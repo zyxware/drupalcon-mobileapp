@@ -4,9 +4,11 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+var db = null;
 
-.run(function($ionicPlatform) {
+angular.module('starter', ['ionic', 'starter.controllers','ngStorage','ngCordova','starter.config'])
+
+.run(function($ionicPlatform,$cordovaSQLite, DB_CONFIG) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -19,8 +21,35 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    // db = $cordovaSQLite.openDB({ name: "my.db" });
+    if (window.cordova) {
+      db = $cordovaSQLite.openDB({ name: DB_CONFIG.name }); //device
+    }else{
+      db = window.openDatabase(DB_CONFIG.name, '1', 'd_conference', 1024 * 1024 * 100); // browser
+    }
+
+
+          angular.forEach(DB_CONFIG.tables, function(table) {
+              var columns = [];
+
+              angular.forEach(table.columns, function(column) {
+                  columns.push(column.name + ' ' + column.type);
+              });
+
+              var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
+              $cordovaSQLite.execute(db, query);
+          });
+
   });
 })
+    .factory('readJson', function ($http) {
+        return {
+            get: function () {        
+                 return  $http.get('json/DrupalCon_JsonData_v1.json');
+
+            }
+        }
+    })
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -36,7 +65,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     url: '/sessions',
     views: {
       'menuContent': {
-        templateUrl: 'templates/sessions.html'
+        templateUrl: 'templates/sessions.html',
+        controller: 'JsonController',
       }
     }
   })
@@ -49,6 +79,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
+  // .state('app.sessiondetails', {
+  //     url: '/sessiondetails',
+  //     views: {
+  //       'menuContent': {
+  //         templateUrl: 'templates/sessiondetails.html',
+  //         controller: 'sessiondetails',
+  //       }
+  //     }
+  //   })
     .state('app.tracks', {
       url: '/tracks',
       views: {

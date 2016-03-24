@@ -1,0 +1,301 @@
+{
+  "days": [
+    "09-05-2016 00:00:00",
+    "10-05-2016 00:00:00",
+    "11-05-2016 00:00:00",
+    "12-05-2016 00:00:00",
+    "13-05-2016 00:00:00"
+  ],
+  "sessions": [
+    {
+      "id": 1,
+      "title": "Ask Not What Open Source Can Do For You…But What You Can Do For Open Source",
+      "date": "09-05-2016 00:00:00",
+      "room": 1,
+      "startTime": "09:00am",
+      "endTime": "10:30am",
+      "track": 1,
+      "icon": "session1.jpg",
+      "desc": "The largest and most influential companies, non-profits, universities, and governments in the world are using open source to create value within their organizations. These organizations benefit from the use of open source software, but not all of them capitalize on the full value of embracing the communities that support open source. It's not enough to choose to use open source anymore: it is time for organizations to step into the center of the community to contribute, drive innovation, lead with practical requirements and assist in further developing the projects that are helping them to achieve their missions every day.Open source involvement is not a purely altruistic proposition. Organizations who build contribution into the jobs of their digital teams are rewarded with tangible business benefits including greater return on investment (ROI) and lower total cost of ownership (TCO) for their software platforms.Many organizations have blazed a trail to demonstrate what good open source citizenship should look like. In the Drupal community, we have remarkable examples to follow like NBC Universal, Pfizer, Redhat, the World Bank, Stanford, United Nations, and the White House.This talk will center on the organizations who truly embrace open source, their leadership principles, their community practices and how they make open source part of their everyday work, culture, and mission. Anyone tasked with building performing software teams, making IT investments or leading technology change including CTO's and CIO's will learn:    How organizations of all sizes, budgets, and missions contribute to open source.",
+      "experiencelevel": "Beginner"
+    },
+    {
+      "id": 2,
+      "title": "Drupal 8 and Omni-Channel: Peanut Butter Meets Chocolate",
+      "date": "09-05-2016 00:00:00",
+      "room": 2,
+      "startTime": "10:30am",
+      "endTime": "11:30am",
+      "track": 1,
+      "icon": "session3",
+      "desc": "When it comes to digital interactions, today’s users have become quite demanding. Whether they’re using a smartphone or desktop or a tablet, a native app or social media platform, they expect a continuous, unified experience - one that syncs with their offline journey as well. Gaps in their experience quickly lead to dissatisfaction and consumer flight. What’s a business to do? Enter omni-channel. Technological advances - like the advent of Drupal 8 - make it easier for organizations to support content everywhere and anywhere, as it is consumed by multiple devices. But truly implementing omni-channel requires a thoughtful digital strategy. You must consider your audience’s user journey with your product/service, what digital touchpoints are needed to support them, and how these touchpoints support your own content strategy.",
+      "experiencelevel": "Beginner"
+    },
+    {
+      "id": 3,
+      "title": "Fifth year using Drupal: A look at Georgia's return on investment ",
+      "date": "09-05-2016 00:00:00",
+      "room": 1,
+      "startTime": "11:30am",
+      "endTime": "12:30pm",
+      "track": 1,
+      "icon": "session2",
+      "desc": "Five years ago the State of Georgia started it's move to Drupal from a proprietory CMS. The business case promised benefits and cost savings a Drupal implementation might bring to the state's web presence. Now that Georgia is on Drupal for the last 5 years how did the promise hold?",
+      "experiencelevel": "Beginner"
+    },
+    {
+      "id": 4,
+      "title": "Government Security Frameworks: Where Do I Begin?",
+      "date": "10-05-2016 00:00:00",
+      "room": 3,
+      "startTime": "10:30am",
+      "endTime": "11:30am",
+      "track": 2,
+      "icon": "session3",
+      "desc": "Development companies are becoming more involved in application building for the federal government, but are quickly finding themselves in a security nightmare. The acronyms “FedRAMP” and “FISMA” are commonly interjected into every conference call you are on, causing you ask yourself, “How did I get here?” Well, you are not alone … Weaving your way through federal security frameworks for the first time can be extremely difficult and very frustrating. In this session, we will discuss these complicated frameworks, and devise different ways to leverage compliant services for your application. We will also review various tools and techniques to apply against your application to meet these framework standards.",
+      "experiencelevel": "Beginner"
+    },
+    {
+      "id": 5,
+      "title": "Largest Drupal 8 Sites serve millions of page views - How you can do it, too!",
+      "date": "10-05-2016 00:00:00",
+      "room": 1,
+      "startTime": "10:30am",
+      "endTime": "11:30am",
+      "track": 2,
+      "icon": "session4",
+      "desc": "Alright, we don’t have the secret to bringing unique visitors to your site. Anyone that tells you they do it probably selling snake-oil. But if you build it… and they come… there’s a few things you’ll need to make sure your site stays online! 'With 4.2 million page views per month, Le Temps is probably the largest website on Drupal 8' - Dries Buytaert. Months before the official release of Drupal 8, the Swiss online news industry underwent a transformation in its digital publishing operations. Thanks to a meticulously curated Drupal 8 distribution called NP8, online news sources: LeTemps.ch and Suedostschweiz.ch were enjoying better workflows, a 2.5x increase in performance, and higher Google search rankings.  All built on top of Platform.sh, the revolutionary PaaS, giving them the speed and agility to keep their fast-paced business online and relevant.",
+      "experiencelevel": "Beginner"
+    },
+    {
+      "id": 6,
+      "title": "Altering, Extending, and Enhancing Drupal 8",
+      "date": "10-05-2016 00:00:00",
+      "room": 1,
+      "startTime": "01:30pm",
+      "endTime": "03:30pm",
+      "track": 3,
+      "icon": "session6",
+      "desc": "A large part of Drupal's appeal lies in its flexibility. The fact that a developer can alter, extend, and enhance almost any aspect of Drupal without having to hack core. Historically this versatility has been made possible through the existence of hooks. Specially named PHP functions that are executed at critical points during the fulfillment of a request. And they've served the framework well for years. But times are changing, and Drupal 8 offers a variety of new patterns that all module developers will be required to learn, and understand.",
+      "experiencelevel": "Intermediate"
+    },
+    {
+      "id": 7,
+      "title": "Configuration Management for Developers in Drupal 8",
+      "date": "10-05-2016 00:00:00",
+      "room": 3,
+      "startTime": "09:30am",
+      "endTime": "11:30am",
+      "track": 3,
+      "icon": "session8",
+      "desc": "Is the configuration system your favorite feature of Drupal 8? Are you interested in doing continuous integration? Do you want to easily export all of your Drupal configuration to code? Interested in building a best practice continuous integration and deployment solution? This session, hosted by co-maintainers of the configuration system, will focus on how Drupal 8's configuration management system works, how to integrate it with a continuous integration system, and what developers can do to extend its power through contributed modules and custom code. Come with your questions and learn more about this magical part of Drupal 8.",
+      "experiencelevel": "Intermediate"
+    },
+    {
+      "id": 8,
+      "title": "Approaches for UX changes big and small",
+      "date": "11-05-2016 00:00:00",
+      "room": 2,
+      "startTime": "09:30am",
+      "endTime": "11:30am",
+      "track": 4,
+      "icon": "session7",
+      "desc": "Drupal is very powerful but how much of that power is real if people can not understand or even find it? It has historically been very hard to make big changes in how Drupal functionality gets exposed to people. At the same time, turning Drupal outside-in is a big focus for Drupal 8 and 9. We want to get better at making Drupal work like people expect things to work.",
+      "experiencelevel": "Intermediate"
+    },
+    {
+      "id": 9,
+      "title": "Automated javascript testing: where we are and what we actually want",
+      "date": "11-05-2016 00:00:00",
+      "room": 2,
+      "startTime": "02:30pm",
+      "endTime": "03:30pm",
+      "track": 1,
+      "icon": "session10",
+      "desc": "First the issue will give a short overview about different kind of testing: Unit vs. Integration/Functional testing. After that let's talk about the current status of testing of our javascript (which will be more and more important in the future).",
+      "experiencelevel": "Intermediate"
+    }
+  ],
+  "speakers": [
+    {
+      "id": 1,
+      "name": "Jeff Walpole",
+      "desgn": "",
+      "desc":""
+    },
+    {
+      "id": 2,
+      "name": "Jordan Hirsch",
+      "desgn": "",
+      "desc":""
+    },
+    {
+      "id": 3,
+      "name": "Karyn Snyder",
+      "desgn": "",
+      "desc":""
+    },
+    {
+      "id": 4,
+      "name": "Nikhil Deshpande",
+      "desgn": "Director, Digital Services at GeorgiaGov Interactive, GTA",
+      "desc":"Nikhil is Director of GeorgiaGov Interactive, where he oversees the strategy and operations of Georgia.gov, and a Drupal-based web publishing platform hosting around 75 websites for state agencies and elected officials. Nikhil has 15 years of public and private sector experience in the web services area. He holds an master of fine arts in Interaction Design and master of design degree in Visual Communication. Nikhil is also an adjunct faculty member at the Savannah College of Art and Design (SCAD), Atlanta campus, where he teaches Interaction Design and Social Gaming. Reach Nikhil at @nikofthehill"
+    },
+    {
+      "id": 5,
+      "name": "Jason Ford",
+      "desgn": "",
+      "desc":""
+    },
+    {
+      "id": 6,
+      "name": "Doug Goldberg",
+      "desgn": "",
+      "desc":""
+    },
+    {
+      "id": 7,
+      "name": "Joe Shindelar",
+      "desgn": "",
+      "desc":""
+    },
+    {
+      "id": 8,
+      "name": "Matthew Tift",
+      "desgn": "Senior Developer at Lullabot",
+      "desc":"Matthew Tift (mtift on drupal.org) is a Senior Developer at Lullabot and host of the free software show Hacking Culture.  He is a Drupal 8 configuration system co-maintainer, organizer of the Twin Cities DrupalCamp, Drupal core contributor since 2010, and regular speaker at various conferences, user groups, and webinars."
+    },
+    {
+      "id": 9,
+      "name": "Alex Pott",
+      "desgn": "Drupal Research Engineer at Chapter Three",
+      "desc":"I'm passionate about using and contributing to open source. I believe that open source delivers great solutions and that Drupal 8 is a rock-solid CMS with fantastic features for developers, site builders and content editors. In my spare time I like solving cryptic crosswords, playing a ukelele and having a laugh with my son Jack."
+    },
+    {
+      "id": 10,
+      "name": "Roy Scholten",
+      "desgn": "",
+      "desc":""
+    },
+    {
+      "id": 11,
+      "name": "Daniel Wehner",
+      "desgn": "Senior Performance Engineer at ChapterThree | Tag1 Consulting",
+      "desc":"Starting with the google highle open participation contest in 2007/2008 dawehner got a bit involved over time on Drupal 8 and there in areas like routing. These days Daniel is interested in machine learning and its applications on 'normal' Drupal sites."
+    }
+  ],
+  "sessionSpeakers": [
+    {
+      "sessionId": 1,
+      "speakerId": 1
+    },
+    {
+      "sessionId": 2,
+      "speakerId": 2
+    },
+    {
+      "sessionId": 2,
+      "speakerId": 3
+    },
+    {
+      "sessionId": 3,
+      "speakerId": 4
+    },
+    {
+      "sessionId": 4,
+      "speakerId": 5
+    },
+    {
+      "sessionId": 5,
+      "speakerId": 6
+    },
+    {
+      "sessionId": 6,
+      "speakerId": 7
+    },
+    {
+      "sessionId": 7,
+      "speakerId": 8
+    },
+    {
+      "sessionId": 7,
+      "speakerId": 9
+    },
+    {
+      "sessionId": 8,
+      "speakerId": 10
+    },
+    {
+      "sessionId": 9,
+      "speakerId": 11
+    }
+  ],
+  "tracks": [
+    {
+      "id": 1,
+      "title": "Business",
+      "image": "ic_dummy"
+    },
+    {
+      "id": 2,
+      "title": "Bussiness Showcase",
+      "image": "ic_dummy"
+    },
+    {
+      "id": 3,
+      "title": "Coding and Development",
+      "image": "ic_dummy"
+    },
+    {
+      "id": 4,
+      "title": "Core Conventions",
+      "image": "ic_dummy"
+    },
+    {
+      "id": 5,
+      "title": "PHP",
+      "image": "ic_dummy"
+    },
+    {
+      "id": 6,
+      "title": "Site Building",
+      "image": "ic_dummy"
+    },
+    {
+      "id": 3,
+      "title": "Project Management",
+      "image": "ic_dummy"
+    },
+    {
+      "id": 7,
+      "title": "Drupal.org",
+      "image": "ic_dummy"
+    }
+  ],
+  "rooms": [
+    {
+      "id": 1,
+      "name": "Hall 1",
+      "latitude": "10.4577845",
+      "longitude": "72.7676878",
+      "Desc": "Loren Ipsum",
+      "image": "hall1"
+    },
+    {
+      "id": 2,
+      "name": "Hall 2",
+      "latitude": "10.4577845",
+      "longitude": "72.7676878",
+      "Desc": "Loren Ipsum",
+      "image": "hall2"
+    },
+    {
+      "id": 3,
+      "name": "Hall 3",
+      "latitude": "10.4577845",
+      "longitude": "72.7676878",
+      "Desc": "Loren Ipsum",
+      "image": "hall3"
+    }
+  ]
+}
