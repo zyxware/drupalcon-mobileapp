@@ -1,5 +1,11 @@
 <ion-view view-title="Rooms">
     <ion-content>
         <h1>Rooms</h1>
+        <ion-list>
+        <ion-item ng-repeat="room in rooms" href="#/app/roomdetails/">
+          {{room.name}}
+          <p>{{room.desc}}</p>
+        </ion-item>
+      </ion-list>
     </ion-content>
 </ion-view>
