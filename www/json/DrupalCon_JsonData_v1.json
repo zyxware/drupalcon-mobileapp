@@ -276,25 +276,19 @@
     {
       "id": 1,
       "name": "Hall 1",
-      "latitude": "10.4577845",
-      "longitude": "72.7676878",
-      "Desc": "Loren Ipsum",
+      "desc": "Loren Ipsum",
       "image": "hall1"
     },
     {
       "id": 2,
       "name": "Hall 2",
-      "latitude": "10.4577845",
-      "longitude": "72.7676878",
-      "Desc": "Loren Ipsum",
+      "desc": "Loren Ipsum",
       "image": "hall2"
     },
     {
       "id": 3,
       "name": "Hall 3",
-      "latitude": "10.4577845",
-      "longitude": "72.7676878",
-      "Desc": "Loren Ipsum",
+      "desc": "Loren Ipsum",
       "image": "hall3"
     }
   ]
