@@ -4,8 +4,8 @@ angular.module('starter.controllers', [])
 
 
   })
-  
-  .controller('ProgramCtrl', function ($scope, readJson, DB_CONFIG,$cordovaSQLite) {
+
+  .controller('ProgramCtrl', function ($scope, readJson, DB_CONFIG, $cordovaSQLite) {
     //Temporary code to initialize the local storage. TO BE REMOVED.
     //window.localStorage.setItem('db-initialized', null);
     if (window.localStorage.getItem('db-initialized') == 'null') {
@@ -15,7 +15,7 @@ angular.module('starter.controllers', [])
 
         angular.forEach(DB_CONFIG.tables, function (table) {
 
-          angular.forEach(jsonData[table.name], function(tableData){
+          angular.forEach(jsonData[table.name], function (tableData) {
 
             console.log(table.name);
 
@@ -24,10 +24,10 @@ angular.module('starter.controllers', [])
             var fieldValues = [];
 
             angular.forEach(table.columns, function (column) {
-              if(column.name != 'id' ) {
+              if (column.name != 'id') {
                 columns.push(column.name);
                 params.push('?');
-                if(column.name != 'id' )
+                if (column.name != 'id')
                   fieldValues.push(tableData[column.name]);
               }
             });
@@ -44,21 +44,37 @@ angular.module('starter.controllers', [])
       });
       window.localStorage.setItem('db-initialized', 1);
     }
-  })
-  .controller('RoomsCtrl', function($scope, $cordovaSQLite ) {
-    var query = "SELECT * FROM rooms WHERE 1";
-    $scope.rooms = [];
-    $cordovaSQLite.execute(db, query).then(function(res) {
-      if(res.rows.length > 0) {
-          for (var i = 0; i < res.rows.length; i++)
-            {
-              $scope.rooms.push(res.rows.item(i));
-               //console.log(res.rows.item(i));
-            }
+
+    var query = "SELECT * FROM programs";
+    $cordovaSQLite.execute(db, query).then(function (res) {
+      if (res.rows.length > 0) {
+        $scope.programs = [];
+
+        angular.forEach(res.rows,function(programData){
+          //console.log(programData);
+          $scope.programs.push(programData);
+        });
       } else {
-          console.log("No results found");
+        //console.log("No results found");
       }
     }, function (err) {
-        console.error(err);
+      //console.error(err);
+    });
+
+  })
+  .controller('RoomsCtrl', function ($scope, $cordovaSQLite) {
+    var query = "SELECT * FROM rooms WHERE 1";
+    $scope.rooms = [];
+    $cordovaSQLite.execute(db, query).then(function (res) {
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          $scope.rooms.push(res.rows.item(i));
+          //console.log(res.rows.item(i));
+        }
+      } else {
+        console.log("No results found");
+      }
+    }, function (err) {
+      console.error(err);
     });
   });
