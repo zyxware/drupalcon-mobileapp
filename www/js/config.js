@@ -13,6 +13,7 @@ angular.module('starter.config', [])
                   {name: 'endTime', type: 'text'},
                   {name: 'icon', type: 'text'},
                   {name: 'desc', type: 'text'},
+                  {name: 'track', type: 'integer'},
                   {name: 'experiencelevel', type: 'text'},
               ]
             },

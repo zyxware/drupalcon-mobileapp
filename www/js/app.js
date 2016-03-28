@@ -35,7 +35,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         angular.forEach(table.columns, function (column) {
           columns.push(column.name + ' ' + column.type);
         });
-        $cordovaSQLite.execute(db, 'DROP TABLE programs');
         var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
         $cordovaSQLite.execute(db, query);
       });
@@ -61,41 +60,40 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         controller: 'AppCtrl'
       })
 
-      .state('app.sessions', {
-        url: '/sessions',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/sessions.html',
-            controller: 'ProgramCtrl',
-          }
-        }
-      })
+  .state('app.sessions', {
+    url: '/sessions',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/sessions.html',
+        controller: 'JsonController',
+      }
+    }
+  })
 
-      .state('app.speakers', {
-        url: '/speakers',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/speakers.html'
-          }
+  .state('app.speakers', {
+      url: '/speakers',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/speakers.html'
         }
-      })
-      // .state('app.sessiondetails', {
-      //     url: '/sessiondetails',
-      //     views: {
-      //       'menuContent': {
-      //         templateUrl: 'templates/sessiondetails.html',
-      //         controller: 'sessiondetails',
-      //       }
-      //     }
-      //   })
-      .state('app.tracks', {
-        url: '/tracks',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/tracks.html',
-          }
+      }
+    })
+  .state('app.rooms', {
+      url: '/rooms',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/rooms.html'
         }
-      });
-    // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/sessions');
-  });
+      }
+    })
+    .state('app.tracks', {
+      url: '/tracks',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/tracks.html',
+        }
+      }
+    });
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/app/sessions');
+});
