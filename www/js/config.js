@@ -45,7 +45,7 @@ angular.module('starter.config', [])
               name: 'rooms',
               columns: [
                   {name: 'id', type: 'integer primary key'},
-                  {name: 'title', type: 'text'},
+                  {name: 'name', type: 'text'},
                   {name: 'desc', type: 'text'},
                   {name: 'image', type: 'text'},
               ]
