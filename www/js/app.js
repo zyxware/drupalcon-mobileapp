@@ -65,7 +65,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
     views: {
       'menuContent': {
         templateUrl: 'templates/sessions.html',
-        controller: 'JsonController',
+        controller: 'ProgramCtrl',
       }
     }
   })

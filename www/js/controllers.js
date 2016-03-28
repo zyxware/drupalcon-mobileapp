@@ -5,7 +5,7 @@ angular.module('starter.controllers', [])
 
   })
   .controller('ProgramCtrl', function ($scope, readJson, DB_CONFIG,$cordovaSQLite) {
-    window.localStorage.setItem('db-initialized', 'null');
+
     if (window.localStorage.getItem('db-initialized') == 'null') {
       console.log(window.localStorage.getItem('db-initialized'));
 
