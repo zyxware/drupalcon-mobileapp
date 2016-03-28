@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 var db = null;
 
-angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordova', 'starter.config'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordova', 'starter.config','ng.group'])
 
   .run(function ($ionicPlatform, $cordovaSQLite, DB_CONFIG) {
     $ionicPlatform.ready(function () {
@@ -38,6 +38,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         angular.forEach(table.columns, function (column) {
           columns.push(column.name + ' ' + column.type);
         });
+
         var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
         $cordovaSQLite.execute(db, query);
       });
@@ -55,7 +56,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
 
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
-
       .state('app', {
         url: '/app',
         abstract: true,

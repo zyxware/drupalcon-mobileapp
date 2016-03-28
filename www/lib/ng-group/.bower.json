@@ -1,0 +1,39 @@
+{
+  "name": "ng-group",
+  "version": "0.9.0",
+  "description": "An Angular.js filter for grouping items in an array by one of their fields.",
+  "authors": [
+    "Sam Stokes <me@samstokes.co.uk>"
+  ],
+  "license": "MIT",
+  "main": "src/ngGroup.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "package.json",
+    "Gruntfile.js",
+    "tasks",
+    "TODO",
+    "example",
+    "test",
+    "coverage"
+  ],
+  "dependencies": {
+    "angular": "*"
+  },
+  "devDependencies": {
+    "angular-mocks": "*"
+  },
+  "homepage": "https://github.com/samstokes/ng-group",
+  "_release": "0.9.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.9.0",
+    "commit": "eefe13946f16364fccbedba9d4c8ef45b696b74d"
+  },
+  "_source": "git://github.com/samstokes/ng-group.git",
+  "_target": "^0.9.0",
+  "_originalSource": "ng-group",
+  "_direct": true
+}
