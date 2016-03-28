@@ -30,6 +30,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
 
 
       angular.forEach(DB_CONFIG.tables, function (table) {
+        //Temporary code to drop the existing table. TO BE REMOVED.
+        //var query = 'DROP TABLE ' + table.name;
+        //$cordovaSQLite.execute(db, query);
         var columns = [];
 
         angular.forEach(table.columns, function (column) {
@@ -82,7 +85,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       url: '/rooms',
       views: {
         'menuContent': {
-          templateUrl: 'templates/rooms.html'
+          templateUrl: 'templates/rooms.html',
+          controller: 'RoomsCtrl',
         }
       }
     })
