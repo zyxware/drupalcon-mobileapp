@@ -79,6 +79,14 @@ angular.module('starter', ['ionic', 'starter.controllers','ngStorage','ngCordova
         }
       }
     })
+  .state('app.rooms', {
+      url: '/rooms',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/rooms.html'
+        }
+      }
+    })
   // .state('app.sessiondetails', {
   //     url: '/sessiondetails',
   //     views: {
