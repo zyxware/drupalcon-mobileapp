@@ -84,6 +84,24 @@ angular.module('starter.controllers', [])
       console.error(err);
     });
   })
+
+  // TracksCtrl
+  .controller('TracksCtrl', function ($scope, $cordovaSQLite) {
+    var query = "SELECT * FROM tracks WHERE 1";
+    $scope.tracks = [];
+    $cordovaSQLite.execute(db, query).then(function (res) {
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          $scope.tracks.push(res.rows.item(i));
+        }
+      } else {
+        console.log("No results found");
+      }
+    }, function (err) {
+      console.error(err);
+    });
+  })
+
   // RoomsCtrl
   .controller('RoomsCtrl', function ($scope, $cordovaSQLite) {
     var query = "SELECT * FROM rooms WHERE 1";

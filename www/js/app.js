@@ -96,6 +96,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       views: {
         'menuContent': {
           templateUrl: 'templates/tracks.html',
+          controller: 'TracksCtrl',
         }
       }
     });
