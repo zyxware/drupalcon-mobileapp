@@ -103,6 +103,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         }
       }
     })
+  .state('app.speaker', {
+      url: '/speaker/:speakerId',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/speaker.html',
+          controller: 'SpeakerCtrl',
+        }
+      }
+    })
   .state('app.rooms', {
       url: '/rooms',
       views: {

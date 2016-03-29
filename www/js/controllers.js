@@ -60,7 +60,7 @@ angular.module('starter.controllers', [])
     });
   })
   
-  // SpeakersCtrl
+  // SpeakersCtrl - Speaker listing page
   .controller('SpeakersCtrl', function ($scope, $cordovaSQLite) {
     var query = "SELECT * FROM speakers WHERE 1";
     $scope.speakers = [];
@@ -69,6 +69,23 @@ angular.module('starter.controllers', [])
         for (var i = 0; i < res.rows.length; i++) {
           $scope.speakers.push(res.rows.item(i));
         }
+      } else {
+        console.log("No results found");
+      }
+    }, function (err) {
+      console.error(err);
+    });
+  })
+
+  // SpeakerCtrl - Speaker Detail page
+  .controller('SpeakerCtrl', function ($scope, $stateParams, $cordovaSQLite) {
+    var query = "SELECT speakers.id, speakers.name, speakers.desc, speakers.desgn ";
+        query += "FROM speakers WHERE id = ?";
+    var id = $stateParams.speakerId;
+    $scope.speakerDtl = [];
+    $cordovaSQLite.execute(db, query, [id]).then(function (res) {
+      if (res.rows.length > 0) {
+        $scope.speakerDtl.push(res.rows.item(0));
       } else {
         console.log("No results found");
       }

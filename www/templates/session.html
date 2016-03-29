@@ -13,8 +13,7 @@
           {{program.tracktitle}}
         </div>
         <div class='users' ng-repeat="speaker in speakers">
-          <a href="#/app/speakers">
-            {{speaker.speakerid}}
+          <a href="#/app/speaker/{{speaker.speakerid}}">
             {{speaker.speakername}}
           </a>
         </div>

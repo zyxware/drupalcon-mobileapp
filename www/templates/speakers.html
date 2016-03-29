@@ -2,8 +2,8 @@
     <ion-content>
         <h1>Speakers</h1>
         <ion-list>
-          <ion-item ng-repeat="speaker in speakers track by $index" href="#/app/speakerdetails/">
-            {{speaker.name}}
+          <ion-item ng-repeat="speaker in speakers track by $index">
+            <a ng-href="#/app/speaker/{{speaker.id}}">{{speaker.name}}</a>
              <h3>{{speaker.desgn}}</h3>
             <p>{{speaker.desc}}</p>
           </ion-item>
