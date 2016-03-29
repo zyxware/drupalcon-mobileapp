@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 var db = null;
 
-angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordova', 'starter.config','ng.group'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordova', 'starter.config'])
 
   .run(function ($ionicPlatform, $cordovaSQLite, DB_CONFIG) {
     $ionicPlatform.ready(function () {
@@ -48,7 +48,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
   .factory('readJson', function ($http) {
     return {
       get: function () {
-        return $http.get('json/DrupalCon_JsonData_v1.json');
+        console.log(ionic.Platform.isAndroid());
+        var url = "";
+        if(ionic.Platform.isAndroid()){
+          url = "/android_asset/www/";
+        }
+        return $http.get(url+'json/DrupalCon_JsonData_v1.json');
 
       }
     }
