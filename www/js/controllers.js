@@ -137,7 +137,9 @@ angular.module('starter.controllers', [])
       if (res.rows.length > 0) {
         $scope.program = res.rows.item(0);
         for (var i = 0; i < res.rows.length; i++) {
-          $scope.speakers.push(res.rows.item(i).speakername);
+          var speakerId = res.rows.item(i).speakerid;
+          var speakername = res.rows.item(i).speakername;
+          $scope.speakers.push({speakername:speakername,speakerid:speakerId});
         }
       } else {
         console.log("No results found");
