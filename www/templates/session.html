@@ -1,6 +1,26 @@
-<ion-view view-title="Tracks">
+<ion-view view-title="Session">
     <ion-content>
-        <h1>Session</h1>
+        <h2>{{program.title}}</h2>
+        <div class='date'>
+          {{program.date}}
+          {{program.startTime}} - 
+          {{program.endTime}}
+        </div>
+        <div class='level'>
+          {{program.experiencelevel}}
+        </div>
+        <div class='track'>
+          {{program.tracktitle}}
+        </div>
+        <div class='users' ng-repeat="speaker in speakers">
+          <a href="#/app/speakers">
+            {{speaker}}
+          </a>
+        </div>
+        <div class='room'>
+          {{program.roomname}}
+        </div>
+        <p>{{program.desc}}</p>
     </ion-content>
 </ion-view>
 
