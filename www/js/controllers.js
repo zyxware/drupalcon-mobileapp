@@ -104,7 +104,30 @@ angular.module('starter.controllers', [])
   
   // SessionCtrl
   .controller('SessionCtrl', function ($scope, $stateParams, $cordovaSQLite) {
-    console.log($stateParams);
+    var id = $stateParams.sessionId;
+    var query = "SELECT programs.*, tracks.title AS tracktitle, ";
+        query += "speakers.name AS speakername, speakers.id AS speakerid, ";
+        query += "rooms.name AS roomname, rooms.id AS roomid ";
+        query += "FROM programs ";
+        query += "JOIN tracks ON tracks.id = programs.track ";
+        query += "JOIN rooms ON rooms.id = programs.room ";
+        query += "JOIN sessionSpeakers ON sessionSpeakers.sessionId = programs.id ";
+        query += "JOIN speakers ON speakers.id = sessionSpeakers.speakerId ";
+        query += " WHERE programs.id = ?";
+    $scope.program = [];
+    $scope.speakers = [];
+    $cordovaSQLite.execute(db, query, [id]).then(function (res) {
+      if (res.rows.length > 0) {
+        $scope.program = res.rows.item(0);
+        for (var i = 0; i < res.rows.length; i++) {
+          $scope.speakers.push(res.rows.item(i).speakername);
+        }
+      } else {
+        console.log("No results found");
+      }
+    }, function (err) {
+      console.error(err);
+    });
   })
 
   // RoomsCtrl
