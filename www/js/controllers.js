@@ -68,6 +68,22 @@ angular.module('starter.controllers', [])
     });
   })
   
+  // SpeakersCtrl
+  .controller('SpeakersCtrl', function ($scope, $cordovaSQLite) {
+    var query = "SELECT * FROM speakers WHERE 1";
+    $scope.speakers = [];
+    $cordovaSQLite.execute(db, query).then(function (res) {
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          $scope.speakers.push(res.rows.item(i));
+        }
+      } else {
+        console.log("No results found");
+      }
+    }, function (err) {
+      console.error(err);
+    });
+  })
   // RoomsCtrl
   .controller('RoomsCtrl', function ($scope, $cordovaSQLite) {
     var query = "SELECT * FROM rooms WHERE 1";
@@ -76,7 +92,6 @@ angular.module('starter.controllers', [])
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
           $scope.rooms.push(res.rows.item(i));
-          //console.log(res.rows.item(i));
         }
       } else {
         console.log("No results found");

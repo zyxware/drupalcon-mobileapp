@@ -77,7 +77,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       url: '/speakers',
       views: {
         'menuContent': {
-          templateUrl: 'templates/speakers.html'
+          templateUrl: 'templates/speakers.html',
+          controller: 'SpeakersCtrl',
         }
       }
     })

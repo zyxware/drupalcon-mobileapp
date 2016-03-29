@@ -1,5 +1,12 @@
 <ion-view view-title="Speakers">
     <ion-content>
         <h1>Speakers</h1>
+        <ion-list>
+          <ion-item ng-repeat="speaker in speakers track by $index" href="#/app/speakerdetails/">
+            {{speaker.name}}
+             <h3>{{speaker.desgn}}</h3>
+            <p>{{speaker.desc}}</p>
+          </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>
