@@ -4,7 +4,7 @@ angular.module('starter.controllers', [])
 
 
   })
-
+  // ProgramCtrl
   .controller('ProgramCtrl', function ($scope, readJson, DB_CONFIG, $cordovaSQLite) {
     //Temporary code to initialize the local storage. TO BE REMOVED.
     //window.localStorage.setItem('db-initialized', null);
@@ -44,14 +44,20 @@ angular.module('starter.controllers', [])
       });
       window.localStorage.setItem('db-initialized', 1);
     }
-
-    var query = "SELECT * FROM programs";
+    // if view-pastevents = NULL, view future events only, else view past events.
+    // Temporary code to initialize the local storage. TO BE REMOVED.
+    window.localStorage.setItem('view-pastevents', null);
+    if (window.localStorage.getItem('view-pastevents') == 'null') {
+      var query = "SELECT * FROM programs WHERE date > date('now')";
+    }
+    else {
+      var query = "SELECT * FROM programs WHERE 1";
+    }
     $cordovaSQLite.execute(db, query).then(function (res) {
       if (res.rows.length > 0) {
         $scope.programs = [];
-
         angular.forEach(res.rows,function(programData){
-          //console.log(programData);
+          console.log(programData);
           $scope.programs.push(programData);
         });
       } else {
@@ -60,8 +66,9 @@ angular.module('starter.controllers', [])
     }, function (err) {
       //console.error(err);
     });
-
   })
+  
+  // RoomsCtrl
   .controller('RoomsCtrl', function ($scope, $cordovaSQLite) {
     var query = "SELECT * FROM rooms WHERE 1";
     $scope.rooms = [];

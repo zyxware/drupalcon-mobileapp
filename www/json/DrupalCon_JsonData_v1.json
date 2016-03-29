@@ -1,16 +1,16 @@
 {
   "days": [
-    "09-05-2016 00:00:00",
-    "10-05-2016 00:00:00",
-    "11-05-2016 00:00:00",
-    "12-05-2016 00:00:00",
-    "13-05-2016 00:00:00"
+    "2016-05-09 00:00:00",
+    "2016-05-10 00:00:00",
+    "2016-05-11 00:00:00",
+    "2016-05-12 00:00:00",
+    "2016-05-13 00:00:00"
   ],
   "programs": [
     {
       "id": 1,
       "title": "Ask Not What Open Source Can Do For You…But What You Can Do For Open Source",
-      "date": "09-05-2016 00:00:00",
+      "date": "2016-03-09 00:00:00",
       "room": 1,
       "startTime": "09:00am",
       "endTime": "10:30am",
@@ -22,7 +22,7 @@
     {
       "id": 2,
       "title": "Drupal 8 and Omni-Channel: Peanut Butter Meets Chocolate",
-      "date": "09-05-2016 00:00:00",
+      "date": "2016-05-09 00:00:00",
       "room": 2,
       "startTime": "10:30am",
       "endTime": "11:30am",
@@ -34,7 +34,7 @@
     {
       "id": 3,
       "title": "Fifth year using Drupal: A look at Georgia's return on investment ",
-      "date": "09-05-2016 00:00:00",
+      "date": "2016-05-09 00:00:00",
       "room": 1,
       "startTime": "11:30am",
       "endTime": "12:30pm",
@@ -46,7 +46,7 @@
     {
       "id": 4,
       "title": "Government Security Frameworks: Where Do I Begin?",
-      "date": "10-05-2016 00:00:00",
+      "date": "2016-05-10 00:00:00",
       "room": 3,
       "startTime": "10:30am",
       "endTime": "11:30am",
@@ -58,7 +58,7 @@
     {
       "id": 5,
       "title": "Largest Drupal 8 Sites serve millions of page views - How you can do it, too!",
-      "date": "10-05-2016 00:00:00",
+      "date": "2016-05-10 00:00:00",
       "room": 1,
       "startTime": "10:30am",
       "endTime": "11:30am",
@@ -70,7 +70,7 @@
     {
       "id": 6,
       "title": "Altering, Extending, and Enhancing Drupal 8",
-      "date": "10-05-2016 00:00:00",
+      "date": "2016-05-10 00:00:00",
       "room": 1,
       "startTime": "01:30pm",
       "endTime": "03:30pm",
@@ -82,7 +82,7 @@
     {
       "id": 7,
       "title": "Configuration Management for Developers in Drupal 8",
-      "date": "10-05-2016 00:00:00",
+      "date": "2016-05-10 00:00:00",
       "room": 3,
       "startTime": "09:30am",
       "endTime": "11:30am",
@@ -94,7 +94,7 @@
     {
       "id": 8,
       "title": "Approaches for UX changes big and small",
-      "date": "11-05-2016 00:00:00",
+      "date": "2016-05-11 00:00:00",
       "room": 2,
       "startTime": "09:30am",
       "endTime": "11:30am",
@@ -106,7 +106,7 @@
     {
       "id": 9,
       "title": "Automated javascript testing: where we are and what we actually want",
-      "date": "11-05-2016 00:00:00",
+      "date": "2016-05-11 00:00:00",
       "room": 2,
       "startTime": "02:30pm",
       "endTime": "03:30pm",
