@@ -71,6 +71,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       }
     }
   })
+  .state('app.sessionslist', {
+    url: '/sessionlist',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/sessionslist.html',
+        controller: 'SesssionsCtrl',
+      }
+    }
+  })
   .state('app.session', {
     url: '/session/:sessionId',
     views: {
