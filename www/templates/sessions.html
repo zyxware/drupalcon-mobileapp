@@ -1,11 +1,11 @@
 <ion-view view-title="Sessions">
   <ion-content>    
     <ion-list>
-      <ion-item ng-repeat="program in programs | groupBy:'date' track by $index">
+      <ion-item ng-repeat="program in programs  | groupBy:'date' track by $index">
         <h2>{{program.date}}</h2>
-              <ion-item ng-repeat="pp in program.items track by $index">
-                  <h3>{{pp.title}}</h3>
-              </ion-item>
+        <ion-item ng-repeat="pp in program.items track by $index">
+          <h3>{{pp.title}}</h3>
+        </ion-item>
       </ion-item>
     </ion-list>
   </ion-content>

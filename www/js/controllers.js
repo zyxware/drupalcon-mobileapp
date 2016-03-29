@@ -4,6 +4,7 @@ angular.module('starter.controllers', [])
 
 
   })
+  
   // ProgramCtrl
   .controller('ProgramCtrl', function ($scope, readJson, DB_CONFIG, $cordovaSQLite) {
     //Temporary code to initialize the local storage. TO BE REMOVED.
@@ -56,15 +57,14 @@ angular.module('starter.controllers', [])
     $cordovaSQLite.execute(db, query).then(function (res) {
       if (res.rows.length > 0) {
         $scope.programs = [];
-        angular.forEach(res.rows,function(programData){
-          console.log(programData);
-          $scope.programs.push(programData);
-        });
+        for (var i = 0; i < res.rows.length; i++) {
+          $scope.programs.push(res.rows.item(i));
+        }
       } else {
-        //console.log("No results found");
+        console.log("No results found");
       }
     }, function (err) {
-      //console.error(err);
+      console.error(err);
     });
   })
   
@@ -100,6 +100,11 @@ angular.module('starter.controllers', [])
     }, function (err) {
       console.error(err);
     });
+  })
+  
+  // SessionCtrl
+  .controller('SessionCtrl', function ($scope, $stateParams, $cordovaSQLite) {
+    console.log($stateParams);
   })
 
   // RoomsCtrl
