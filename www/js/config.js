@@ -3,6 +3,13 @@ angular.module('starter.config', [])
         name: 'd_conference.db',
         tables: [
             {
+              name: 'eventdates',
+              columns: [
+                  {name: 'id', type: 'integer'},
+                  {name: 'date', type: 'text'},
+              ]
+            },
+            {
               name: 'programs',
               columns: [
                   {name: 'id', type: 'integer primary key'},
