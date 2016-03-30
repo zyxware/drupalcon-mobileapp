@@ -6,3 +6,6 @@ platforms/
 plugins/
 /.project
 .idea/*
+www/cssc/ionic.app.min.css
+www/cssc/ionic.app.css
+
