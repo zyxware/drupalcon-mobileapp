@@ -136,6 +136,7 @@ angular.module('starter.controllers', [])
     $cordovaSQLite.execute(db, query, [id]).then(function (res) {
       if (res.rows.length > 0) {
         $scope.program = res.rows.item(0);
+        $scope.programDate = new Date(res.rows.item(0).date);
         for (var i = 0; i < res.rows.length; i++) {
           var speakerId = res.rows.item(i).speakerid;
           var speakername = res.rows.item(i).speakername;
