@@ -1,0 +1,9 @@
+<ion-view view-title="{{detail.name}}">
+    <ion-content>
+        <ion-item ng-repeat="detail in details track by $index">
+           {{detail.name}}
+           <h3 ng-if="detail.desgn">{{detail.desgn}}</h3>
+          <p ng-if="detail.desc">{{detail.desc}}</p>
+        </ion-item>
+    </ion-content>
+</ion-view>

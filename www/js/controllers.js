@@ -5,8 +5,8 @@ angular.module('starter.controllers', [])
 
   })
   
-  // ProgramCtrl
-  .controller('ProgramCtrl', function ($scope, readJson, DB_CONFIG, $cordovaSQLite) {
+  // ScheduleCtrl
+  .controller('ScheduleCtrl', function ($scope, readJson, DB_CONFIG, $cordovaSQLite) {
     //Temporary code to initialize the local storage. TO BE REMOVED.
     //window.localStorage.setItem('db-initialized', null);
     if (window.localStorage.getItem('db-initialized') == 'null') {
@@ -46,11 +46,11 @@ angular.module('starter.controllers', [])
       window.localStorage.setItem('db-initialized', 1);
     }
     var query = "SELECT * FROM eventdates WHERE 1";
-    $scope.eventdates = [];
+    $scope.schedules = [];
     $cordovaSQLite.execute(db, query).then(function (res) {
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
-          $scope.eventdates.push(res.rows.item(i));
+          $scope.schedules.push(res.rows.item(i));
         }
       } else {
         console.log("No results found");
@@ -77,15 +77,15 @@ angular.module('starter.controllers', [])
     });
   })
 
-  // SpeakerCtrl - Speaker Detail page
-  .controller('SpeakerCtrl', function ($scope, $stateParams, $cordovaSQLite) {
+  // SpeakerDetailCtrl - Speaker Detail page
+  .controller('SpeakerDetailCtrl', function ($scope, $stateParams, $cordovaSQLite) {
     var query = "SELECT speakers.id, speakers.name, speakers.desc, speakers.desgn ";
         query += "FROM speakers WHERE id = ?";
     var id = $stateParams.speakerId;
-    $scope.speakerDtl = [];
+    $scope.details = [];
     $cordovaSQLite.execute(db, query, [id]).then(function (res) {
       if (res.rows.length > 0) {
-        $scope.speakerDtl.push(res.rows.item(0));
+        $scope.details.push(res.rows.item(0));
       } else {
         console.log("No results found");
       }
@@ -94,8 +94,8 @@ angular.module('starter.controllers', [])
     });
   })
 
-  // SesssionsCtrl
-  .controller('SesssionsCtrl', function ($scope, $cordovaSQLite) {
+  // SessionsCtrl - Session listing Page
+  .controller('SessionsCtrl', function ($scope, $cordovaSQLite) {
     // if view-pastevents = NULL, view future events only, else view past events.
     // Temporary code to initialize the local storage. TO BE REMOVED.
     window.localStorage.setItem('view-pastevents', null);
@@ -118,26 +118,9 @@ angular.module('starter.controllers', [])
       console.error(err);
     });
   })
-
-  // TracksCtrl
-  .controller('TracksCtrl', function ($scope, $cordovaSQLite) {
-    var query = "SELECT * FROM tracks WHERE 1";
-    $scope.tracks = [];
-    $cordovaSQLite.execute(db, query).then(function (res) {
-      if (res.rows.length > 0) {
-        for (var i = 0; i < res.rows.length; i++) {
-          $scope.tracks.push(res.rows.item(i));
-        }
-      } else {
-        console.log("No results found");
-      }
-    }, function (err) {
-      console.error(err);
-    });
-  })
   
-  // SessionCtrl
-  .controller('SessionCtrl', function ($scope, $stateParams, $cordovaSQLite) {
+  // SessionDetailCtrl - Session Detail Page
+  .controller('SessionDetailCtrl', function ($scope, $stateParams, $cordovaSQLite) {
     var id = $stateParams.sessionId;
     var query = "SELECT programs.*, tracks.title AS tracktitle, ";
         query += "speakers.name AS speakername, speakers.id AS speakerid, ";
@@ -166,7 +149,58 @@ angular.module('starter.controllers', [])
     });
   })
 
-  // RoomsCtrl
+  // TracksCtrl - Tracks listing page.
+  .controller('TracksCtrl', function ($scope, $cordovaSQLite) {
+    var query = "SELECT * FROM tracks WHERE 1";
+    $scope.tracks = [];
+    $cordovaSQLite.execute(db, query).then(function (res) {
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          $scope.tracks.push(res.rows.item(i));
+        }
+      } else {
+        console.log("No results found");
+      }
+    }, function (err) {
+      console.error(err);
+    });
+  })
+  
+  // TrackDetailCtrl - Track Detail page.
+  .controller('TrackDetailCtrl', function ($scope, $stateParams, $cordovaSQLite) {
+    var query = "SELECT tracks.id, tracks.title AS name ";
+        query += "FROM tracks WHERE id = ?";
+    var id = $stateParams.trackId;
+    $scope.details = [];
+    $cordovaSQLite.execute(db, query, [id]).then(function (res) {
+      if (res.rows.length > 0) {
+        $scope.details.push(res.rows.item(0));
+      } else {
+        console.log("No results found");
+      }
+    }, function (err) {
+      console.error(err);
+    });
+  })
+  
+  // RoomDetailCtrl - Room Detail page
+  .controller('RoomDetailCtrl', function ($scope, $stateParams, $cordovaSQLite) {
+    var query = "SELECT rooms.id, rooms.name, rooms.desc ";
+        query += "FROM rooms WHERE id = ?";
+    var id = $stateParams.roomId;
+    $scope.details = [];
+    $cordovaSQLite.execute(db, query, [id]).then(function (res) {
+      if (res.rows.length > 0) {
+        $scope.details.push(res.rows.item(0));
+      } else {
+        console.log("No results found");
+      }
+    }, function (err) {
+      console.error(err);
+    });
+  })
+  
+  // RoomsCtrl - Rooms listing page.
   .controller('RoomsCtrl', function ($scope, $cordovaSQLite) {
     var query = "SELECT * FROM rooms WHERE 1";
     $scope.rooms = [];

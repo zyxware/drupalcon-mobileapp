@@ -1,0 +1,9 @@
+<ion-view view-title="Schedules">
+  <ion-content>    
+    <ion-list>
+      <ion-item ng-repeat="schedule in schedules track by $index" href="#/app/sessions">
+        <h2>{{schedule.date}}</h2>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

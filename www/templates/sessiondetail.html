@@ -10,15 +10,19 @@
           {{program.experiencelevel}}
         </div>
         <div class='track'>
-          {{program.tracktitle}}
+          <a href="#/app/trackdetail/{{program.track}}">
+            {{program.tracktitle}}
+          </a>
         </div>
-        <div class='users' ng-repeat="speaker in speakers">
-          <a href="#/app/speaker/{{speaker.speakerid}}">
+        <div class='speakers' ng-repeat="speaker in speakers">
+          <a href="#/app/speakerdetail/{{speaker.speakerid}}">
             {{speaker.speakername}}
           </a>
         </div>
         <div class='room'>
-          {{program.roomname}}
+          <a href="#/app/roomdetail/{{program.room}}">
+            {{program.roomname}}
+          </a>
         </div>
         <p>{{program.desc}}</p>
     </ion-content>

@@ -3,7 +3,7 @@
         <h1>Rooms</h1>
         <ion-list>
           <ion-item ng-repeat="room in rooms track by $index" href="#/app/roomdetails/">
-            {{room.name}}
+            <a ng-href="#/app/roomdetail/{{room.id}}">{{room.name}}</a>
             <p>{{room.desc}}</p>
           </ion-item>
         </ion-list>

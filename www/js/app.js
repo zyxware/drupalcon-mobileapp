@@ -67,30 +67,30 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         templateUrl: 'templates/menu.html',
         controller: 'AppCtrl'
       })
+  .state('app.schedules', {
+    url: '/schedules',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/schedules.html',
+        controller: 'ScheduleCtrl',
+      }
+    }
+  })
   .state('app.sessions', {
     url: '/sessions',
     views: {
       'menuContent': {
         templateUrl: 'templates/sessions.html',
-        controller: 'ProgramCtrl',
+        controller: 'SessionsCtrl',
       }
     }
   })
-  .state('app.sessionslist', {
-    url: '/sessionlist',
+  .state('app.sessiondetail', {
+    url: '/session-detail/:sessionId',
     views: {
       'menuContent': {
-        templateUrl: 'templates/sessionslist.html',
-        controller: 'SesssionsCtrl',
-      }
-    }
-  })
-  .state('app.session', {
-    url: '/session/:sessionId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/session.html',
-        controller: 'SessionCtrl',
+        templateUrl: 'templates/sessiondetail.html',
+        controller: 'SessionDetailCtrl',
       }
     }
   })
@@ -103,12 +103,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         }
       }
     })
-  .state('app.speaker', {
-      url: '/speaker/:speakerId',
+  .state('app.speakerdetail', {
+      url: '/speakerdetail/:speakerId',
       views: {
         'menuContent': {
-          templateUrl: 'templates/speaker.html',
-          controller: 'SpeakerCtrl',
+          templateUrl: 'templates/detail.html',
+          controller: 'SpeakerDetailCtrl',
         }
       }
     })
@@ -118,6 +118,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         'menuContent': {
           templateUrl: 'templates/rooms.html',
           controller: 'RoomsCtrl',
+        }
+      }
+    })
+    .state('app.roomdetail', {
+      url: '/roomdetail/:roomId',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/detail.html',
+          controller: 'RoomDetailCtrl',
+        }
+      }
+    })
+    .state('app.trackdetail', {
+      url: '/trackdetail/:trackId',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/detail.html',
+          controller: 'TrackDetailCtrl',
         }
       }
     })
@@ -131,5 +149,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       }
     });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/sessions');
+  $urlRouterProvider.otherwise('/app/schedules');
 });
