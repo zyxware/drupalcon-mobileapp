@@ -2,7 +2,7 @@
     <ion-content>
         <h2>{{program.title}}</h2>
         <div class='date'>
-          {{program.date}}
+          {{programDate | date :'yyyy-MM-dd'}}
           {{program.startTime}} - 
           {{program.endTime}}
         </div>
