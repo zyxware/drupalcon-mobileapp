@@ -190,12 +190,11 @@ angular.module('starter.controllers', [])
     var id = $stateParams.roomId;
     $scope.details = [];
     $scope.programs = [];
-    
+
     sessionService.getSessions('room', id).then(function(response){
       $scope.programs = response;
-      console.log($scope.programs);
+
     });
-    console.log($scope.programs.length);
     $cordovaSQLite.execute(db, query, [id]).then(function (res) {
       if (res.rows.length > 0) {
         $scope.details.push(res.rows.item(0));
