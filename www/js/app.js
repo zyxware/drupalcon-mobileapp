@@ -57,6 +57,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
 
       }
     }
+  }).config(function($ionicConfigProvider) {
+    $ionicConfigProvider.views.maxCache(5);
+    $ionicConfigProvider.backButton.text('Back').icon('ion-chevron-left');
+    $ionicConfigProvider.backButton.previousTitleText(false).text('');
   })
 
   //factory to get the session details based on the filters.
