@@ -13,6 +13,7 @@ $energized:                       #ffc900 !default;
 $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #4D4D4D !default;
+$menu-border:                     #7D7777 !default;
 
 
 // The path for our ionicons font files, relative to the built CSS in www/css
@@ -20,7 +21,12 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
-.menu-bg .item-content{
-  background-color: $dark;
+.menu-bg {
+  .item-content {
+    background-color: $dark;
+  }
+  .item{
+    border-color: $menu-border;
+  }
 }
 
