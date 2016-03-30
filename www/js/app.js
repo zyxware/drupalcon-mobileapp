@@ -80,6 +80,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         if( filterKey == 'room') {
           query += " WHERE programs.room = ?";
         }
+        if( filterKey == 'track') {
+          query += " WHERE programs.track = ?";
+        }
+        if( filterKey == 'speaker') {
+          query += " WHERE sessionSpeakers.speakerId = ?";
+        }
 
        $cordovaSQLite.execute(db, query, [filtervalue]).then(function (res) {
           if (res.rows.length > 0) {

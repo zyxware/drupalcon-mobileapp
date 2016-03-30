@@ -78,11 +78,17 @@ angular.module('starter.controllers', [])
   })
 
   // SpeakerDetailCtrl - Speaker Detail page
-  .controller('SpeakerDetailCtrl', function ($scope, $stateParams, $cordovaSQLite) {
+  .controller('SpeakerDetailCtrl', function ($scope, $stateParams, $cordovaSQLite, sessionService) {
     var query = "SELECT speakers.id, speakers.name, speakers.desc, speakers.desgn ";
         query += "FROM speakers WHERE id = ?";
     var id = $stateParams.speakerId;
     $scope.details = [];
+    $scope.programs = [];
+    
+    sessionService.getSessions('speaker', id).then(function(response){
+      $scope.programs = response;
+    });
+    
     $cordovaSQLite.execute(db, query, [id]).then(function (res) {
       if (res.rows.length > 0) {
         $scope.details.push(res.rows.item(0));
@@ -133,6 +139,7 @@ angular.module('starter.controllers', [])
         query += " WHERE programs.id = ?";
     $scope.program = [];
     $scope.speakers = [];
+    
     $cordovaSQLite.execute(db, query, [id]).then(function (res) {
       if (res.rows.length > 0) {
         $scope.program = res.rows.item(0);
@@ -168,11 +175,17 @@ angular.module('starter.controllers', [])
   })
   
   // TrackDetailCtrl - Track Detail page.
-  .controller('TrackDetailCtrl', function ($scope, $stateParams, $cordovaSQLite) {
+  .controller('TrackDetailCtrl', function ($scope, $stateParams, $cordovaSQLite, sessionService) {
     var query = "SELECT tracks.id, tracks.title AS name ";
         query += "FROM tracks WHERE id = ?";
     var id = $stateParams.trackId;
     $scope.details = [];
+    $scope.programs = [];
+
+    sessionService.getSessions('track', id).then(function(response){
+      $scope.programs = response;
+    });
+
     $cordovaSQLite.execute(db, query, [id]).then(function (res) {
       if (res.rows.length > 0) {
         $scope.details.push(res.rows.item(0));
@@ -185,18 +198,17 @@ angular.module('starter.controllers', [])
   })
   
   // RoomDetailCtrl - Room Detail page
-  .controller('RoomDetailCtrl', function ($scope, $stateParams, $cordovaSQLite, sessionService,$q) {
+  .controller('RoomDetailCtrl', function ($scope, $stateParams, $cordovaSQLite, sessionService) {
     var query = "SELECT rooms.id, rooms.name, rooms.desc ";
         query += "FROM rooms WHERE id = ?";
     var id = $stateParams.roomId;
     $scope.details = [];
     $scope.programs = [];
-    
+
     sessionService.getSessions('room', id).then(function(response){
       $scope.programs = response;
-      console.log($scope.programs);
     });
-    console.log($scope.programs.length);
+
     $cordovaSQLite.execute(db, query, [id]).then(function (res) {
       if (res.rows.length > 0) {
         $scope.details.push(res.rows.item(0));

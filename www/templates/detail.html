@@ -6,9 +6,9 @@
           <p ng-if="detail.desc">{{detail.desc}}</p>
         </ion-item>
         <ion-item ng-repeat="program in programs track by $index">
-           {{program.name}}
-           <h3 ng-if="detail.desgn">{{program.date}}</h3>
-          <p ng-if="detail.desc">{{program.desc}}</p>
+           {{program.title}}
+           <h3>{{program.date}}</h3>
+          <p>{{program.desc}}</p>
         </ion-item>
     </ion-content>
 </ion-view>
