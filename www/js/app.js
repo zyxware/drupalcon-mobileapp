@@ -59,6 +59,42 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
     }
   })
 
+  //factory to get the session details based on the filters.
+  .factory('sessionService', function($q, $cordovaSQLite) {
+    return {
+      getSessions: function(filterKey, filtervalue) {
+        var q = $q.defer();
+        var result = [];
+        var query = "SELECT programs.id, programs.title, programs.date, programs.startTime, programs.endTime,  ";
+        query += "tracks.title AS tracktitle, ";
+        query += "rooms.name AS roomname, rooms.id AS roomid ";
+        query += "FROM programs ";
+        query += "JOIN tracks ON tracks.id = programs.track ";
+        query += "JOIN rooms ON rooms.id = programs.room ";
+        query += "JOIN sessionSpeakers ON sessionSpeakers.sessionId = programs.id ";
+        query += "JOIN speakers ON speakers.id = sessionSpeakers.speakerId ";
+        if( filterKey == 'room') {
+          query += " WHERE programs.room = ?";
+        }
+
+       $cordovaSQLite.execute(db, query, [filtervalue]).then(function (res) {
+          if (res.rows.length > 0) {
+            for (var i = 0; i < res.rows.length; i++) {
+              result.push(res.rows.item(i));
+            }
+            q.resolve(result);
+          } else {
+            console.log("No results found");
+          }
+        }, function (err) {
+           q.reject(null);
+        });
+        console.log(q.promise);
+        return q.promise;
+      }
+    }
+  })
+
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('app', {

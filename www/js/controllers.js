@@ -184,11 +184,18 @@ angular.module('starter.controllers', [])
   })
   
   // RoomDetailCtrl - Room Detail page
-  .controller('RoomDetailCtrl', function ($scope, $stateParams, $cordovaSQLite) {
+  .controller('RoomDetailCtrl', function ($scope, $stateParams, $cordovaSQLite, sessionService,$q) {
     var query = "SELECT rooms.id, rooms.name, rooms.desc ";
         query += "FROM rooms WHERE id = ?";
     var id = $stateParams.roomId;
     $scope.details = [];
+    $scope.programs = [];
+    
+    sessionService.getSessions('room', id).then(function(response){
+      $scope.programs = response;
+      console.log($scope.programs);
+    });
+    console.log($scope.programs.length);
     $cordovaSQLite.execute(db, query, [id]).then(function (res) {
       if (res.rows.length > 0) {
         $scope.details.push(res.rows.item(0));
