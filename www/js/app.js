@@ -174,7 +174,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       url: '/speakerdetail/:speakerId',
       views: {
         'menuContent': {
-          templateUrl: 'templates/detail.html',
+          templateUrl: 'templates/speakerDetail.html',
           controller: 'SpeakerDetailCtrl',
         }
       }
