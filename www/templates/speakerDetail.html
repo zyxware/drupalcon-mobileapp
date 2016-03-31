@@ -17,15 +17,15 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div ng-if="detail.desgn" class="row">
             <div class="col desc-listing padding">
-                <span ng-if="detail.desgn">{{detail.desgn}}</span>
+                <span >{{detail.desgn}}</span>
             </div>
 
         </div>
-        <div class="row">
+        <div ng-if="detail.desc" class="row">
             <div class="col desc-listing padding">
-                <p ng-if="detail.desc">{{detail.desc}}</p>
+                <p >{{detail.desc}}</p>
             </div>
 
         </div>
