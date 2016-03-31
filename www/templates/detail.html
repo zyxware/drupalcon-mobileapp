@@ -5,10 +5,14 @@
            <h3 ng-if="detail.desgn">{{detail.desgn}}</h3>
           <p ng-if="detail.desc">{{detail.desc}}</p>
         </ion-item>
-        <ion-item ng-repeat="program in programs track by $index">
-           {{program.title}}
-           <h3>{{program.date}}</h3>
-          <p>{{program.desc}}</p>
-        </ion-item>
+        <h3>Sessions</h3>
+        <ion-card ng-repeat="program in programs track by $index">
+          <ion-card-content>
+            <div class="title"><a ng-href="#/app/session-detail/{{program.id}}">{{program.title}}</a></div>
+            <ion-col width-10>{{program.date}}</ion-col>
+            <ion-col width-10>{{program.startTime}} - {{program.endTime}}</ion-col>
+            <ion-col width-10><a ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</a></ion-col>
+          </ion-card-content>
+        </ion-card>
     </ion-content>
 </ion-view>

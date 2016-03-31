@@ -60,9 +60,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
   })
 
   //factory to get the session details based on the filters.
-  .factory('sessionService', function($q, $cordovaSQLite) {
+  .factory('sessionService', function($q, $cordovaSQLite, $filter) {
     return {
-      getSessions: function(filterKey, filtervalue) {
+      getSessions: function(filterKey, filterValue) {
         var q = $q.defer();
         var result = [];
         var query = "SELECT programs.id, programs.title, programs.date, programs.startTime, programs.endTime,  ";
@@ -73,19 +73,34 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         query += "JOIN rooms ON rooms.id = programs.room ";
         query += "JOIN sessionSpeakers ON sessionSpeakers.sessionId = programs.id ";
         query += "JOIN speakers ON speakers.id = sessionSpeakers.speakerId ";
+        // if view-pastevents = NULL, view future events only, else view past events.
+        // Temporary code to initialize the local storage. TO BE REMOVED.
+        window.localStorage.setItem('view-pastevents', null);
+        if (window.localStorage.getItem('view-pastevents') == 'null') {
+          query += "WHERE programs.date > date('now') ";
+        }
+        else {
+          query += "WHERE 1";
+        }
+        if( filterKey == 'date') {
+          var filterValue = $filter('date')(filterValue, "yyyy-MM-dd HH:mm:ss");
+          query += " AND programs.date = ?";
+        }
         if( filterKey == 'room') {
-          query += " WHERE programs.room = ?";
+          query += " AND programs.room = ?";
         }
         if( filterKey == 'track') {
-          query += " WHERE programs.track = ?";
+          query += " AND programs.track = ?";
         }
         if( filterKey == 'speaker') {
-          query += " WHERE sessionSpeakers.speakerId = ?";
+          query += " AND sessionSpeakers.speakerId = ?";
         }
-
-       $cordovaSQLite.execute(db, query, [filtervalue]).then(function (res) {
+       $cordovaSQLite.execute(db, query, [filterValue]).then(function (res) {
           if (res.rows.length > 0) {
             for (var i = 0; i < res.rows.length; i++) {
+              //var dateStr = res.rows.item(i).date;
+              //var dateVal = new Date(dateStr).getTime();
+              //result.push({programs: res.rows.item(i), dateval:dateVal});
               result.push(res.rows.item(i));
             }
             q.resolve(result);
@@ -129,7 +144,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
     }
   })
   .state('app.sessions', {
-    url: '/sessions',
+    url: '/sessions/:date',
     views: {
       'menuContent': {
         templateUrl: 'templates/sessions.html',
