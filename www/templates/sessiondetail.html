@@ -1,5 +1,7 @@
-<ion-view view-title="Session">
+<ion-view view-title="Session" ng-controller="BookmarkCtrl">
     <ion-content>
+       <i ng-if="!bookmarked" class="ion-ios-star-outline positive" ng-click="addBookmark('session', program.id)"></i>
+       <i ng-if="bookmarked" class="ion-ios-star positive" ng-click="removeBookmark('session', program.id)"></i>
         <h2>{{program.title}}</h2>
         <div class='date'>
           {{programDate | date :'yyyy-MM-dd'}}

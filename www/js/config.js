@@ -57,5 +57,13 @@ angular.module('starter.config', [])
                   {name: 'image', type: 'text'},
               ]
             },
+            {
+              name: 'bookmarks',
+              columns: [
+                  {name: 'id', type: 'integer primary key'},
+                  {name: 'type', type: 'text'},
+                  {name: 'itemId', type: 'integer'},
+              ]
+            },
         ]
     });
