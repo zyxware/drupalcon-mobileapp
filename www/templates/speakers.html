@@ -1,12 +1,11 @@
 <ion-view view-title="Speakers">
     <ion-content>
         <ion-list>
-            <ion-item href="#/app/sessions" type="item-text-wrap" class="item-remove-animate item-avatar item-icon-right" ng-repeat="speaker in speakers track by $index">
+            <ion-item  type="item-text-wrap"  class="item-listing item-remove-animate item-avatar item-icon-right" ng-repeat="speaker in speakers track by $index" href="#/app/speakerdetail/{{speaker.id}}">
 
-                <img src="http://ionicframework.com/img/docs/venkman.jpg">
+                <img src="img/avatar.png">
                 <h2>{{speaker.name}}</h2>
                 <h3>{{speaker.desgn}}</h3>
-                <!--<p>{{speaker.desc}}</p>-->
 
             </ion-item>
         </ion-list>
