@@ -124,6 +124,7 @@ angular.module('starter.controllers', [])
         query += "JOIN sessionSpeakers ON sessionSpeakers.sessionId = programs.id ";
         query += "JOIN speakers ON speakers.id = sessionSpeakers.speakerId ";
         query += " WHERE programs.id = ?";
+
     $scope.program = [];
     $scope.speakers = [];
 
@@ -136,6 +137,15 @@ angular.module('starter.controllers', [])
           var speakername = res.rows.item(i).speakername;
           $scope.speakers.push({speakername:speakername,speakerid:speakerId});
         }
+        $scope.bookmarks = false;
+        var bookQuery = "SELECT bookmarks.id FROM bookmarks WHERE type = ? AND itemId = ?";
+        console.log(bookQuery);
+        $cordovaSQLite.execute(db, bookQuery, ['session', id]).then(function (resBook) {
+          console.log(resBook.rows);
+          if (resBook.rows.length > 0) {
+            $scope.bookmarked = true;
+          }
+        });
       } else {
         console.log("No results found");
       }
@@ -225,5 +235,27 @@ angular.module('starter.controllers', [])
       }
     }, function (err) {
       console.error(err);
-    });
+    })
+  })
+
+  // BookmarkCtrl - Bookmarking items
+  .controller('BookmarkCtrl', function ($scope, $cordovaSQLite) {
+    $scope.addBookmark = function(type, id) {
+      var query = 'INSERT INTO bookmarks (type, itemId) VALUES ( ?, ?)';
+      $cordovaSQLite.execute(db, query, [type, id]).then(function (res) {
+        $scope.bookmarked = true;
+      }, function (err) {
+          console.error(err);
+      });
+    };
+
+    $scope.removeBookmark = function(type, id) {
+      var query = 'DELETE FROM bookmarks WHERE type = ? AND itemId = ?';
+      $cordovaSQLite.execute(db, query, [type, id]).then(function (res) {
+        $scope.bookmarked = false;
+      }, function (err) {
+          console.error(err);
+      });
+    };
+
   });
