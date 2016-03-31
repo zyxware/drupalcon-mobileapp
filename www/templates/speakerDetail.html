@@ -1,0 +1,44 @@
+<ion-view view-title="Speaker's Profile">
+    <ion-content>
+        <div class="row">
+            <div class="col text-center item-avatar-center">
+                    <img width="50" height="50" src="img/avatar.png">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col padding profile-header text-center">
+                <div class="col">
+                    {{detail.name}}
+                </div>
+                <div class="col">
+                    <i class="icon ion-ios-star"></i>
+                    <i class="icon ion-ios-star"></i>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col desc-listing padding">
+                <span ng-if="detail.desgn">{{detail.desgn}}</span>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col desc-listing padding">
+                <p ng-if="detail.desc">{{detail.desc}}</p>
+            </div>
+
+        </div>
+
+
+        <h3 ng-if="programs.length">Sessions</h3>
+        <ion-card ng-repeat="program in programs track by $index">
+          <ion-card-content>
+            <div class="title"><a ng-href="#/app/session-detail/{{program.id}}">{{program.title}}</a></div>
+            <ion-col width-10>{{program.date}}</ion-col>
+            <ion-col width-10>{{program.startTime}} - {{program.endTime}}</ion-col>
+            <ion-col width-10><a ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</a></ion-col>
+          </ion-card-content>
+        </ion-card>
+    </ion-content>
+</ion-view>
