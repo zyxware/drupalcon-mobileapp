@@ -84,7 +84,7 @@ angular.module('starter.controllers', [])
     var query = "SELECT speakers.id, speakers.name, speakers.desc, speakers.desgn ";
         query += "FROM speakers WHERE id = ?";
     var id = $stateParams.speakerId;
-    $scope.details = [];
+    //$scope.detail = [];
     $scope.programs = [];
 
     sessionService.getSessions('speaker', id).then(function(response){
@@ -93,7 +93,7 @@ angular.module('starter.controllers', [])
 
     $cordovaSQLite.execute(db, query, [id]).then(function (res) {
       if (res.rows.length > 0) {
-        $scope.details.push(res.rows.item(0));
+        $scope.detail = res.rows.item(0);
       } else {
         console.log("No results found");
       }
