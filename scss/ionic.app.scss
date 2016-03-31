@@ -14,6 +14,9 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #4D4D4D !default;
 $menu-border:                     #7D7777 !default;
+$body-background:                 #E5E5E5 !default;
+$content-margin:                  10px !default;
+$avatar-border-color:             #28A9E0 !default;
 
 
 // The path for our ionicons font files, relative to the built CSS in www/css
@@ -21,6 +24,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+
+@mixin contentMargin {
+  margin: $content-margin;
+}
+
+ion-content{
+  background-color: $body-background;
+}
 .menu-bg {
   .item-content {
     background-color: $dark;
@@ -29,4 +40,21 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     border-color: $menu-border;
   }
 }
-
+.item-listing {
+  @include contentMargin;
+}
+.item-avatar img, .item-avatar-center img{
+  border:1px solid $avatar-border-color;
+}
+.item-avatar-center img{
+  border-radius: 50%;
+}
+.profile-header {
+  background-color: lighten($dark, 10%);
+  color: $light;
+  font-weight: bold;
+}
+.desc-listing {
+  @include contentMargin;
+  background-color: $light;
+}
