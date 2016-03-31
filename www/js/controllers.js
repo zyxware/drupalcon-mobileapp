@@ -6,7 +6,7 @@ angular.module('starter.controllers', [])
   })
   
   // ScheduleCtrl
-  .controller('ScheduleCtrl', function ($scope, readJson, DB_CONFIG, $cordovaSQLite) {
+  .controller('ScheduleCtrl', function ($scope, readJson, DB_CONFIG, $cordovaSQLite, $filter) {
     //Temporary code to initialize the local storage. TO BE REMOVED.
     //window.localStorage.setItem('db-initialized', null);
     if (window.localStorage.getItem('db-initialized') == 'null') {
@@ -50,7 +50,9 @@ angular.module('starter.controllers', [])
     $cordovaSQLite.execute(db, query).then(function (res) {
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
-          $scope.schedules.push(res.rows.item(i));
+          var dateStr = res.rows.item(i).date;
+          var dateVal = new Date(dateStr).getTime();
+          $scope.schedules.push({dateStr:dateStr, dateVal:dateVal});
         }
       } else {
         console.log("No results found");
@@ -101,27 +103,12 @@ angular.module('starter.controllers', [])
   })
 
   // SessionsCtrl - Session listing Page
-  .controller('SessionsCtrl', function ($scope, $cordovaSQLite) {
-    // if view-pastevents = NULL, view future events only, else view past events.
-    // Temporary code to initialize the local storage. TO BE REMOVED.
-    window.localStorage.setItem('view-pastevents', null);
-    if (window.localStorage.getItem('view-pastevents') == 'null') {
-      var query = "SELECT * FROM programs WHERE date > date('now')";
-    }
-    else {
-      var query = "SELECT * FROM programs WHERE 1";
-    }
-    $cordovaSQLite.execute(db, query).then(function (res) {
-      if (res.rows.length > 0) {
-        $scope.programs = [];
-        for (var i = 0; i < res.rows.length; i++) {
-          $scope.programs.push(res.rows.item(i));
-        }
-      } else {
-        console.log("No results found");
-      }
-    }, function (err) {
-      console.error(err);
+  .controller('SessionsCtrl', function ($scope, sessionService, $stateParams) {
+    var date = $stateParams.date;
+    $scope.programs = [];
+
+    sessionService.getSessions('date', date).then(function(response){
+      $scope.programs = response;
     });
   })
   
@@ -207,7 +194,10 @@ angular.module('starter.controllers', [])
 
     sessionService.getSessions('room', id).then(function(response){
       $scope.programs = response;
-
+      //angular.forEach(response, function (res) {
+        //$scope.programs.push(res.programs);
+      //});
+      //console.log($scope.programs);
     });
 
     $cordovaSQLite.execute(db, query, [id]).then(function (res) {
