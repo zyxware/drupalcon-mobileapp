@@ -105,12 +105,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
     $ionicConfigProvider.backButton.text('Back').icon('ion-chevron-left');
     $ionicConfigProvider.backButton.previousTitleText(false).text('');
     $stateProvider
-      .state('app', {
+  .state('app', {
         url: '/app',
         abstract: true,
         templateUrl: 'templates/menu.html',
         controller: 'AppCtrl'
-      })
+  })
+  .state('app.home', {
+      url: '/home',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/home.html',
+        }
+      }
+   })
   .state('app.schedules', {
     url: '/schedules',
     views: {
@@ -193,5 +201,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       }
     });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/schedules');
+  $urlRouterProvider.otherwise('/app/home');
 });
