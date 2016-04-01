@@ -13,8 +13,7 @@
                     {{detail.name}}
                 </div>
                 <div class="col">
-                    <i class="icon ion-ios-star"></i>
-                    <i class="icon ion-ios-star"></i>
+                    <i class="icon ion-bookmark"></i>
                 </div>
             </div>
         </div>
@@ -40,9 +39,9 @@
                         <div class="col"> {{program.title}}</div>
                     </a>
                     <div class="row text-center program-schedule-details">
-                        <div class="col col-33">{{program.date.replace("00:00:00","").trim() | date:'MMMM d'}}</div>
-                        <div class="col col-33">{{program.startTime}} - {{program.endTime}}</div>
-                        <div class="col col-33" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
+                        <div class="col col-25">{{program.date.replace("00:00:00","").trim() | date:'MMMM d'}}</div>
+                        <div class="col col-50">{{program.startTime}} - {{program.endTime}}</div>
+                        <div class="col col-25" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
                     </div>
                 </div>
             </div>
