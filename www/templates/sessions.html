@@ -1,14 +1,20 @@
 <ion-view view-title="Sessions">
   <ion-content>    
     <ion-list>
-      <ion-card ng-repeat="program in programs track by $index">
-          <ion-card-content>
-            <div class="title"><a ng-href="#/app/session-detail/{{program.id}}">{{program.title}}</a></div>
-            <ion-col width-10>{{program.date}}</ion-col>
-            <ion-col width-10>{{program.startTime}} - {{program.endTime}}</ion-col>
-            <ion-col width-10><a ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</a></ion-col>
-          </ion-card-content>
-        </ion-card>
+      <div class="row" ng-if="programs.length" class="program-schedule">
+            <div class="col">
+                <div class="item item-text-wrap" ng-repeat="program in programs track by $index">
+                    <a ng-href="#/app/session-detail/{{program.id}}" class="row schedule-title">
+                        <div class="col"> {{program.title}}</div>
+                    </a>
+                    <div class="row text-center program-schedule-details">
+                        <div class="col col-33">{{program.date.replace("00:00:00","").trim() | date:'MMMM d'}}</div>
+                        <div class="col col-33">{{program.startTime}} - {{program.endTime}}</div>
+                        <div class="col col-33" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </ion-list>
   </ion-content>
 </ion-view>
