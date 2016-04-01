@@ -1,9 +1,8 @@
 <ion-view view-title="Rooms">
     <ion-content>
-        <h1>Rooms</h1>
         <ion-list>
-          <ion-item ng-repeat="room in rooms track by $index" href="#/app/roomdetails/">
-            <a ng-href="#/app/roomdetail/{{room.id}}">{{room.name}}</a>
+          <ion-item type="item-text-wrap" class="item-listing item-remove-animate item-icon-right" ng-repeat="room in rooms track by $index" href="#/app/roomdetail/{{room.id}}">
+            <h2>{{room.name}}</h2>
             <p>{{room.desc}}</p>
           </ion-item>
         </ion-list>

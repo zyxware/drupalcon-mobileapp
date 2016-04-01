@@ -27,8 +27,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       } else {
         db = window.openDatabase(DB_CONFIG.name, '1', 'd_conference', 1024 * 1024 * 100); // browser
       }
-
-
       angular.forEach(DB_CONFIG.tables, function (table) {
         //Temporary code to drop the existing table. TO BE REMOVED.
         //var query = 'DROP TABLE ' + table.name;
@@ -42,6 +40,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
         $cordovaSQLite.execute(db, query);
       });
+      // Code to initialize the local storage. TO BE REMOVED.
+      window.localStorage.setItem('view-pastevents', null);
 
     });
   })
@@ -74,8 +74,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         query += "JOIN sessionSpeakers ON sessionSpeakers.sessionId = programs.id ";
         query += "JOIN speakers ON speakers.id = sessionSpeakers.speakerId ";
         // if view-pastevents = NULL, view future events only, else view past events.
-        // Temporary code to initialize the local storage. TO BE REMOVED.
-        window.localStorage.setItem('view-pastevents', null);
         if (window.localStorage.getItem('view-pastevents') == 'null') {
           query += "WHERE programs.date > date('now') ";
         }
@@ -109,21 +107,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         });
         return q.promise;
       },
-      // Get the bookmarked sessions and speakers.
+      // Get the bookmarked sessions and speakers based on the type filter.
       getFavourites: function(type) {
         var q = $q.defer();
         var result = [];
-        var query = "SELECT bookmarks.id, bookmarks.type, bookmarks.itemId, ";
-        query += "programs.id, programs.title, programs.date, programs.startTime, programs.endTime, ";
-        query += "rooms.name AS roomname, rooms.id AS roomid ";
-        query += "FROM bookmarks ";
-        query += "JOIN programs ON programs.id = bookmarks.itemId ";
-        query += "JOIN rooms ON rooms.id = programs.room ";
-        query += "WHERE bookmarks.type = ?";
-        //Checking past events filter.
-        if (type == 'session' && window.localStorage.getItem('view-pastevents') == 'null') {
-          query += " AND programs.date > date('now') ";
+        var select = "SELECT bookmarks.id, bookmarks.type, bookmarks.itemId ";
+        var from = "FROM bookmarks ";
+        var where = "WHERE bookmarks.type = ?";
+        var join = "";
+        if (type == 'session') {
+          select += ", programs.id, programs.title, programs.date, programs.startTime, programs.endTime, ";
+          select += "rooms.name AS roomname, rooms.id AS roomid ";
+          join += "JOIN programs ON programs.id = bookmarks.itemId ";
+          join += "JOIN rooms ON rooms.id = programs.room ";
+          //Checking past events filter.
+          if(window.localStorage.getItem('view-pastevents') == 'null') {
+            where += " AND programs.date > date('now') ";
+          }
+        } else if(type == 'speaker') {
+          select += ", speakers.id, speakers.name, speakers.desgn ";
+          join += "JOIN speakers ON speakers.id = bookmarks.itemId ";
         }
+        var query = select + from + join + where;
         $cordovaSQLite.execute(db, query, [type]).then(function (res) {
           if (res.rows.length > 0) {
             for (var i = 0; i < res.rows.length; i++) {
