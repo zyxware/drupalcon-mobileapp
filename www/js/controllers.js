@@ -184,7 +184,7 @@ angular.module('starter.controllers', [])
     var id = $stateParams.trackId;
     $scope.details = [];
     $scope.programs = [];
-
+    $scope.pageTitle = "Tracks";
     sessionService.getSessions('track', id).then(function(response){
       $scope.programs = response;
     });
@@ -207,7 +207,7 @@ angular.module('starter.controllers', [])
     var id = $stateParams.roomId;
     $scope.details = [];
     $scope.programs = [];
-
+    $scope.pageTitle = "Rooms";
     sessionService.getSessions('room', id).then(function(response){
       $scope.programs = response;
     });

@@ -1,9 +1,8 @@
 <ion-view view-title="Tracks">
     <ion-content>
-        <h1>Tracks</h1>
         <ion-list>
-          <ion-item ng-repeat="trackitem in tracks track by $index">
-            <a href="#/app/trackdetail/{{trackitem.id}}">{{trackitem.title}}</a>
+          <ion-item  type="item-text-wrap" class="item-listing item-remove-animate item-icon-right" ng-repeat="trackitem in tracks track by $index" href="#/app/trackdetail/{{trackitem.id}}">
+            <h2>{{trackitem.title}}</h2>
           </ion-item>
         </ion-list>
     </ion-content>
