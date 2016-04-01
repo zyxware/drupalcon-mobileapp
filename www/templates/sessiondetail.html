@@ -1,18 +1,18 @@
 <ion-view view-title="Session" ng-controller="BookmarkCtrl">
     <ion-content>
-      <div class="row">
+      <div class="row session-details">
           <div class="col profile-header text-center">
-            <div class="col">{{program.title}}</div>
-            <div class="row text-center session-schedule-details">
-              <div class="col col-33"> On {{program.date.replace("00:00:00","").trim() | date:'d MMMM yyyy'}}</div>
-              <div class="col col-33">{{program.startTime}} - {{program.endTime}}</div>
-              <div class="col col-33" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
+            <div class="col session-title">{{program.title}}</div>
+            <div class="row text-center">
+              <div class="col"> On {{program.date.replace("00:00:00","").trim() | date:'d MMMM yyyy'}}</div>
+              <div class="col col-50 ">{{program.startTime}} - {{program.endTime}}</div>
+              <div class="col" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
             </div>
-            <div class="col">
-              <i ng-if="!bookmarked" class="ion-ios-star-outline" ng-click="addBookmark('session', program.id)"></i>
-              <i ng-if="bookmarked" class="ion-ios-star" ng-click="removeBookmark('session', program.id)"></i>
-            </div>
-            <div class="row session-schedule-details">
+
+              <i ng-if="!bookmarked" class="ion-ios-bookmarks-outline" ng-click="addBookmark('session', program.id)"></i>
+              <i ng-if="bookmarked" class="ion-ios-bookmarks" ng-click="removeBookmark('session', program.id)"></i>
+
+            <div class="row">
               <div class="col col-50">{{program.experiencelevel}}</div>
               <div class="col col-50" href="#/app/trackdetail/{{program.track}}">{{program.tracktitle}}</div>
             </div>
