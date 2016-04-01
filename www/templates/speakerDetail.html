@@ -1,11 +1,12 @@
-<ion-view view-title="Speaker's Profile">
+<ion-view view-title="Speaker's Profile" ng-controller="BookmarkCtrl">
     <ion-content>
         <div class="row">
             <div class="col text-center item-avatar-center">
                     <img width="50" height="50" src="img/avatar.png">
             </div>
         </div>
-
+        <i ng-if="!bookmarked" class="ion-ios-star-outline positive" ng-click="addBookmark('speaker', detail.id)"></i>
+        <i ng-if="bookmarked" class="ion-ios-star positive" ng-click="removeBookmark('speaker', detail.id)"></i>
         <div class="row">
             <div class="col padding profile-header text-center">
                 <div class="col">

@@ -100,6 +100,15 @@ angular.module('starter.controllers', [])
     }, function (err) {
       console.error(err);
     });
+    
+    $scope.bookmarks = false;
+    var bookQuery = "SELECT bookmarks.id FROM bookmarks WHERE type = ? AND itemId = ?";
+    $cordovaSQLite.execute(db, bookQuery, ['speaker', id]).then(function (resBook) {
+      console.log(resBook.rows);
+      if (resBook.rows.length > 0) {
+        $scope.bookmarked = true;
+      }
+    });
   })
 
   // SessionsCtrl - Session listing Page
@@ -203,7 +212,7 @@ angular.module('starter.controllers', [])
     sessionService.getSessions('room', id).then(function(response){
       $scope.programs = response;
     });
-
+    
     $cordovaSQLite.execute(db, query, [id]).then(function (res) {
       if (res.rows.length > 0) {
         $scope.details.push(res.rows.item(0));
@@ -269,6 +278,6 @@ angular.module('starter.controllers', [])
   .controller('FavouriteSpeakersCtrl', function ($scope, $cordovaSQLite, sessionService) {
     $scope.speakers = [];
     sessionService.getFavourites('speaker').then(function(response){
-      $scope.programs = response;
+      $scope.speakers = response;
     });
   });
