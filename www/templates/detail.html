@@ -31,9 +31,9 @@
                     <div class="col"> {{program.title}}</div>
                 </a>
                 <div class="row text-center program-schedule-details">
-                    <div class="col col-33">{{program.date.replace("00:00:00","").trim() | date:'MMMM d'}}</div>
-                    <div class="col col-33">{{program.startTime}} - {{program.endTime}}</div>
-                    <div class="col col-33" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
+                    <div class="col col-30">{{program.date.replace("00:00:00","").trim() | date:'MMMM d'}}</div>
+                    <div class="col col-40">{{program.startTime}} - {{program.endTime}}</div>
+                    <div class="col col-30" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
                 </div>
               </div>
             </div>

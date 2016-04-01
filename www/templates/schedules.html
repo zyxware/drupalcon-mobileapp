@@ -2,7 +2,7 @@
   <ion-content>    
     <ion-list>
       <ion-item type="item-text-wrap" class="item-listing item-remove-animate" ng-repeat="schedule in schedules track by $index" href="#/app/sessions/{{schedule.dateVal}}">
-        <h2>{{schedule.dateStr}}</h2>
+        <h2>{{schedule.dateStr.replace("00:00:00","").trim() | date:' d MMMM yyyy'}}</h2>
       </ion-item>
     </ion-list>
   </ion-content>
