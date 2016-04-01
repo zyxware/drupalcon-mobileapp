@@ -27,8 +27,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       } else {
         db = window.openDatabase(DB_CONFIG.name, '1', 'd_conference', 1024 * 1024 * 100); // browser
       }
-
-
       angular.forEach(DB_CONFIG.tables, function (table) {
         //Temporary code to drop the existing table. TO BE REMOVED.
         //var query = 'DROP TABLE ' + table.name;
@@ -42,6 +40,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
         $cordovaSQLite.execute(db, query);
       });
+      // Code to initialize the local storage. TO BE REMOVED.
+      window.localStorage.setItem('view-pastevents', null);
 
     });
   })
@@ -74,8 +74,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         query += "JOIN sessionSpeakers ON sessionSpeakers.sessionId = programs.id ";
         query += "JOIN speakers ON speakers.id = sessionSpeakers.speakerId ";
         // if view-pastevents = NULL, view future events only, else view past events.
-        // Temporary code to initialize the local storage. TO BE REMOVED.
-        window.localStorage.setItem('view-pastevents', null);
         if (window.localStorage.getItem('view-pastevents') == 'null') {
           query += "WHERE programs.date > date('now') ";
         }
