@@ -139,9 +139,7 @@ angular.module('starter.controllers', [])
         }
         $scope.bookmarks = false;
         var bookQuery = "SELECT bookmarks.id FROM bookmarks WHERE type = ? AND itemId = ?";
-        console.log(bookQuery);
         $cordovaSQLite.execute(db, bookQuery, ['session', id]).then(function (resBook) {
-          console.log(resBook.rows);
           if (resBook.rows.length > 0) {
             $scope.bookmarked = true;
           }
@@ -204,10 +202,6 @@ angular.module('starter.controllers', [])
 
     sessionService.getSessions('room', id).then(function(response){
       $scope.programs = response;
-      //angular.forEach(response, function (res) {
-        //$scope.programs.push(res.programs);
-      //});
-      //console.log($scope.programs);
     });
 
     $cordovaSQLite.execute(db, query, [id]).then(function (res) {
@@ -256,6 +250,25 @@ angular.module('starter.controllers', [])
       }, function (err) {
           console.error(err);
       });
-    };
+    }
+  })
 
+  // FavouritesCtrl - Displays favourites
+  .controller('FavouritesCtrl', function ($scope, $cordovaSQLite) {
+  })
+
+  // FavouriteSessionsCtrl - Displays favourite sessions
+  .controller('FavouriteSessionsCtrl', function ($scope, $cordovaSQLite, sessionService) {
+    $scope.programs = [];
+    sessionService.getFavourites('session').then(function(response){
+      $scope.programs = response;
+    });
+  })
+
+  // FavouriteSpeakersCtrl - Displays favourite speakers
+  .controller('FavouriteSpeakersCtrl', function ($scope, $cordovaSQLite, sessionService) {
+    $scope.speakers = [];
+    sessionService.getFavourites('speaker').then(function(response){
+      $scope.programs = response;
+    });
   });

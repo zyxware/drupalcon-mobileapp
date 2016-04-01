@@ -98,9 +98,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
        $cordovaSQLite.execute(db, query, [filterValue]).then(function (res) {
           if (res.rows.length > 0) {
             for (var i = 0; i < res.rows.length; i++) {
-              //var dateStr = res.rows.item(i).date;
-              //var dateVal = new Date(dateStr).getTime();
-              //result.push({programs: res.rows.item(i), dateval:dateVal});
               result.push(res.rows.item(i));
             }
             q.resolve(result);
@@ -110,7 +107,35 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         }, function (err) {
            q.reject(null);
         });
-        //console.log(q.promise);
+        return q.promise;
+      },
+      // Get the bookmarked sessions and speakers.
+      getFavourites: function(type) {
+        var q = $q.defer();
+        var result = [];
+        var query = "SELECT bookmarks.id, bookmarks.type, bookmarks.itemId, ";
+        query += "programs.id, programs.title, programs.date, programs.startTime, programs.endTime, ";
+        query += "rooms.name AS roomname, rooms.id AS roomid ";
+        query += "FROM bookmarks ";
+        query += "JOIN programs ON programs.id = bookmarks.itemId ";
+        query += "JOIN rooms ON rooms.id = programs.room ";
+        query += "WHERE bookmarks.type = ?";
+        //Checking past events filter.
+        if (type == 'session' && window.localStorage.getItem('view-pastevents') == 'null') {
+          query += " AND programs.date > date('now') ";
+        }
+        $cordovaSQLite.execute(db, query, [type]).then(function (res) {
+          if (res.rows.length > 0) {
+            for (var i = 0; i < res.rows.length; i++) {
+              result.push(res.rows.item(i));
+            }
+            q.resolve(result);
+          } else {
+            console.log("No results found");
+          }
+        }, function (err) {
+           q.reject(null);
+        });
         return q.promise;
       }
     }
@@ -212,6 +237,33 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         'menuContent': {
           templateUrl: 'templates/tracks.html',
           controller: 'TracksCtrl',
+        }
+      }
+    })
+    .state('app.favourites', {
+      url: '/favourites',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/favourites.html',
+          controller: 'FavouritesCtrl',
+        }
+      }
+    })
+    .state('app.favourites.sessions', {
+      url: '/favourites-sessions',
+      views: {
+        'tab-tab1': {
+          templateUrl: 'templates/sessions.html',
+          controller: 'FavouriteSessionsCtrl'
+        }
+      }
+    })
+    .state('app.favourites.speakers', {
+      url: '/favourites-speakers',
+      views: {
+        'tab-tab2': {
+          templateUrl: 'templates/speakers.html',
+          controller: 'FavouriteSpeakersCtrl'
         }
       }
     });
