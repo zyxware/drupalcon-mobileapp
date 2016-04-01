@@ -1,7 +1,7 @@
 <ion-view view-title="Schedules">
   <ion-content>    
     <ion-list>
-      <ion-item ng-repeat="schedule in schedules track by $index" href="#/app/sessions/{{schedule.dateVal}}">
+      <ion-item type="item-text-wrap" class="item-listing item-remove-animate" ng-repeat="schedule in schedules track by $index" href="#/app/sessions/{{schedule.dateVal}}">
         <h2>{{schedule.dateStr}}</h2>
       </ion-item>
     </ion-list>
