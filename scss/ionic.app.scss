@@ -4,20 +4,19 @@ in ionic's _variables.scss file.
 
 For example, you might change some of the default colors:
 */
-$light:                           #fff !default;
-$stable:                          #f8f8f8 !default;
-$positive:                        #632D90 !default;
-$calm:                            #11c1f3 !default;
-$balanced:                        #33cd5f !default;
-$energized:                       #ffc900 !default;
-$assertive:                       #ef473a !default;
-$royal:                           #886aea !default;
-$dark:                            #4D4D4D !default;
-$menu-border:                     #7D7777 !default;
-$body-background:                 #E5E5E5 !default;
-$content-margin:                  10px !default;
-$avatar-border-color:             #28A9E0 !default;
-
+$light: #fff !default;
+$stable: #f8f8f8 !default;
+$positive: #632D90 !default;
+$calm: #11c1f3 !default;
+$balanced: #33cd5f !default;
+$energized: #ffc900 !default;
+$assertive: #ef473a !default;
+$royal: #886aea !default;
+$dark: #4D4D4D !default;
+$menu-border: #7D7777 !default;
+$body-background: #E5E5E5 !default;
+$content-margin: 10px !default;
+$avatar-border-color: #28A9E0 !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -29,32 +28,66 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   margin: $content-margin;
 }
 
-ion-content{
+ion-content {
   background-color: $body-background;
 }
+
 .menu-bg {
   .item-content {
     background-color: $dark;
   }
-  .item{
+  .item {
     border-color: $menu-border;
   }
 }
+
 .item-listing {
   @include contentMargin;
 }
-.item-avatar img, .item-avatar-center img{
-  border:1px solid $avatar-border-color;
+
+.item-avatar img, .item-avatar-center img {
+  border: 1px solid $avatar-border-color;
 }
-.item-avatar-center img{
+
+.item-avatar-center img {
   border-radius: 50%;
 }
+
 .profile-header {
   background-color: lighten($dark, 10%);
   color: $light;
   font-weight: bold;
 }
+
 .desc-listing {
   @include contentMargin;
   background-color: $light;
 }
+
+.item-divider {
+  background-color: lighten($dark, 10%);
+  color: $light;
+  padding: 5%;
+}
+
+.program-schedule-details {
+  border-top: 1px solid darken(#0a9dc7, 10%);
+  border-bottom: 1px solid darken(#0a9dc7, 10%);
+  font-size: 14px;
+  color: $positive;
+  padding: 2px;
+  margin-bottom:10px;
+
+  .col {
+    margin: 3px;
+    border-right: 1px solid darken(#0a9dc7, 10%);
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
+a.row.schedule-title {
+  text-decoration: none;
+  color: black;
+}
+

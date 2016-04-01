@@ -2,12 +2,12 @@
     <ion-content>
         <div class="row">
             <div class="col text-center item-avatar-center">
-                    <img width="50" height="50" src="img/avatar.png">
+                <img width="25%" height="25%" src="img/avatar.png">
             </div>
         </div>
 
         <div class="row">
-            <div class="col padding profile-header text-center">
+            <div class="col profile-header text-center">
                 <div class="col">
                     {{detail.name}}
                 </div>
@@ -19,26 +19,32 @@
         </div>
         <div ng-if="detail.desgn" class="row">
             <div class="col desc-listing padding">
-                <span >{{detail.desgn}}</span>
+                <span>{{detail.desgn}}</span>
             </div>
 
         </div>
         <div ng-if="detail.desc" class="row">
             <div class="col desc-listing padding">
-                <p >{{detail.desc}}</p>
+                <p>{{detail.desc}}</p>
             </div>
-
         </div>
-
-
-        <h3 ng-if="programs.length">Sessions</h3>
-        <ion-card ng-repeat="program in programs track by $index">
-          <ion-card-content>
-            <div class="title"><a ng-href="#/app/session-detail/{{program.id}}">{{program.title}}</a></div>
-            <ion-col width-10>{{program.date}}</ion-col>
-            <ion-col width-10>{{program.startTime}} - {{program.endTime}}</ion-col>
-            <ion-col width-10><a ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</a></ion-col>
-          </ion-card-content>
-        </ion-card>
+        <div class="row" ng-if="programs.length" class="program-schedule">
+            <div class="col">
+                <div class="item item-divider text-center">
+                    SESSIONS
+                </div>
+                <div class="item item-text-wrap" ng-repeat="program in programs track by $index"
+                     >
+                    <a ng-href="#/app/session-detail/{{program.id}}" class="row schedule-title">
+                        <div class="col"> {{program.title}}</div>
+                    </a>
+                    <div class="row text-center program-schedule-details">
+                        <div class="col col-33">{{program.date.replace("00:00:00","").trim() | date:'MMMM d'}}</div>
+                        <div class="col col-33">{{program.startTime}} - {{program.endTime}}</div>
+                        <div class="col col-33" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </ion-content>
 </ion-view>
