@@ -104,7 +104,6 @@ angular.module('starter.controllers', [])
     $scope.bookmarks = false;
     var bookQuery = "SELECT bookmarks.id FROM bookmarks WHERE type = ? AND itemId = ?";
     $cordovaSQLite.execute(db, bookQuery, ['speaker', id]).then(function (resBook) {
-      console.log(resBook.rows);
       if (resBook.rows.length > 0) {
         $scope.bookmarked = true;
       }
