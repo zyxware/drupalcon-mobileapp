@@ -9,7 +9,7 @@ angular.module('starter.controllers', [])
   .controller('ScheduleCtrl', function ($scope, readJson, DB_CONFIG, $cordovaSQLite, $filter) {
     //Temporary code to initialize the local storage. TO BE REMOVED.
     //window.localStorage.setItem('db-initialized', null);
-    if (window.localStorage.getItem('db-initialized') == 'null') {
+    if (window.localStorage.getItem('db-initialized') != 1) {
       console.log(window.localStorage.getItem('db-initialized'));
 
       readJson.get().success(function (jsonData) {
