@@ -44,7 +44,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       //Temporary code to initialize the local storage. TO BE REMOVED.
       //window.localStorage.setItem('db-initialized', null);
       if (window.localStorage.getItem('db-initialized') != 1) {
-        console.log(window.localStorage.getItem('db-initialized'));
+        //console.log(window.localStorage.getItem('db-initialized'));
 
         var url = "";
         if(ionic.Platform.isAndroid()){
@@ -56,7 +56,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
 
             angular.forEach(jsonData[table.name], function (tableData) {
 
-              console.log(table.name);
+              //console.log(table.name);
 
               var columns = [];
               var params = [];
@@ -74,9 +74,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
               var query = 'INSERT INTO ' + table.name + ' (' + columns.join(',') + ') VALUES (' + params.join(',') + ')';
 
               $cordovaSQLite.execute(db, query, fieldValues).then(function (res) {
-                console.log("INSERT ID -> " + res.insertId);
+                //console.log("INSERT ID -> " + res.insertId);
               }, function (err) {
-                console.error(err);
+                //console.error(err);
               });
             });
           });
@@ -131,7 +131,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
             }
             q.resolve(result);
           } else {
-            console.log("No results found");
+            //console.log("No results found");
           }
         }, function (err) {
            q.reject(null);
@@ -167,7 +167,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
             }
             q.resolve(result);
           } else {
-            console.log("No results found");
+            //console.log("No results found");
           }
         }, function (err) {
            q.reject(null);
@@ -289,6 +289,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       url: '/favourites-sessions',
       views: {
         'tab-tab1': {
+          cache: false,
           templateUrl: 'templates/sessions.html',
           controller: 'FavouriteSessionsCtrl'
         }
@@ -298,6 +299,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       url: '/favourites-speakers',
       views: {
         'tab-tab2': {
+          cache: false,
           templateUrl: 'templates/speakers.html',
           controller: 'FavouriteSpeakersCtrl'
         }
