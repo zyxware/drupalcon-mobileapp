@@ -6,7 +6,7 @@ angular.module('starter.controllers', [])
   })
   
   // ScheduleCtrl
-  .controller('ScheduleCtrl', function ($scope, readJson, DB_CONFIG, $cordovaSQLite, $filter) {
+  .controller('ScheduleCtrl', function ($scope , DB_CONFIG, $cordovaSQLite, $filter) {
 
     var query = "SELECT * FROM eventdates WHERE 1";
     $scope.schedules = [];

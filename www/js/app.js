@@ -45,7 +45,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       //window.localStorage.setItem('db-initialized', null);
       if (window.localStorage.getItem('db-initialized') != 1) {
         console.log(window.localStorage.getItem('db-initialized'));
-        
+
         var url = "";
         if(ionic.Platform.isAndroid()){
           url = "/android_asset/www/";
