@@ -7,44 +7,7 @@ angular.module('starter.controllers', [])
   
   // ScheduleCtrl
   .controller('ScheduleCtrl', function ($scope, readJson, DB_CONFIG, $cordovaSQLite, $filter) {
-    //Temporary code to initialize the local storage. TO BE REMOVED.
-    //window.localStorage.setItem('db-initialized', null);
-    if (window.localStorage.getItem('db-initialized') != 1) {
-      console.log(window.localStorage.getItem('db-initialized'));
 
-      readJson.get().success(function (jsonData) {
-
-        angular.forEach(DB_CONFIG.tables, function (table) {
-
-          angular.forEach(jsonData[table.name], function (tableData) {
-
-            console.log(table.name);
-
-            var columns = [];
-            var params = [];
-            var fieldValues = [];
-
-            angular.forEach(table.columns, function (column) {
-              if (column.name != 'id') {
-                columns.push(column.name);
-                params.push('?');
-                if (column.name != 'id')
-                  fieldValues.push(tableData[column.name]);
-              }
-            });
-
-            var query = 'INSERT INTO ' + table.name + ' (' + columns.join(',') + ') VALUES (' + params.join(',') + ')';
-
-            $cordovaSQLite.execute(db, query, fieldValues).then(function (res) {
-              console.log("INSERT ID -> " + res.insertId);
-            }, function (err) {
-              console.error(err);
-            });
-          });
-        });
-      });
-      window.localStorage.setItem('db-initialized', 1);
-    }
     var query = "SELECT * FROM eventdates WHERE 1";
     $scope.schedules = [];
     $cordovaSQLite.execute(db, query).then(function (res) {

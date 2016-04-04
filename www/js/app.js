@@ -8,7 +8,7 @@ var db = null;
 
 angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordova', 'starter.config'])
 
-  .run(function ($ionicPlatform, $cordovaSQLite, DB_CONFIG) {
+  .run(function ($ionicPlatform, $cordovaSQLite, DB_CONFIG, $http) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -40,23 +40,54 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
         $cordovaSQLite.execute(db, query);
       });
-      // Code to initialize the local storage. TO BE REMOVED.
-      window.localStorage.setItem('view-pastevents', null);
 
-    });
-  })
-  .factory('readJson', function ($http) {
-    return {
-      get: function () {
-        console.log(ionic.Platform.isAndroid());
+      //Temporary code to initialize the local storage. TO BE REMOVED.
+      //window.localStorage.setItem('db-initialized', null);
+      if (window.localStorage.getItem('db-initialized') != 1) {
+        console.log(window.localStorage.getItem('db-initialized'));
+        
         var url = "";
         if(ionic.Platform.isAndroid()){
           url = "/android_asset/www/";
         }
-        return $http.get(url+'json/DrupalCon_JsonData_v1.json');
+        $http.get(url+'json/DrupalCon_JsonData_v1.json').success(function (jsonData) {
 
+          angular.forEach(DB_CONFIG.tables, function (table) {
+
+            angular.forEach(jsonData[table.name], function (tableData) {
+
+              console.log(table.name);
+
+              var columns = [];
+              var params = [];
+              var fieldValues = [];
+
+              angular.forEach(table.columns, function (column) {
+                if (column.name != 'id') {
+                  columns.push(column.name);
+                  params.push('?');
+                  if (column.name != 'id')
+                    fieldValues.push(tableData[column.name]);
+                }
+              });
+
+              var query = 'INSERT INTO ' + table.name + ' (' + columns.join(',') + ') VALUES (' + params.join(',') + ')';
+
+              $cordovaSQLite.execute(db, query, fieldValues).then(function (res) {
+                console.log("INSERT ID -> " + res.insertId);
+              }, function (err) {
+                console.error(err);
+              });
+            });
+          });
+        });
+        window.localStorage.setItem('db-initialized', 1);
       }
-    }
+
+      // Code to initialize the local storage. TO BE REMOVED.
+      window.localStorage.setItem('view-pastevents', null);
+
+    });
   })
 
   //factory to get the session details based on the filters.
