@@ -1,11 +1,11 @@
 <ion-view view-title="Sessions">
   <ion-content>    
     <ion-list>
-      <div class="row" ng-if="programs.length" class="program-schedule">
+      <div class="row program-schedule" ng-if="programs.length">
             <div class="col">
                 <div class="item item-text-wrap" ng-repeat="program in programs track by $index">
                     <a ng-href="#/app/session-detail/{{program.id}}" class="row schedule-title">
-                        <div class="col"> {{program.title}}</div>
+                        <div class="col program-title"> {{program.title}}</div>
                     </a>
                     <div class="row text-center program-schedule-details">
                         <div class="col col-33">{{program.date.replace("00:00:00","").trim() | date:'MMMM d'}}</div>
