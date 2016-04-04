@@ -6,7 +6,7 @@ angular.module('starter.controllers', [])
   })
   
   // ScheduleCtrl
-  .controller('ScheduleCtrl', function ($scope , DB_CONFIG, $cordovaSQLite, $filter) {
+  .controller('ScheduleCtrl', function ($scope, DB_CONFIG, $cordovaSQLite, $filter) {
 
     var query = "SELECT * FROM eventdates WHERE 1";
     $scope.schedules = [];
@@ -226,20 +226,26 @@ angular.module('starter.controllers', [])
 
   // FavouritesCtrl - Displays favourites
   .controller('FavouritesCtrl', function ($scope, $cordovaSQLite) {
+
   })
 
   // FavouriteSessionsCtrl - Displays favourite sessions
   .controller('FavouriteSessionsCtrl', function ($scope, $cordovaSQLite, sessionService) {
-    $scope.programs = [];
-    sessionService.getFavourites('session').then(function(response){
-      $scope.programs = response;
+    $scope.$on('$ionicView.afterEnter', function() {
+      $scope.programs = [];
+      sessionService.getFavourites('session').then(function(response){
+        $scope.programs = response;
+      });
     });
+
   })
 
   // FavouriteSpeakersCtrl - Displays favourite speakers
   .controller('FavouriteSpeakersCtrl', function ($scope, $cordovaSQLite, sessionService) {
-    $scope.speakers = [];
-    sessionService.getFavourites('speaker').then(function(response){
-      $scope.speakers = response;
+    $scope.$on('$ionicView.afterEnter', function() {
+      $scope.speakers = [];
+      sessionService.getFavourites('speaker').then(function(response){
+        $scope.speakers = response;
+      });
     });
   });
