@@ -18,6 +18,7 @@ $body-background:       #E5E5E5 !default;
 $content-margin:        10px !default;
 $avatar-border-color:   #28A9E0 !default;
 $body-font-color:       #ACACAC !default;
+$default-color:         darken($body-font-color,30%);
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -30,7 +31,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 body, .ionic-body{
-  color: darken($body-font-color,30%);
+  color: $default-color;
 }
 
 ion-content {
@@ -62,6 +63,9 @@ ion-content {
   background-color: lighten($dark, 10%);
   color: $light;
   font-weight: bold;
+  i{
+    color: $light;
+  }
 }
 
 .desc-listing {
@@ -76,8 +80,8 @@ ion-content {
 }
 
 .program-schedule-details {
-  border-top: 1px solid lighten($dark, 10%);
-  border-bottom: 1px solid lighten($dark, 10%);
+  border-top: 1px dotted lighten($dark, 10%);
+  border-bottom: 1px dotted lighten($dark, 10%);
   font-size: 14px;
   color: $positive;
   padding: 2px;
@@ -85,7 +89,8 @@ ion-content {
 
   .col {
     margin: 3px;
-    border-right: 1px solid lighten($dark, 10%);
+    font-size: 0.7em;
+    border-right: 1px dotted lighten($dark, 10%);
     &:last-child {
       border-right: none;
     }
@@ -93,6 +98,7 @@ ion-content {
 }
 a.row.schedule-title {
   text-decoration: none;
+  color: $default-color;
 }
 
 /*Home Page*/
@@ -101,12 +107,29 @@ a.row.schedule-title {
   background: url(../img/Start_BG_screen_without_logo.png) no-repeat center center fixed;
   background-size: cover;
   .default-margin{
-    @include contentMargin;
+    margin-top: 30px;
+  }
+
+  .main-listing{
+    a {
+      text-decoration: none;
+    }
+    margin-top: 20px;
+    .item-title{
+      font-size: 1.3em;
+
+
+    }
   }
 }
 .session-details {
   font-size: 12px;
   .session-title{
     font-size: 14px;
+  }
+}
+.program-schedule{
+  .item{
+    margin-top: 5px;
   }
 }
