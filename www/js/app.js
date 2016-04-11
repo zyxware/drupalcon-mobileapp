@@ -223,88 +223,96 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
     }
   })
   .state('app.speakers', {
-      url: '/speakers',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/speakers.html',
-          controller: 'SpeakersCtrl',
-        }
+    url: '/speakers',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/speakers.html',
+        controller: 'SpeakersCtrl',
       }
-    })
+    }
+  })
   .state('app.speakerdetail', {
-      url: '/speakerdetail/:speakerId',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/speakerDetail.html',
-          controller: 'SpeakerDetailCtrl',
-        }
+    url: '/speakerdetail/:speakerId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/speakerDetail.html',
+        controller: 'SpeakerDetailCtrl',
       }
-    })
+    }
+  })
   .state('app.rooms', {
-      url: '/rooms',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/rooms.html',
-          controller: 'RoomsCtrl',
-        }
+    url: '/rooms',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/rooms.html',
+        controller: 'RoomsCtrl',
       }
-    })
-    .state('app.roomdetail', {
-      url: '/roomdetail/:roomId',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/detail.html',
-          controller: 'RoomDetailCtrl',
-        }
+    }
+  })
+  .state('app.roomdetail', {
+    url: '/roomdetail/:roomId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/detail.html',
+        controller: 'RoomDetailCtrl',
       }
-    })
-    .state('app.trackdetail', {
-      url: '/trackdetail/:trackId',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/detail.html',
-          controller: 'TrackDetailCtrl',
-        }
+    }
+  })
+  .state('app.trackdetail', {
+    url: '/trackdetail/:trackId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/detail.html',
+        controller: 'TrackDetailCtrl',
       }
-    })
-    .state('app.tracks', {
-      url: '/tracks',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/tracks.html',
-          controller: 'TracksCtrl',
-        }
+    }
+  })
+  .state('app.tracks', {
+    url: '/tracks',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/tracks.html',
+        controller: 'TracksCtrl',
       }
-    })
-    .state('app.favourites', {
-      url: '/favourites',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/favourites.html',
-          controller: 'FavouritesCtrl',
-        }
+    }
+  })
+  .state('app.favourites', {
+    url: '/favourites',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/favourites.html',
+        controller: 'FavouritesCtrl',
       }
-    })
-    .state('app.favourites.sessions', {
-      url: '/favourites-sessions',
-      views: {
-        'tab-tab1': {
-          cache: false,
-          templateUrl: 'templates/sessions.html',
-          controller: 'FavouriteSessionsCtrl'
-        }
+    }
+  })
+  .state('app.favourites.sessions', {
+    url: '/favourites-sessions',
+    views: {
+      'tab-tab1': {
+        cache: false,
+        templateUrl: 'templates/sessions.html',
+        controller: 'FavouriteSessionsCtrl'
       }
-    })
-    .state('app.favourites.speakers', {
-      url: '/favourites-speakers',
-      views: {
-        'tab-tab2': {
-          cache: false,
-          templateUrl: 'templates/speakers.html',
-          controller: 'FavouriteSpeakersCtrl'
-        }
+    }
+  })
+  .state('app.favourites.speakers', {
+    url: '/favourites-speakers',
+    views: {
+      'tab-tab2': {
+        cache: false,
+        templateUrl: 'templates/speakers.html',
+        controller: 'FavouriteSpeakersCtrl'
       }
-    });
+    }
+  })
+  .state('app.about', {
+    url: '/about',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/about.html'
+      }
+    }
+  });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/home');
 });
