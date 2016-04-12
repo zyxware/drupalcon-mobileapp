@@ -1,14 +1,38 @@
 angular.module('starter.controllers', [])
 
-  .controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
-
-
+  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, $ionicSideMenuDelegate) {
+    if (window.localStorage.getItem('view-pastevents') == 0) {
+      $scope.pastevents = false;
+    }
+    else {
+      $scope.pastevents = true;
+    }
+    $scope.viewPastEvents = function() {
+      window.localStorage.setItem('view-pastevents', 1);
+      $scope.pastevents = true;
+      $ionicSideMenuDelegate.toggleLeft(false);
+    };
+    $scope.removePastEvents = function() {
+      window.localStorage.setItem('view-pastevents', 0);
+      $scope.pastevents = false;
+      $ionicSideMenuDelegate.toggleLeft(false);
+    };
   })
   
   // ScheduleCtrl
-  .controller('ScheduleCtrl', function ($scope, DB_CONFIG, $cordovaSQLite, $filter) {
+  .controller('ScheduleCtrl', function ($scope, DB_CONFIG, $cordovaSQLite) {
 
-    var query = "SELECT * FROM eventdates WHERE 1";
+    var query = "SELECT date FROM eventdates ";
+    // if view-pastevents = 0, view future events only, else view past events.
+    console.log(window.localStorage.getItem('view-pastevents'));
+    if (window.localStorage.getItem('view-pastevents') == 0) {
+      console.log('inside if');
+      query += "WHERE date > date('now') ";
+    }
+    else {
+      console.log('inside else');
+      query += "WHERE 1";
+    }
     $scope.schedules = [];
     $cordovaSQLite.execute(db, query).then(function (res) {
       if (res.rows.length > 0) {
@@ -64,7 +88,7 @@ angular.module('starter.controllers', [])
       console.error(err);
     });
     
-    $scope.bookmarks = false;
+    $scope.bookmarked = false;
     var bookQuery = "SELECT bookmarks.id FROM bookmarks WHERE type = ? AND itemId = ?";
     $cordovaSQLite.execute(db, bookQuery, ['speaker', id]).then(function (resBook) {
       if (resBook.rows.length > 0) {

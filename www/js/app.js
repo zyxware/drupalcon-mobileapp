@@ -42,7 +42,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       });
 
       //Temporary code to initialize the local storage. TO BE REMOVED.
-      //window.localStorage.setItem('db-initialized', null);
+      //window.localStorage.setItem('db-initialized', 0);
       if (window.localStorage.getItem('db-initialized') != 1) {
         //console.log(window.localStorage.getItem('db-initialized'));
 
@@ -83,10 +83,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         });
         window.localStorage.setItem('db-initialized', 1);
       }
-
-      // Code to initialize the local storage. TO BE REMOVED.
-      window.localStorage.setItem('view-pastevents', null);
-
     });
   })
 
@@ -104,8 +100,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         query += "JOIN rooms ON rooms.id = programs.room ";
         query += "JOIN sessionSpeakers ON sessionSpeakers.sessionId = programs.id ";
         query += "JOIN speakers ON speakers.id = sessionSpeakers.speakerId ";
-        // if view-pastevents = NULL, view future events only, else view past events.
-        if (window.localStorage.getItem('view-pastevents') == 'null') {
+        // if view-pastevents = 0, view future events only, else view past events.
+        if (window.localStorage.getItem('view-pastevents') == 0) {
           query += "WHERE programs.date > date('now') ";
         }
         else {
@@ -152,7 +148,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
           join += "JOIN programs ON programs.id = bookmarks.itemId ";
           join += "JOIN rooms ON rooms.id = programs.room ";
           //Checking past events filter.
-          if(window.localStorage.getItem('view-pastevents') == 'null') {
+          if(window.localStorage.getItem('view-pastevents') == 0) {
             where += " AND programs.date > date('now') ";
           }
         } else if(type == 'speaker') {

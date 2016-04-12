@@ -43,6 +43,14 @@
           <i class="icon ion-information-circled"></i>
           About
         </ion-item>
+        <ion-item  ng-if="!pastevents"  class="light" menu-close href="#" ng-click="viewPastEvents()">
+          <i class="icon ion-android-checkbox-outline-blank" ></i>
+          View past events
+        </ion-item>
+        <ion-item  ng-if="pastevents" class="light" menu-close href="#" ng-click="removePastEvents()">
+          <i class="icon ion-android-checkbox-outline" ></i>
+          View past events
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-side-menu>
