@@ -272,4 +272,164 @@ angular.module('starter.controllers', [])
         $scope.speakers = response;
       });
     });
+  })
+  
+  // FilterSessions - Filters sessions
+  .controller('FilterSessions', function ($scope, $cordovaSQLite, sessionService, $state, $rootScope) {
+    
+    // Getting the tracks.
+    var query = "SELECT * FROM tracks WHERE 1";
+    $scope.tracks = [];
+    $cordovaSQLite.execute(db, query).then(function (res) {
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          $scope.tracks.push(res.rows.item(i));
+        }
+      } else {
+        console.log("No results found");
+      }
+    }, function (err) {
+      console.error(err);
+    });
+    
+    // Getting the eventdates.
+    var query = "SELECT date FROM eventdates ";
+    // if view-pastevents = 0, view future events only, else view past events.
+    console.log(window.localStorage.getItem('view-pastevents'));
+    if (window.localStorage.getItem('view-pastevents') == 0) {
+      query += "WHERE date > date('now') ";
+    }
+    else {
+      query += "WHERE 1";
+    }
+    $scope.schedules = [];
+    $cordovaSQLite.execute(db, query).then(function (res) {
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          var dateStr = res.rows.item(i).date;
+          var dateVal = new Date(dateStr).getTime();
+          $scope.schedules.push({dateStr:dateStr, dateVal:dateVal});
+        }
+      } else {
+        console.log("No results found");
+      }
+    }, function (err) {
+      console.error(err);
+    });
+    
+    // Getting rooms list.
+    var query = "SELECT * FROM rooms WHERE 1";
+    $scope.rooms = [];
+    $cordovaSQLite.execute(db, query).then(function (res) {
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          $scope.rooms.push(res.rows.item(i));
+        }
+      } else {
+        console.log("No results found");
+      }
+    }, function (err) {
+      console.error(err);
+    })
+    
+    // Setting the values for datefilter, with values listed in filter page.
+    $rootScope.dateFilter = [];
+    
+    $scope.setDateFilter = function(date) {
+      var idx = $rootScope.dateFilter.indexOf(date);
+      
+      if(idx > -1) {
+        $rootScope.dateFilter.splice(idx, 1);
+      }
+      else {
+        $rootScope.dateFilter.push(date);
+      }
+    }
+    
+    // Setting the values for track, with values listed in filter page.
+    $rootScope.trackFilter = [];
+    
+    $scope.setTrackFilter = function(date) {
+      var idx = $rootScope.trackFilter.indexOf(date);
+      
+      if(idx > -1) {
+        $rootScope.trackFilter.splice(idx, 1);
+      }
+      else {
+        $rootScope.trackFilter.push(date);
+      }
+    }
+    
+    // Setting the values for rooms, with values listed in filter page.
+    $rootScope.roomFilter = [];
+    
+    $scope.setRoomFilter = function(date) {
+      var idx = $rootScope.roomFilter.indexOf(date);
+      
+      if(idx > -1) {
+        $rootScope.roomFilter.splice(idx, 1);
+      }
+      else {
+        $rootScope.roomFilter.push(date);
+      }
+    }
+    
+    $scope.applyFilter = function() {
+      $state.go('app.sessionsFilter');
+    };
+    
+    $scope.clearFilter = function(data) {
+      $rootScope.dateFilter = [];
+      $rootScope.trackFilter = [];
+      $rootScope.roomFilter = [];
+      $scope.dateVal = false;
+      $scope.trackVal = false;
+      $scope.roomVal = false;
+    };
+  })
+  
+  // FilteredSessionsList - Displays sessions after filtering
+  .controller('FilteredSessionsList', function ($scope, $rootScope, $filter, $cordovaSQLite) {
+    var query = "SELECT programs.id, programs.title, programs.date, programs.startTime, programs.endTime,  ";
+    query += "tracks.title AS tracktitle, ";
+    query += "rooms.name AS roomname, rooms.id AS roomid ";
+    query += "FROM programs ";
+    query += "JOIN tracks ON tracks.id = programs.track ";
+    query += "JOIN rooms ON rooms.id = programs.room ";
+    query += "JOIN sessionSpeakers ON sessionSpeakers.sessionId = programs.id ";
+    query += "JOIN speakers ON speakers.id = sessionSpeakers.speakerId ";
+    // if view-pastevents = 0, view future events only, else view past events.
+    if (window.localStorage.getItem('view-pastevents') == 0) {
+      query += "WHERE programs.date > date('now') ";
+    }
+    else {
+      query += "WHERE 1";
+    }
+    var filterValue = [];
+    if( $rootScope.dateFilter.length > 0) {
+      for ( var i = 0; i < $rootScope.dateFilter.length; i++) {
+        filterValue.push($filter('date')($rootScope.dateFilter[i], "yyyy-MM-dd HH:mm:ss"));
+      }
+      query += " AND programs.date IN ("  + filterValue + ")";
+    }
+    if( $rootScope.trackFilter.length > 0) {
+      query += " AND programs.track IN (" + $rootScope.trackFilter + ")";
+    }
+    if( $rootScope.roomFilter.length > 0) {
+      query += " AND programs.room IN (" + $rootScope.roomFilter + ")";
+    }
+    console.log(query);
+    $scope.programs = [];
+    $cordovaSQLite.execute(db, query).then(function (res) {
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          $scope.programs.push(res.rows.item(i));
+        }
+      } else {
+        console.log("No results found");
+      }
+    }, function (err) {
+      console.error(err);
+    });
   });
+

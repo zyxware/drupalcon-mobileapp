@@ -1,20 +1,27 @@
 <ion-view view-title="Sessions">
-  <ion-content>    
+  <ion-content>
+    <div class="row row-top filter-row" ng-if="programs.length">
+      <a class="col .col-50 filter-col text-right" href="#/app/filters">
+        <i class="icon ion-funnel"></i>
+        Filter
+      </a>
+    </div>    
     <ion-list>
+      <div class="row empty-result" ng-if="!programs.length">No Sessions under this criteria.</div>
       <div class="row program-schedule" ng-if="programs.length">
-            <div class="col">
-                <div class="item item-text-wrap" ng-repeat="program in programs track by $index">
-                    <a ng-href="#/app/session-detail/{{program.id}}" class="row schedule-title">
-                        <div class="col program-title"> {{program.title}}</div>
-                    </a>
-                    <div class="row text-center program-schedule-details">
-                        <div class="col col-33">{{program.date.replace("00:00:00","").trim() | date:'MMMM d'}}</div>
-                        <div class="col col-33">{{program.startTime}} - {{program.endTime}}</div>
-                        <div class="col col-33" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
-                    </div>
-                </div>
+        <div class="col">
+          <div class="item item-text-wrap" ng-repeat="program in programs track by $index">
+            <a ng-href="#/app/session-detail/{{program.id}}" class="row schedule-title">
+              <div class="col program-title"> {{program.title}}</div>
+            </a>
+            <div class="row text-center program-schedule-details">
+              <div class="col col-33">{{program.date.replace("00:00:00","").trim() | date:'MMMM d'}}</div>
+              <div class="col col-33">{{program.startTime}} - {{program.endTime}}</div>
+              <div class="col col-33" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
             </div>
+          </div>
         </div>
+      </div>
     </ion-list>
   </ion-content>
 </ion-view>

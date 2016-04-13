@@ -101,13 +101,45 @@ a.row.schedule-title {
   color: $default-color;
 }
 
+.filter-row {
+  background-color: $light;
+  padding: 2px;
+  
+  .filter-col {
+    text-decoration: none;
+    color: $default-color;
+    margin-right: 5px;
+  }
+}
+
+.filter-page {
+  .input-label {
+    background-color: $dark;
+    margin: 5px 0px;
+  } 
+}
+.row-form-submit {
+  margin: 0px;
+
+  .col{
+    padding: 0px;
+  }  
+}
+
+.empty-result {
+  background-color: $light;
+  padding: 10px;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
 /*Home Page*/
 
 .ion-conference-home{
   background: url(../img/Start_BG_screen_without_logo.png) no-repeat center center fixed;
   background-size: cover;
   .default-margin{
-    margin-top: 30px;
+    
   }
 
   .main-listing{

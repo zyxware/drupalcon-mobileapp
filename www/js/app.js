@@ -47,17 +47,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         //console.log(window.localStorage.getItem('db-initialized'));
 
         var url = "";
-        if(ionic.Platform.isAndroid()){
-          url = "/android_asset/www/";
-        }
+        //if(ionic.Platform.isAndroid()){
+          //url = "/android_asset/www/";
+        //}
         $http.get(url+'json/DrupalCon_JsonData_v1.json').success(function (jsonData) {
-
           angular.forEach(DB_CONFIG.tables, function (table) {
-
             angular.forEach(jsonData[table.name], function (tableData) {
-
-              //console.log(table.name);
-
               var columns = [];
               var params = [];
               var fieldValues = [];
@@ -169,6 +164,44 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
            q.reject(null);
         });
         return q.promise;
+      },
+      getSessionsFiltered: function(filterKey, filterValue) {
+        var q = $q.defer();
+        var result = [];
+        var query = "SELECT programs.id, programs.title, programs.date, programs.startTime, programs.endTime,  ";
+        query += "tracks.title AS tracktitle, ";
+        query += "rooms.name AS roomname, rooms.id AS roomid ";
+        query += "FROM programs ";
+        query += "JOIN tracks ON tracks.id = programs.track ";
+        query += "JOIN rooms ON rooms.id = programs.room ";
+        query += "JOIN sessionSpeakers ON sessionSpeakers.sessionId = programs.id ";
+        query += "JOIN speakers ON speakers.id = sessionSpeakers.speakerId ";
+        // if view-pastevents = 0, view future events only, else view past events.
+        if (window.localStorage.getItem('view-pastevents') == 0) {
+          query += "WHERE programs.date > date('now') ";
+        }
+        else {
+          query += "WHERE 1";
+        }
+        var dateIdx = filterKey.indexOf('date');
+        if( dateIdx > -1) {
+          var filterValue = $filter('date')(filterValue[dateIdx], "yyyy-MM-dd HH:mm:ss");
+          query += " AND programs.date = ?";
+        }
+        
+       $cordovaSQLite.execute(db, query, [filterValue]).then(function (res) {
+          if (res.rows.length > 0) {
+            for (var i = 0; i < res.rows.length; i++) {
+              result.push(res.rows.item(i));
+            }
+            q.resolve(result);
+          } else {
+            //console.log("No results found");
+          }
+        }, function (err) {
+           q.reject(null);
+        });
+        return q.promise;
       }
     }
   })
@@ -193,6 +226,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
    })
   .state('app.schedules', {
     url: '/schedules',
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/schedules.html',
@@ -306,6 +340,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
     views: {
       'menuContent': {
         templateUrl: 'templates/about.html'
+      }
+    }
+  })
+  .state('app.filters', {
+    url: '/filters',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/filters.html',
+        controller:'FilterSessions'
+      }
+    }
+  })
+  .state('app.sessionsFilter', {
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/sessions.html',
+        controller:'FilteredSessionsList'
       }
     }
   });
