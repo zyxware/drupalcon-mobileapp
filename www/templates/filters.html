@@ -1,0 +1,43 @@
+<ion-view view-title="Filter By" controller="FilterSessions">
+  <ion-content>
+    <form name="filteForm">
+      <div class="row filter-page">
+          <div class="col col-25 input-label">
+            <ion-list>
+              <ion-item class="light filter-menu" ng-class="{'active': dateToggle}" ng-click="toggleFilter('date')">
+                Dates
+              </ion-item>
+              <ion-item class="light filter-menu" ng-class="{'active': trackToggle}" ng-click="toggleFilter('track')">
+                Tracks
+              </ion-item>
+              <ion-item class="light filter-menu" ng-class="{'active': roomToggle}" ng-click="toggleFilter('room')">
+                Rooms
+              </ion-item>
+            </ion-list>
+          </div>
+          <div class="col col-75">
+            <ion-list ng-show="dateToggle" ng-repeat="schedule in schedules track by $index">
+              <ion-checkbox ng-model="data.date" ng-checked="dateVal" ng-click="setDateFilter(schedule.dateVal)">{{schedule.dateStr.replace("00:00:00","").trim() | date:' d MMMM yyyy'}}</ion-checkbox>
+            </ion-list>
+            
+            <ion-list ng-show="trackToggle" ng-repeat="trackitem in tracks track by $index">
+              <ion-checkbox ng-model="data.track" ng-checked="trackVal" ng-click="setTrackFilter(trackitem.id)">{{trackitem.title}}</ion-checkbox>
+            </ion-list>
+            
+            <ion-list ng-show="roomToggle" ng-repeat="room in rooms track by $index">
+              <ion-checkbox ng-model="data.room" ng-checked="roomVal" ng-click="setRoomFilter(room.id)">{{room.name}}</ion-checkbox>
+            </ion-list>
+            
+          </div>
+      </div>
+      <div class="row row-form-submit">
+        <div class="col col-50 ">
+          <button class="button button-light button-block" type="submit" ng-click="clearFilter()">Clear</button>
+        </div>
+        <div class="col col-50">
+          <button class="button button-positive button-block" type="submit" ng-click="applyFilter()">Apply</button>
+        </div>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

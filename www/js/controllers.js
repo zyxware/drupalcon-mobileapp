@@ -18,7 +18,7 @@ angular.module('starter.controllers', [])
       $ionicSideMenuDelegate.toggleLeft(false);
     };
   })
-  
+
   // ScheduleCtrl
   .controller('ScheduleCtrl', function ($scope, DB_CONFIG, $cordovaSQLite) {
 
@@ -48,7 +48,7 @@ angular.module('starter.controllers', [])
       console.error(err);
     });
   })
-  
+
   // SpeakersCtrl - Speaker listing page
   .controller('SpeakersCtrl', function ($scope, $cordovaSQLite) {
     var query = "SELECT * FROM speakers WHERE 1";
@@ -106,7 +106,7 @@ angular.module('starter.controllers', [])
       $scope.programs = response;
     });
   })
-  
+
   // SessionDetailCtrl - Session Detail Page
   .controller('SessionDetailCtrl', function ($scope, $stateParams, $cordovaSQLite) {
     var id = $stateParams.sessionId;
@@ -149,7 +149,7 @@ angular.module('starter.controllers', [])
 
   // TracksCtrl - Tracks listing page.
   .controller('TracksCtrl', function ($scope, $cordovaSQLite) {
-    var query = "SELECT * FROM tracks WHERE 1";
+    var query = "SELECT tracks.id, tracks.title FROM tracks WHERE 1";
     $scope.tracks = [];
     $cordovaSQLite.execute(db, query).then(function (res) {
       if (res.rows.length > 0) {
@@ -186,7 +186,7 @@ angular.module('starter.controllers', [])
       console.error(err);
     });
   })
-  
+
   // RoomDetailCtrl - Room Detail page
   .controller('RoomDetailCtrl', function ($scope, $stateParams, $cordovaSQLite, sessionService) {
     var query = "SELECT rooms.id, rooms.name, rooms.desc ";
@@ -209,7 +209,7 @@ angular.module('starter.controllers', [])
       console.error(err);
     });
   })
-  
+
   // RoomsCtrl - Rooms listing page.
   .controller('RoomsCtrl', function ($scope, $cordovaSQLite) {
     var query = "SELECT * FROM rooms WHERE 1";
@@ -277,22 +277,7 @@ angular.module('starter.controllers', [])
   // FilterSessions - Filters sessions
   .controller('FilterSessions', function ($scope, $cordovaSQLite, sessionService, $state, $rootScope) {
     
-    // Getting the tracks.
-    var query = "SELECT * FROM tracks WHERE 1";
-    $scope.tracks = [];
-    $cordovaSQLite.execute(db, query).then(function (res) {
-      if (res.rows.length > 0) {
-        for (var i = 0; i < res.rows.length; i++) {
-          $scope.tracks.push(res.rows.item(i));
-        }
-      } else {
-        console.log("No results found");
-      }
-    }, function (err) {
-      console.error(err);
-    });
-    
-    // Getting the eventdates.
+    // Intializing the date filter. Getting the eventdates.
     var query = "SELECT date FROM eventdates ";
     // if view-pastevents = 0, view future events only, else view past events.
     console.log(window.localStorage.getItem('view-pastevents'));
@@ -317,7 +302,24 @@ angular.module('starter.controllers', [])
       console.error(err);
     });
     
-    // Getting rooms list.
+    // Intializing the date filter
+    $scope.dateToggle = true;
+    // Intializing the track filter. Getting the tracks.
+    var query = "SELECT * FROM tracks WHERE 1";
+    $scope.tracks = [];
+    $cordovaSQLite.execute(db, query).then(function (res) {
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          $scope.tracks.push(res.rows.item(i));
+        }
+      } else {
+        console.log("No results found");
+      }
+    }, function (err) {
+      console.error(err);
+    });
+
+    // Intializing the room filter. Getting rooms list.
     var query = "SELECT * FROM rooms WHERE 1";
     $scope.rooms = [];
     $cordovaSQLite.execute(db, query).then(function (res) {
@@ -331,7 +333,24 @@ angular.module('starter.controllers', [])
     }, function (err) {
       console.error(err);
     })
-    
+
+    // Show/hide the filter values  according to the active div
+    $scope.toggleFilter = function(type) {
+      $scope.dateToggle = false;
+      $scope.trackToggle = false;
+      $scope.roomToggle = false;
+      
+      if(type == 'date') {
+        $scope.dateToggle = true;
+      }
+      if(type == 'track') {
+        $scope.trackToggle = true;
+      }
+      if(type == 'room') {
+        $scope.roomToggle = true;
+      }
+    }
+
     // Setting the values for datefilter, with values listed in filter page.
     $rootScope.dateFilter = [];
     
@@ -345,7 +364,7 @@ angular.module('starter.controllers', [])
         $rootScope.dateFilter.push(date);
       }
     }
-    
+
     // Setting the values for track, with values listed in filter page.
     $rootScope.trackFilter = [];
     
@@ -359,7 +378,7 @@ angular.module('starter.controllers', [])
         $rootScope.trackFilter.push(date);
       }
     }
-    
+
     // Setting the values for rooms, with values listed in filter page.
     $rootScope.roomFilter = [];
     
@@ -373,12 +392,14 @@ angular.module('starter.controllers', [])
         $rootScope.roomFilter.push(date);
       }
     }
-    
+
     $scope.applyFilter = function() {
       $state.go('app.sessionsFilter');
     };
-    
-    $scope.clearFilter = function(data) {
+
+    $scope.clearFilter = function() {
+      console.log($rootScope.trackFilter);
+      console.log($rootScope.roomFilter);
       $rootScope.dateFilter = [];
       $rootScope.trackFilter = [];
       $rootScope.roomFilter = [];
@@ -387,7 +408,7 @@ angular.module('starter.controllers', [])
       $scope.roomVal = false;
     };
   })
-  
+
   // FilteredSessionsList - Displays sessions after filtering
   .controller('FilteredSessionsList', function ($scope, $rootScope, $filter, $cordovaSQLite) {
     var query = "SELECT programs.id, programs.title, programs.date, programs.startTime, programs.endTime,  ";
@@ -406,11 +427,16 @@ angular.module('starter.controllers', [])
       query += "WHERE 1";
     }
     var filterValue = [];
-    if( $rootScope.dateFilter.length > 0) {
-      for ( var i = 0; i < $rootScope.dateFilter.length; i++) {
-        filterValue.push($filter('date')($rootScope.dateFilter[i], "yyyy-MM-dd HH:mm:ss"));
+    if($rootScope.dateFilter.length > 0) {
+      query += "AND (";
+      for (var i = 0; i < $rootScope.dateFilter.length; i++) {
+        filterValue = $filter('date')($rootScope.dateFilter[i], "yyyy-MM-dd HH:mm:ss");
+        query += "programs.date = '" + filterValue + "'";  //;
+        if(i != $rootScope.dateFilter.length -1) {
+          query += " OR ";
+        }
       }
-      query += " AND programs.date IN ("  + filterValue + ")";
+      query += ")";
     }
     if( $rootScope.trackFilter.length > 0) {
       query += " AND programs.track IN (" + $rootScope.trackFilter + ")";
@@ -418,7 +444,6 @@ angular.module('starter.controllers', [])
     if( $rootScope.roomFilter.length > 0) {
       query += " AND programs.room IN (" + $rootScope.roomFilter + ")";
     }
-    console.log(query);
     $scope.programs = [];
     $cordovaSQLite.execute(db, query).then(function (res) {
       if (res.rows.length > 0) {

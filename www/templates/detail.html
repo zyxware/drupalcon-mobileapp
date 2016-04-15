@@ -1,26 +1,26 @@
 <ion-view view-title="{{pageTitle}}">
     <ion-content>
-        <ion-item ng-repeat="detail in details track by $index">
-          <div class="row">
-              <div class="col profile-header text-center">
-                <div class="col">{{detail.name}}</div>
-                <div class="col">
-                  <i class="icon ion-ios-star"></i>
-                  <i class="icon ion-ios-star"></i>
-                </div>
+      <ion-item ng-repeat="detail in details track by $index">
+        <div class="row">
+            <div class="col profile-header text-center padding-left">
+              <div class="col">{{detail.name}}</div>
+              <div class="col">
+                <i class="icon ion-ios-star"></i>
+                <i class="icon ion-ios-star"></i>
               </div>
-          </div>
-          <div ng-if="detail.desgn" class="row">
-            <div class="col desc-listing padding">
-                <span>{{detail.desgn}}</span>
             </div>
+        </div>
+        <div ng-if="detail.desgn" class="row">
+          <div class="col desc-listing padding">
+              <span>{{detail.desgn}}</span>
           </div>
-          <div ng-if="detail.desc" class="row">
-            <div class="col desc-listing padding">
-                <p>{{detail.desc}}</p>
-            </div>
+        </div>
+        <div ng-if="detail.desc" class="row">
+          <div class="col desc-listing padding">
+              <p>{{detail.desc}}</p>
           </div>
-        </ion-item>
+        </div>
+      </ion-item>
         <div class="row" ng-if="programs.length" class="program-schedule">
           <div class="col">
             <div class="item item-divider text-center">

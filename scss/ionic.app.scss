@@ -113,10 +113,25 @@ a.row.schedule-title {
 }
 
 .filter-page {
+  padding-bottom: 0px;
   .input-label {
     background-color: $dark;
     margin: 5px 0px;
+    padding: 0px;
   } 
+  
+  ion-item {
+    background-color: $dark;
+    border: none;
+    border-bottom: 1px solid lighten($dark, 50%);
+  }
+  
+  .item.active {
+    background-color: $calm;
+  }
+  .col-75 {
+    padding-left: 0px;
+  }
 }
 .row-form-submit {
   margin: 0px;
@@ -124,6 +139,11 @@ a.row.schedule-title {
   .col{
     padding: 0px;
   }  
+  button.button {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border-radius: 0px;
+  }
 }
 
 .empty-result {
@@ -149,8 +169,6 @@ a.row.schedule-title {
     margin-top: 20px;
     .item-title{
       font-size: 1.3em;
-
-
     }
   }
 }

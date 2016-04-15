@@ -1,6 +1,7 @@
 <ion-view view-title="Schedules">
   <ion-content>    
     <ion-list>
+      <div class="row empty-result" ng-if="!schedules.length">No schedules added.</div>
       <ion-item type="item-text-wrap" class="item-listing item-remove-animate text-center" ng-repeat="schedule in schedules track by $index" href="#/app/sessions/{{schedule.dateVal}}">
         <h2>{{schedule.dateStr.replace("00:00:00","").trim() | date:' d MMMM yyyy'}}</h2>
       </ion-item>
