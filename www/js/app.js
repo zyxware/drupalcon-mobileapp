@@ -47,9 +47,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         //console.log(window.localStorage.getItem('db-initialized'));
 
         var url = "";
-        //if(ionic.Platform.isAndroid()){
-          //url = "/android_asset/www/";
-        //}
+        if(ionic.Platform.isAndroid()){
+          url = "/android_asset/www/";
+        }
         $http.get(url+'json/DrupalCon_JsonData_v1.json').success(function (jsonData) {
           angular.forEach(DB_CONFIG.tables, function (table) {
             angular.forEach(jsonData[table.name], function (tableData) {
