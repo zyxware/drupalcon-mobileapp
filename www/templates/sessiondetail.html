@@ -29,8 +29,7 @@
           </div>
         </div>
         <div ng-if="program.desc" class="row">
-          <div class="col desc-listing padding">
-              {{program.desc}}
+          <div class="col desc-listing padding" ng-bind-html="program.desc">
           </div>
         </div>
     </ion-content>
