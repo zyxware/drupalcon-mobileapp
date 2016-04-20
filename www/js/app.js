@@ -119,7 +119,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         if(ionic.Platform.isAndroid()){
           url = "/android_asset/www/";
         }
-        $http.get(url+'json/session.json').success(function (jsonData) {
+        $http.get(url+'json/sessions.json').success(function (jsonData) {
           angular.forEach(DB_CONFIG.tables, function (table) {
             angular.forEach(jsonData[table.name], function (tableData) {
               var columns = [];
@@ -148,7 +148,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         $ionicLoading.hide();
       }
     });
-  })
+  });
 
   //factory to get the session details based on the filters.
   .factory('sessionService', function($q, $cordovaSQLite, $filter) {
