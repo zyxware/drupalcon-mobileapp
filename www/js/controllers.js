@@ -26,7 +26,6 @@ angular.module('starter.controllers', [])
     // if view-pastevents = 0, view future events only, else view past events.
     console.log(window.localStorage.getItem('view-pastevents'));
     if (window.localStorage.getItem('view-pastevents') == 0) {
-      console.log('inside if');
       query += "WHERE date > date('now') ";
     }
     else {

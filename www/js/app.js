@@ -6,57 +6,126 @@
 // 'starter.controllers' is found in controllers.js
 var db = null;
 
-angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordova', 'starter.config'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordova', 'starter.config', 'starter.services', 'ngSanitize'])
 
-  .run(function ($ionicPlatform, $cordovaSQLite, DB_CONFIG, $http) {
+  .run(function ($ionicPlatform, $cordovaSQLite, DB_CONFIG, $http, $cordovaNetwork, dataService, ajaxService, $rootScope, $ionicPopup, $ionicLoading) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
       if (window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
-
       }
       if (window.StatusBar) {
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
-      // db = $cordovaSQLite.openDB({ name: "my.db" });
       if (window.cordova) {
         db = $cordovaSQLite.openDB({name: DB_CONFIG.name}); //device
       } else {
         db = window.openDatabase(DB_CONFIG.name, '1', 'd_conference', 1024 * 1024 * 100); // browser
       }
-      angular.forEach(DB_CONFIG.tables, function (table) {
-        //Temporary code to drop the existing table. TO BE REMOVED.
-        //var query = 'DROP TABLE ' + table.name;
-        //$cordovaSQLite.execute(db, query);
-        var columns = [];
-
-        angular.forEach(table.columns, function (column) {
-          columns.push(column.name + ' ' + column.type);
+      //window.localStorage.setItem('json-version', 1);
+      var currentJsonVersion = window.localStorage.getItem('json-version');
+      console.log("currentJsonVersion");
+      console.log(currentJsonVersion);
+      var params = headers = [];
+      // listen for Online event - on device
+      $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+        ajaxService.ajax('json-version', params, headers).then(function (response) {
+          currentJsonVersion = response.data.version;
+          console.log('currentJsonVersion after updation');
+          console.log(currentJsonVersion);
+          console.log(window.localStorage.getItem('json-version'));
+          if(window.localStorage.getItem('json-version') < currentJsonVersion) {
+            var confirmPopup = $ionicPopup.confirm({
+              title: 'Update Available',
+              template: 'An update conference is avialble. Do you want to update the data?'
+            });
+            confirmPopup.then(function(res) {
+              if(res) {
+                dataService.getJsonFile().then(function (response) {
+                  console.log(response);
+                })
+                if(window.localStorage.getItem('json-version') < currentJsonVersion) {
+                  window.localStorage.setItem('db-initialized', 0);
+                  window.localStorage.setItem('json-version', currentJsonVersion);
+                  angular.forEach(DB_CONFIG.tables, function (table) {
+                    if (table.name != 'bookmarks') {
+                      console.log( "Table name is" + table.name);
+                      var query = 'DROP TABLE ' + table.name;
+                      $cordovaSQLite.execute(db, query);
+                    }
+                  });
+                }
+              } else {
+                console.log('No need to update');
+              }
+            })
+          }  
         });
-
-        var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
-        $cordovaSQLite.execute(db, query);
       });
-
-      //Temporary code to initialize the local storage. TO BE REMOVED.
-      //window.localStorage.setItem('db-initialized', 0);
+      // listen for Online event - on browser
+      window.addEventListener("online", function(e) {
+        ajaxService.ajax('json-version', params, headers).then(function (response) {
+          currentJsonVersion = response.data.version;
+          console.log('currentJsonVersion after updation');
+          console.log(currentJsonVersion);
+          console.log(window.localStorage.getItem('json-version'));
+          if(window.localStorage.getItem('json-version') < currentJsonVersion) {
+            var confirmPopup = $ionicPopup.confirm({
+              title: 'Update Available',
+              template: 'An update conference is avialble. Do you want to update the data?'
+            });
+            confirmPopup.then(function(res) {
+              if(res) {
+                dataService.getJsonFile().then(function (response) {
+                  console.log(response);
+                })
+                if(window.localStorage.getItem('json-version') < currentJsonVersion) {
+                  window.localStorage.setItem('db-initialized', 0);
+                  window.localStorage.setItem('json-version', currentJsonVersion);
+                  angular.forEach(DB_CONFIG.tables, function (table) {
+                    if (table.name != 'bookmarks') {
+                      console.log( "Table name is" + table.name);
+                      var query = 'DROP TABLE ' + table.name;
+                      $cordovaSQLite.execute(db, query);
+                    }
+                  });
+                }
+              } else {
+                console.log('No need to update');
+              }
+            })
+          }  
+        });
+      }, true); 
+      console.log('db-initilized');
+      console.log(window.localStorage.getItem('db-initialized'));
       if (window.localStorage.getItem('db-initialized') != 1) {
-        //console.log(window.localStorage.getItem('db-initialized'));
-
+        $ionicLoading.show({
+          template: '<div align="center" ><ion-spinner style="stroke:#3577E8!important"  icon="android"></ion-spinner></div>'
+        });
+        console.log('inside db-intialization');
+        angular.forEach(DB_CONFIG.tables, function (table) {
+          var columns = [];
+          angular.forEach(table.columns, function (column) {
+            columns.push(column.name + ' ' + column.type);
+          });
+          var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
+          $cordovaSQLite.execute(db, query);
+        });
         var url = "";
-        if(ionic.Platform.isAndroid()){
-          url = "/android_asset/www/";
-        }
-        $http.get(url+'json/DrupalCon_JsonData_v1.json').success(function (jsonData) {
+        //if(ionic.Platform.isAndroid()){
+          //url = "/android_asset/www/";
+        //}
+        $http.get(url+'json/sessions.json').success(function (jsonData) {
           angular.forEach(DB_CONFIG.tables, function (table) {
             angular.forEach(jsonData[table.name], function (tableData) {
               var columns = [];
               var params = [];
               var fieldValues = [];
-
+              console.log("Table name is " + table.name);
               angular.forEach(table.columns, function (column) {
                 if (column.name != 'id') {
                   columns.push(column.name);
@@ -69,14 +138,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
               var query = 'INSERT INTO ' + table.name + ' (' + columns.join(',') + ') VALUES (' + params.join(',') + ')';
 
               $cordovaSQLite.execute(db, query, fieldValues).then(function (res) {
-                //console.log("INSERT ID -> " + res.insertId);
               }, function (err) {
-                //console.error(err);
+                console.error(err);
               });
             });
           });
         });
         window.localStorage.setItem('db-initialized', 1);
+        $ionicLoading.hide();
       }
     });
   })
@@ -95,7 +164,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         query += "JOIN rooms ON rooms.id = programs.room ";
         query += "JOIN sessionSpeakers ON sessionSpeakers.sessionId = programs.id ";
         query += "JOIN speakers ON speakers.id = sessionSpeakers.speakerId ";
-        // if view-pastevents = 0, view future events only, else view past events.
+        // if view-pastevents = 0, view future events only, else view past events also.
         if (window.localStorage.getItem('view-pastevents') == 0) {
           query += "WHERE programs.date > date('now') ";
         }
@@ -202,6 +271,33 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
            q.reject(null);
         });
         return q.promise;
+      }
+    }
+  })
+  .factory('dataService', function($http, $cordovaFileTransfer) {
+    return {
+      getJsonFile: function () {
+        //document.addEventListener('deviceready', function () {
+          // File for download
+          var url = "http://dev.drupalcon.z9.dev.zyxware.net/sites/default/files/sessions.json";
+          console.log(url);
+          // File name only
+          var filename = url.split("/").pop();
+          // Save location
+          var url = "";
+          if(ionic.Platform.isAndroid()){
+            url = "/android_asset/www/";
+          }
+          var targetPath = url + "json/" + filename;
+          console.log(targetPath);
+          $cordovaFileTransfer.download(url, targetPath, {}, true).then(function (result) {
+              console.log('Success');
+            }, function (error) {
+              console.log('Error');
+            }, function (progress) {
+              // PROGRESS HANDLING GOES HERE
+          });
+        //}
       }
     }
   })
