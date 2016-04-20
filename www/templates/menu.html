@@ -39,9 +39,17 @@
           <i class="icon ion-star"></i>
           Favorites
         </ion-item>
+        <ion-item class="menu-separator">
+        </ion-item>
         <ion-item class="light" menu-close href="#/app/about">
+          <i class="icon ion-compose"></i>
+          DrupalCon
+        </ion-item>
+        <ion-item class="light" menu-close href="#/app/about-app">
           <i class="icon ion-information-circled"></i>
-          About
+          About App
+        </ion-item>
+        <ion-item class="menu-separator">
         </ion-item>
         <ion-item  ng-if="!pastevents"  class="light" menu-close href="#" ng-click="viewPastEvents()">
           <i class="icon ion-android-checkbox-outline-blank" ></i>

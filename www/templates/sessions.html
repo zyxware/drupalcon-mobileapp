@@ -1,7 +1,7 @@
 <ion-view view-title="Sessions">
   <ion-content>
-    <div class="row row-top filter-row" ng-if="programs.length">
-      <a class="col .col-50 filter-col text-right" href="#/app/filters">
+    <div class="row row-top filter-row">
+      <a class="col .col-50 filter-col text-right" ng-class="{'filter-active': appliedFilter}" href="#/app/filters">
         <i class="icon ion-funnel"></i>
         Filter
       </a>

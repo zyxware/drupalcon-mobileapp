@@ -36,7 +36,7 @@
                 <div class="item item-text-wrap" ng-repeat="program in programs track by $index"
                      >
                     <a ng-href="#/app/session-detail/{{program.id}}" class="row schedule-title">
-                        <div class="col"> {{program.title}}</div>
+                        <div class="col program-title"> {{program.title}}</div>
                     </a>
                     <div class="row text-center program-schedule-details">
                         <div class="col col-25">{{program.date.replace("00:00:00","").trim() | date:'MMMM d'}}</div>

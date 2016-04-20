@@ -79,9 +79,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
             });
             confirmPopup.then(function(res) {
               if(res) {
-                dataService.getJsonFile().then(function (response) {
-                  console.log(response);
-                })
+                //dataService.getJsonFile().then(function (response) {
+                  //console.log(response);
+                //})
                 if(window.localStorage.getItem('json-version') < currentJsonVersion) {
                   window.localStorage.setItem('db-initialized', 0);
                   window.localStorage.setItem('json-version', currentJsonVersion);
@@ -116,10 +116,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
           $cordovaSQLite.execute(db, query);
         });
         var url = "";
-        //if(ionic.Platform.isAndroid()){
-          //url = "/android_asset/www/";
-        //}
-        $http.get(url+'json/sessions.json').success(function (jsonData) {
+        if(ionic.Platform.isAndroid()){
+          url = "/android_asset/www/";
+        }
+        $http.get(url+'json/session.json').success(function (jsonData) {
           angular.forEach(DB_CONFIG.tables, function (table) {
             angular.forEach(jsonData[table.name], function (tableData) {
               var columns = [];
@@ -436,6 +436,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
     views: {
       'menuContent': {
         templateUrl: 'templates/about.html'
+      }
+    }
+  })
+  .state('app.about-app', {
+    url: '/about-app',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/about-app.html'
       }
     }
   })

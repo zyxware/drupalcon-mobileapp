@@ -45,6 +45,10 @@ ion-content {
   .item {
     border-color: $menu-border;
   }
+  .menu-separator {
+    background-color: lighten($dark, 10%);
+    border:none;
+  }
 }
 
 .item-listing {
@@ -79,10 +83,15 @@ ion-content {
   padding: 3%;
 }
 
+.program-title {
+  font-weight:bold;
+}
+
 .program-schedule-details {
   border-top: 1px dotted lighten($dark, 10%);
   border-bottom: 1px dotted lighten($dark, 10%);
   font-size: 14px;
+  font-weight: bold;
   color: $positive;
   padding: 2px;
   margin-bottom:10px;
@@ -110,6 +119,10 @@ a.row.schedule-title {
     color: $default-color;
     margin-right: 5px;
   }
+  
+  .filter-active {
+    color: $positive;
+  }
 }
 
 .filter-page {
@@ -127,7 +140,8 @@ a.row.schedule-title {
   }
   
   .item.active {
-    background-color: $calm;
+    background-color: $light;
+    color: $dark;
   }
   .col-75 {
     padding-left: 0px;

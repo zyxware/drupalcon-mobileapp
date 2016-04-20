@@ -98,6 +98,7 @@ angular.module('starter.controllers', [])
 
   // SessionsCtrl - Session listing Page
   .controller('SessionsCtrl', function ($scope, sessionService, $stateParams) {
+    
     var date = $stateParams.date;
     $scope.programs = [];
 
@@ -274,7 +275,14 @@ angular.module('starter.controllers', [])
   })
   
   // FilterSessions - Filters sessions
-  .controller('FilterSessions', function ($scope, $cordovaSQLite, sessionService, $state, $rootScope) {
+  .controller('FilterSessions', function ($scope, $cordovaSQLite, sessionService, $state, $rootScope, $ionicHistory) {
+    
+    $ionicHistory.nextViewOptions({
+      disableBack: true
+    });
+    $rootScope.dateFilter = [];
+    $rootScope.trackFilter = [];
+    $rootScope.roomFilter = [];
     
     // Intializing the date filter. Getting the eventdates.
     var query = "SELECT date FROM eventdates ";
@@ -423,7 +431,7 @@ angular.module('starter.controllers', [])
       query += "WHERE programs.date > date('now') ";
     }
     else {
-      query += "WHERE 1";
+      query += "WHERE 1 ";
     }
     var filterValue = [];
     if($rootScope.dateFilter.length > 0) {
@@ -455,5 +463,6 @@ angular.module('starter.controllers', [])
     }, function (err) {
       console.error(err);
     });
+    $scope.appliedFilter = true;
   });
 
