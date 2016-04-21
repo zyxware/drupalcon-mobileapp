@@ -189,7 +189,7 @@ angular.module('starter.controllers', [])
 
   // RoomDetailCtrl - Room Detail page
   .controller('RoomDetailCtrl', function ($scope, $stateParams, $cordovaSQLite, sessionService) {
-    var query = "SELECT rooms.id, rooms.name, rooms.desc ";
+    var query = "SELECT rooms.id, rooms.name ";
         query += "FROM rooms WHERE id = ?";
     var id = $stateParams.roomId;
     $scope.details = [];
@@ -212,7 +212,7 @@ angular.module('starter.controllers', [])
 
   // RoomsCtrl - Rooms listing page.
   .controller('RoomsCtrl', function ($scope, $cordovaSQLite) {
-    var query = "SELECT * FROM rooms WHERE 1";
+    var query = "SELECT id, name FROM rooms WHERE 1";
     $scope.rooms = [];
     $cordovaSQLite.execute(db, query).then(function (res) {
       if (res.rows.length > 0) {
@@ -401,6 +401,8 @@ angular.module('starter.controllers', [])
     }
 
     $scope.applyFilter = function() {
+      console.log($rootScope.trackFilter);
+      console.log($rootScope.roomFilter);
       $state.go('app.sessionsFilter');
     };
 
@@ -451,6 +453,7 @@ angular.module('starter.controllers', [])
     if( $rootScope.roomFilter.length > 0) {
       query += " AND programs.room IN (" + $rootScope.roomFilter + ")";
     }
+    query += "GROUP BY programs.id";
     $scope.programs = [];
     $cordovaSQLite.execute(db, query).then(function (res) {
       if (res.rows.length > 0) {

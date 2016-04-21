@@ -4,7 +4,6 @@
           <div class="row empty-result" ng-if="!rooms.length">No rooms added.</div>
           <ion-item type="item-text-wrap" class="item-listing item-remove-animate item-icon-right" ng-repeat="room in rooms track by $index" href="#/app/roomdetail/{{room.id}}">
             <h2>{{room.name}}</h2>
-            <p>{{room.desc}}</p>
           </ion-item>
         </ion-list>
     </ion-content>

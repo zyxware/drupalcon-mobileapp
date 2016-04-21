@@ -87,7 +87,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
                   window.localStorage.setItem('json-version', currentJsonVersion);
                   angular.forEach(DB_CONFIG.tables, function (table) {
                     if (table.name != 'bookmarks') {
-                      console.log( "Table name is" + table.name);
                       var query = 'DROP TABLE ' + table.name;
                       $cordovaSQLite.execute(db, query);
                     }
@@ -100,13 +99,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
           }  
         });
       }, true); 
-      console.log('db-initilized');
-      console.log(window.localStorage.getItem('db-initialized'));
+      
       if (window.localStorage.getItem('db-initialized') != 1) {
         $ionicLoading.show({
           template: '<div align="center" ><ion-spinner style="stroke:#3577E8!important"  icon="android"></ion-spinner></div>'
         });
-        console.log('inside db-intialization');
         angular.forEach(DB_CONFIG.tables, function (table) {
           var columns = [];
           angular.forEach(table.columns, function (column) {
@@ -125,30 +122,30 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
               var columns = [];
               var params = [];
               var fieldValues = [];
-              console.log("Table name is " + table.name);
               angular.forEach(table.columns, function (column) {
-                if (column.name != 'id') {
+                //if (column.name != 'id') {
                   columns.push(column.name);
                   params.push('?');
-                  if (column.name != 'id')
+                  //if (column.name != 'id')
                     fieldValues.push(tableData[column.name]);
-                }
+                //}
               });
 
               var query = 'INSERT INTO ' + table.name + ' (' + columns.join(',') + ') VALUES (' + params.join(',') + ')';
-
               $cordovaSQLite.execute(db, query, fieldValues).then(function (res) {
+                console.log("Data Inserted into " + table.name);
               }, function (err) {
                 console.error(err);
               });
             });
           });
         });
+        console.log('intilization completed.');
         window.localStorage.setItem('db-initialized', 1);
         $ionicLoading.hide();
       }
     });
-  });
+  })
 
   //factory to get the session details based on the filters.
   .factory('sessionService', function($q, $cordovaSQLite, $filter) {
@@ -184,6 +181,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         if( filterKey == 'speaker') {
           query += " AND sessionSpeakers.speakerId = ?";
         }
+        query += "GROUP BY programs.id";
+
        $cordovaSQLite.execute(db, query, [filterValue]).then(function (res) {
           if (res.rows.length > 0) {
             for (var i = 0; i < res.rows.length; i++) {
@@ -257,8 +256,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
           var filterValue = $filter('date')(filterValue[dateIdx], "yyyy-MM-dd HH:mm:ss");
           query += " AND programs.date = ?";
         }
-        
-       $cordovaSQLite.execute(db, query, [filterValue]).then(function (res) {
+        query += "GROUP BY programs.id";
+        $cordovaSQLite.execute(db, query, [filterValue]).then(function (res) {
           if (res.rows.length > 0) {
             for (var i = 0; i < res.rows.length; i++) {
               result.push(res.rows.item(i));
