@@ -99,7 +99,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
           }  
         });
       }, true); 
-      
+      //window.localStorage.setItem('db-initialized', 0);
       if (window.localStorage.getItem('db-initialized') != 1) {
         $ionicLoading.show({
           template: '<div align="center" ><ion-spinner style="stroke:#3577E8!important"  icon="android"></ion-spinner></div>'
@@ -181,8 +181,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         if( filterKey == 'speaker') {
           query += " AND sessionSpeakers.speakerId = ?";
         }
-        query += "GROUP BY programs.id";
-
+        query += " GROUP BY programs.id";
+        query += " ORDER BY programs.date";
        $cordovaSQLite.execute(db, query, [filterValue]).then(function (res) {
           if (res.rows.length > 0) {
             for (var i = 0; i < res.rows.length; i++) {
@@ -219,6 +219,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
           join += "JOIN speakers ON speakers.id = bookmarks.itemId ";
         }
         var query = select + from + join + where;
+        query += " GROUP BY programs.id";
+        query += " ORDER BY programs.date";
         $cordovaSQLite.execute(db, query, [type]).then(function (res) {
           if (res.rows.length > 0) {
             for (var i = 0; i < res.rows.length; i++) {
@@ -256,7 +258,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
           var filterValue = $filter('date')(filterValue[dateIdx], "yyyy-MM-dd HH:mm:ss");
           query += " AND programs.date = ?";
         }
-        query += "GROUP BY programs.id";
+        query += " GROUP BY programs.id";
+        query += " ORDER BY programs.date";
         $cordovaSQLite.execute(db, query, [filterValue]).then(function (res) {
           if (res.rows.length > 0) {
             for (var i = 0; i < res.rows.length; i++) {
@@ -450,6 +453,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
     url: '/filters',
     views: {
       'menuContent': {
+        cache: false,
         templateUrl: 'templates/filters.html',
         controller:'FilterSessions'
       }
@@ -458,6 +462,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
   .state('app.sessionsFilter', {
     views: {
       'menuContent': {
+        cache: false,
         templateUrl: 'templates/sessions.html',
         controller:'FilteredSessionsList'
       }

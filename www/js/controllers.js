@@ -453,7 +453,8 @@ angular.module('starter.controllers', [])
     if( $rootScope.roomFilter.length > 0) {
       query += " AND programs.room IN (" + $rootScope.roomFilter + ")";
     }
-    query += "GROUP BY programs.id";
+    query += " GROUP BY programs.id";
+    query += " ORDER BY programs.date";
     $scope.programs = [];
     $cordovaSQLite.execute(db, query).then(function (res) {
       if (res.rows.length > 0) {
@@ -467,5 +468,8 @@ angular.module('starter.controllers', [])
       console.error(err);
     });
     $scope.appliedFilter = true;
+    $rootScope.dateFilter = [];
+    $rootScope.trackFilter = [];
+    $rootScope.roomFilter = [];
   });
 
