@@ -63,6 +63,16 @@ ion-content {
   border-radius: 50%;
 }
 
+.about-app{
+  background-color: $light;
+  padding-top: 20px;
+}
+
+.about-app-desc {
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .profile-header {
   background-color: lighten($dark, 10%);
   color: $light;
