@@ -204,7 +204,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         var select = "SELECT bookmarks.id, bookmarks.type, bookmarks.itemId ";
         var from = "FROM bookmarks ";
         var where = "WHERE bookmarks.type = ?";
-        var join = "";
+        var join = groupby = orderby = "";
         if (type == 'session') {
           select += ", programs.id, programs.title, programs.date, programs.startTime, programs.endTime, ";
           select += "rooms.name AS roomname, rooms.id AS roomid ";
@@ -214,13 +214,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
           if(window.localStorage.getItem('view-pastevents') == 0) {
             where += " AND programs.date > date('now') ";
           }
-        } else if(type == 'speaker') {
+          grouby = " GROUP BY programs.id";
+          orderby = " ORDER BY programs.date";
+        } 
+        else if(type == 'speaker') {
           select += ", speakers.id, speakers.name, speakers.desgn ";
           join += "JOIN speakers ON speakers.id = bookmarks.itemId ";
         }
-        var query = select + from + join + where;
-        query += " GROUP BY programs.id";
-        query += " ORDER BY programs.date";
+        var query = select + from + join + where + groupby + orderby;
         $cordovaSQLite.execute(db, query, [type]).then(function (res) {
           if (res.rows.length > 0) {
             for (var i = 0; i < res.rows.length; i++) {
