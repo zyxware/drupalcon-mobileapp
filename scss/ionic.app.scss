@@ -85,6 +85,8 @@ ion-content {
 .desc-listing {
   @include contentMargin;
   background-color: $light;
+  font-size: 14px;
+  text-align: justify;
 }
 
 .item-divider {
@@ -100,7 +102,7 @@ ion-content {
 .program-schedule-details {
   border-top: 1px dotted lighten($dark, 10%);
   border-bottom: 1px dotted lighten($dark, 10%);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: bold;
   color: $positive;
   padding: 2px;
@@ -108,7 +110,7 @@ ion-content {
 
   .col {
     margin: 3px;
-    font-size: 0.7em;
+    font-size: 0.8em;
     border-right: 1px dotted lighten($dark, 10%);
     &:last-child {
       border-right: none;
