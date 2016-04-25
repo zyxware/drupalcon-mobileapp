@@ -145,10 +145,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       $ionicLoading.hide();
     });
   })
-
-  //factory to get the session details based on the filters.
   .factory('sessionService', function($q, $cordovaSQLite, $filter) {
     return {
+       //factory to get the session details based on the filters.
       getSessions: function(filterKey, filterValue) {
         var q = $q.defer();
         var result = [];
@@ -231,51 +230,88 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
             //console.log("No results found");
           }
         }, function (err) {
-           q.reject(null);
+          q.reject(null);
         });
         return q.promise;
       },
-      getSessionsFiltered: function(filterKey, filterValue) {
+      // Get the tracks. If id is provided return the details of individual track.
+      getTracks: function(id) {
         var q = $q.defer();
         var result = [];
-        var query = "SELECT programs.id, programs.title, programs.date, programs.startTime, programs.endTime,  ";
-        query += "tracks.title AS tracktitle, ";
-        query += "rooms.name AS roomname, rooms.id AS roomid ";
-        query += "FROM programs ";
-        query += "JOIN tracks ON tracks.id = programs.track ";
-        query += "JOIN rooms ON rooms.id = programs.room ";
-        query += "JOIN sessionSpeakers ON sessionSpeakers.sessionId = programs.id ";
-        query += "JOIN speakers ON speakers.id = sessionSpeakers.speakerId ";
-        // if view-pastevents = 0, view future events only, else view past events.
-        if (window.localStorage.getItem('view-pastevents') == 0) {
-          query += "WHERE programs.date > date('now') ";
+        var query = "SELECT tracks.id, tracks.title AS name FROM tracks";
+        if(id != null){
+          query += " WHERE id = " + id; 
         }
         else {
-          query += "WHERE 1";
-        }
-        var dateIdx = filterKey.indexOf('date');
-        if( dateIdx > -1) {
-          var filterValue = $filter('date')(filterValue[dateIdx], "yyyy-MM-dd HH:mm:ss");
-          query += " AND programs.date = ?";
-        }
-        query += " GROUP BY programs.id";
-        query += " ORDER BY programs.date";
-        $cordovaSQLite.execute(db, query, [filterValue]).then(function (res) {
+          query += " WHERE 1";
+        }  
+        $cordovaSQLite.execute(db, query).then(function (res) {
           if (res.rows.length > 0) {
             for (var i = 0; i < res.rows.length; i++) {
               result.push(res.rows.item(i));
             }
             q.resolve(result);
           } else {
-            //console.log("No results found");
+            console.log("No results found");
           }
         }, function (err) {
-           q.reject(null);
+          q.reject(null);
+        });
+        return q.promise;
+      },
+      // Get the rooms. If id is provided return the details of individual room.
+      getRooms: function(id) {
+        var q = $q.defer();
+        var result = [];
+        var query = "SELECT id, name FROM rooms";
+        if(id != null){
+          query += " WHERE id = " + id; 
+        }
+        else {
+          query += " WHERE 1";
+        }  
+        $cordovaSQLite.execute(db, query).then(function (res) {
+          if (res.rows.length > 0) {
+            for (var i = 0; i < res.rows.length; i++) {
+              result.push(res.rows.item(i));
+            }
+            q.resolve(result);
+          } else {
+            console.log("No results found");
+          }
+        }, function (err) {
+          q.reject(null);
+        });
+        return q.promise;
+      },
+      // Get the speakers. If id is provided return the details of individual speaker.
+      getSpeakers: function(id) {
+        var q = $q.defer();
+        var result = [];
+        var query = "SELECT speakers.id, speakers.name, speakers.desc, speakers.desgn FROM speakers";
+        if(id != null){
+          query += " WHERE id = " + id; 
+        }
+        else {
+          query += " WHERE 1";
+        }  
+        $cordovaSQLite.execute(db, query).then(function (res) {
+          if (res.rows.length > 0) {
+            for (var i = 0; i < res.rows.length; i++) {
+              result.push(res.rows.item(i));
+            }
+            q.resolve(result);
+          } else {
+            console.log("No results found");
+          }
+        }, function (err) {
+          q.reject(null);
         });
         return q.promise;
       }
     }
   })
+  
   .factory('dataService', function($q, $cordovaFileTransfer) {
     return {
       getJsonFile: function () {

@@ -1,5 +1,6 @@
 <ion-view view-title="Speaker's Profile" ng-controller="BookmarkCtrl">
     <ion-content>
+      <ion-item ng-repeat="detail in details track by $index">
         <div class="row">
             <div class="col text-center item-avatar-center">
                 <img width="25%" height="25%" src="img/avatar.png">
@@ -28,6 +29,7 @@
                 <p ng-bind-html="detail.desc"></p>
             </div>
         </div>
+      </ion-item>
         <div class="row" ng-if="programs.length" class="program-schedule">
             <div class="col">
                 <div class="item item-divider text-center">

@@ -21,7 +21,7 @@
             </ion-list>
             
             <ion-list ng-show="trackToggle" ng-repeat="trackitem in tracks track by $index">
-              <ion-checkbox ng-model="data.track" ng-checked="trackVal" ng-click="setTrackFilter(trackitem.id)">{{trackitem.title}}</ion-checkbox>
+              <ion-checkbox ng-model="data.track" ng-checked="trackVal" ng-click="setTrackFilter(trackitem.id)">{{trackitem.name}}</ion-checkbox>
             </ion-list>
             
             <ion-list ng-show="roomToggle" ng-repeat="room in rooms track by $index">
