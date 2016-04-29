@@ -122,6 +122,9 @@ a.row.schedule-title {
   color: $default-color;
 }
 
+.bookmark-icon {
+  font-size: 20px;
+}
 .filter-row {
   background-color: $light;
   padding: 2px;
@@ -147,7 +150,6 @@ a.row.schedule-title {
   
   ion-item {
     background-color: $dark;
-    border: none;
     border-bottom: 1px solid lighten($dark, 50%);
   }
   
