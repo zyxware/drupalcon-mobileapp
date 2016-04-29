@@ -110,7 +110,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         });
       });
       window.localStorage.setItem('db-initialized', 1);
-      $ionicLoading.hide();
+      $timeout( function(){ $ionicLoading.hide()}, 5000);
     }
   })
   .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
