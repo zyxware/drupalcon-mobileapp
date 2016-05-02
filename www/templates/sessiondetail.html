@@ -9,8 +9,8 @@
               <div class="col" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
             </div>
 
-              <i ng-if="!bookmarked" class="ion-ios-bookmarks-outline" ng-click="addBookmark('session', program.id)"></i>
-              <i ng-if="bookmarked" class="ion-ios-bookmarks" ng-click="removeBookmark('session', program.id)"></i>
+              <i ng-if="!bookmarked" class="ion-ios-bookmarks-outline bookmark-icon" ng-click="addBookmark('session', program.id)"></i>
+              <i ng-if="bookmarked" class="ion-ios-bookmarks bookmark-icon" ng-click="removeBookmark('session', program.id)"></i>
 
             <div class="row">
               <div class="col col-50">{{program.experiencelevel}}</div>

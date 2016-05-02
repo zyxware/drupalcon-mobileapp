@@ -12,8 +12,8 @@
                     {{detail.name}}
                 </div>
                 <div class="col">
-                    <i ng-if="!bookmarked"  class="ion-ios-bookmarks-outline positive" ng-click="addBookmark('speaker', detail.id)"></i>
-                    <i ng-if="bookmarked"  class="ion-ios-bookmarks positive" ng-click="removeBookmark('speaker', detail.id)"></i>
+                    <i ng-if="!bookmarked"  class="ion-ios-bookmarks-outline positive bookmark-icon" ng-click="addBookmark('speaker', detail.id)"></i>
+                    <i ng-if="bookmarked"  class="ion-ios-bookmarks positive bookmark-icon" ng-click="removeBookmark('speaker', detail.id)"></i>
                 </div>
             </div>
         </div>
