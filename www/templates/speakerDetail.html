@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col profile-header text-center">
                 <div class="col">
-                    {{detail.name}}
+                    {{detail.fname}} {{detail.lname}}
                 </div>
                 <div class="col">
                     <i ng-if="!bookmarked"  class="ion-ios-bookmarks-outline positive bookmark-icon" ng-click="addBookmark('speaker', detail.id)"></i>

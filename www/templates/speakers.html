@@ -4,7 +4,7 @@
           <div class="row empty-result" ng-if="!speakers.length">No speakers added.</div>
             <ion-item type="item-text-wrap"  class="item-listing item-remove-animate item-avatar item-icon-right" ng-repeat="speaker in speakers track by $index" href="#/app/speakerdetail/{{speaker.id}}">
                 <img src="img/avatar.png">
-                <h2>{{speaker.name}}</h2>
+                <h2>{{speaker.fname}} {{speaker.lname}}</h2>
                 <h3>{{speaker.desgn}}</h3>
             </ion-item>
         </ion-list>

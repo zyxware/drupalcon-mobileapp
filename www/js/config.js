@@ -31,6 +31,8 @@ angular.module('starter.config', [])
                   {name: 'name', type: 'text'},
                   {name: 'desgn', type: 'text'},
                   {name: 'desc', type: 'text'},
+                  {name: 'fname', type: 'text'},
+                  {name: 'lname', type: 'text'},
               ]
             },
             {

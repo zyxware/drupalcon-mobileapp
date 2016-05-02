@@ -168,7 +168,7 @@ angular.module('starter.services', [])
     getSpeakers: function(id) {
       var q = $q.defer();
       var result = [];
-      var query = "SELECT speakers.id, speakers.name, speakers.desgn, speakers.desc FROM speakers";
+      var query = "SELECT id, name, desgn, desc, fname, lname FROM speakers";
       if(id != null){
         query += " WHERE id = " + id; 
       }
@@ -178,7 +178,6 @@ angular.module('starter.services', [])
       $cordovaSQLite.execute(db, query).then(function (res) {
         if (res.rows.length > 0) {
           for (var i = 0; i < res.rows.length; i++) {
-            console.log(res.rows.item(i));
             result.push(res.rows.item(i));
           }
           q.resolve(result);
