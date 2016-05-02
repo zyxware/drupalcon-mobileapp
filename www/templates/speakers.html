@@ -1,12 +1,32 @@
-<ion-view view-title="Speakers">
-    <ion-content>
-        <ion-list>
-          <div class="row empty-result" ng-if="!speakers.length">No speakers added.</div>
-            <ion-item type="item-text-wrap"  class="item-listing item-remove-animate item-avatar item-icon-right" ng-repeat="speaker in speakers track by $index" href="#/app/speakerdetail/{{speaker.id}}">
-                <img src="img/avatar.png">
-                <h2>{{speaker.fname}} {{speaker.lname}}</h2>
-                <h3>{{speaker.desgn}}</h3>
-            </ion-item>
-        </ion-list>
-    </ion-content>
+<ion-view view-title="Speakers" ng-controller="SearchCtrl">
+  <ion-header-bar class="bar-light bar-subheader">
+    <div ng-hide="showSearchBar" class="row row-top filter-row">
+      <a class="col .col-50 filter-col text-right" ng-click="showSearchbar()">
+        <i class="icon ion-search"></i>
+        Search
+      </a>
+    </div>
+    <div ng-hide="!showSearchBar" class="bar bar-header item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="Search" ng-model="searchSpeaker" ng-change="scrollTop()" id="searchbx" autofocus>
+      </label>
+      <button class="button button-clear" ng-click="hideSearchbar()">
+        Cancel
+      </button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <ion-list>
+      <div class="row empty-result" ng-if="!speakers.length">No speakers added.</div>
+        <ion-item type="item-text-wrap"
+          class="item-listing item-remove-animate item-avatar item-icon-right"
+          ng-repeat="speaker in speakers | filter:searchSpeaker"
+          href="#/app/speakerdetail/{{speaker.id}}">
+            <img src="img/avatar.png">
+            <h2>{{speaker.fname}} {{speaker.lname}}</h2>
+            <h3>{{speaker.desgn}}</h3>
+        </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-view>

@@ -168,12 +168,12 @@ angular.module('starter.services', [])
     getSpeakers: function(id) {
       var q = $q.defer();
       var result = [];
-      var query = "SELECT id, name, desgn, desc, fname, lname FROM speakers";
+      var query = "";
       if(id != null){
-        query += " WHERE id = " + id; 
+        query += "SELECT id, name, desgn, desc, fname, lname FROM speakers  WHERE id = " + id;
       }
       else {
-        query += " WHERE 1";
+        query += "SELECT id, fname, lname FROM speakers WHERE 1";
       }  
       $cordovaSQLite.execute(db, query).then(function (res) {
         if (res.rows.length > 0) {

@@ -19,18 +19,20 @@
             <ion-list ng-show="dateToggle" ng-repeat="schedule in schedules track by $index">
               <ion-checkbox ng-model="data.date" ng-checked="dateVal" ng-click="setDateFilter(schedule.dateVal)">{{schedule.dateStr.replace("00:00:00","").trim() | date:' d MMMM yyyy'}}</ion-checkbox>
             </ion-list>
-            
+
             <ion-list ng-show="trackToggle" ng-repeat="trackitem in tracks track by $index">
               <ion-checkbox ng-model="data.track" ng-checked="trackVal" ng-click="setTrackFilter(trackitem.id)">{{trackitem.name}}</ion-checkbox>
             </ion-list>
-            
             <ion-list ng-show="roomToggle" ng-repeat="room in rooms track by $index">
               <ion-checkbox ng-model="data.room" ng-checked="roomVal" ng-click="setRoomFilter(room.id)">{{room.name}}</ion-checkbox>
             </ion-list>
-            
           </div>
       </div>
-      <div class="row row-form-submit">
+      <!--here was the button row -->
+    </form>
+  </ion-content>
+
+  <div class="row row-form-submit bar-footer" style="position:fixed;padding:0px;">
         <div class="col col-50 ">
           <button class="button button-light button-block" type="submit" ng-click="clearFilter()">Clear</button>
         </div>
@@ -38,6 +40,4 @@
           <button class="button button-positive button-block" type="submit" ng-click="applyFilter()">Apply</button>
         </div>
       </div>
-    </form>
-  </ion-content>
 </ion-view>

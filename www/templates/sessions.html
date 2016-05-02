@@ -1,16 +1,31 @@
-<ion-view cache-view="false" view-title="Sessions">
-  <ion-content>
-    <div class="row row-top filter-row">
+<ion-view cache-view="false" view-title="Sessions" ng-controller="SearchCtrl">
+  <ion-header-bar class="bar-light bar-subheader">
+    <div ng-hide="showSearchBar" class="row row-top filter-row">
+      <a class="col .col-50 filter-col text-left" ng-click="showSearchbar()">
+        <i class="icon ion-search"></i>
+        Search Title
+      </a>
       <a class="col .col-50 filter-col text-right" ng-class="{'filter-active': appliedFilter}" href="#/app/filters">
         <i class="icon ion-funnel"></i>
         Filter
       </a>
-    </div>    
+    </div> 
+    <div ng-hide="!showSearchBar" class="bar bar-header item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="Search" ng-model="searchSession" ng-change="scrollTop()">
+      </label>
+      <button class="button button-clear" ng-click="hideSearchbar()">
+        Cancel
+      </button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
     <ion-list>
       <div class="row empty-result" ng-if="!programs.length">No Sessions under this criteria.</div>
       <div class="row program-schedule" ng-if="programs.length">
         <div class="col">
-          <div class="item item-text-wrap" ng-repeat="program in programs track by $index">
+          <div class="item item-text-wrap" ng-repeat="program in programs | filter:searchSession track by $index">
             <a ng-href="#/app/session-detail/{{program.id}}" class="row schedule-title">
               <div class="col program-title"> {{program.title}}</div>
             </a>

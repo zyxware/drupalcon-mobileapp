@@ -405,5 +405,16 @@ angular.module('starter.controllers', [])
     $rootScope.dateFilter = [];
     $rootScope.trackFilter = [];
     $rootScope.roomFilter = [];
+  })
+
+  // SearchCtrl - Shows/Hides the title search bar.
+  .controller('SearchCtrl', function ($scope, $timeout) {
+    $scope.showSearchbar = function() {
+      $scope.showSearchBar = true;
+      document.getElementById('searchbx').select();
+    }
+    $scope.hideSearchbar = function() {
+      $scope.showSearchBar = false;
+    }
   });
 
