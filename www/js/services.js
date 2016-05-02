@@ -96,7 +96,7 @@ angular.module('starter.services', [])
         orderby = " ORDER BY programs.date";
       } 
       else if(type == 'speaker') {
-        select += ", speakers.id, speakers.name, speakers.desgn ";
+        select += ", speakers.id, speakers.name, speakers.desgn, speakers.fname, speakers.lname ";
         join += "JOIN speakers ON speakers.id = bookmarks.itemId ";
       }
       var query = select + from + join + where + groupby + orderby;

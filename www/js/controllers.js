@@ -81,7 +81,6 @@ angular.module('starter.controllers', [])
 
   // SessionsCtrl - Session listing Page
   .controller('SessionsCtrl', function ($scope, sessionService, $stateParams) {
-    
     var date = $stateParams.date;
     $scope.programs = [];
 
@@ -94,7 +93,7 @@ angular.module('starter.controllers', [])
   .controller('SessionDetailCtrl', function ($scope, $stateParams, $cordovaSQLite) {
     var id = $stateParams.sessionId;
     var query = "SELECT programs.*, tracks.title AS tracktitle, ";
-        query += "speakers.name AS speakername, speakers.id AS speakerid, ";
+        query += "speakers.fname AS speakerfname, speakers.lname AS speakerlname, speakers.id AS speakerid, ";
         query += "rooms.name AS roomname, rooms.id AS roomid ";
         query += "FROM programs ";
         query += "JOIN tracks ON tracks.id = programs.track ";
@@ -112,7 +111,7 @@ angular.module('starter.controllers', [])
         $scope.programDate = new Date(res.rows.item(0).date);
         for (var i = 0; i < res.rows.length; i++) {
           var speakerId = res.rows.item(i).speakerid;
-          var speakername = res.rows.item(i).speakername;
+          var speakername = res.rows.item(i).speakerfname + " " + res.rows.item(i).speakerlname;
           $scope.speakers.push({speakername:speakername,speakerid:speakerId});
         }
         $scope.bookmarks = false;
