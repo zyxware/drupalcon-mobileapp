@@ -170,7 +170,7 @@ angular.module('starter.services', [])
       var result = [];
       var query = "";
       if(id != null){
-        query += "SELECT id, name, desgn, desc, fname, lname FROM speakers  WHERE id = " + id;
+        query += "SELECT id, name, desgn, desc, fname, lname, org FROM speakers  WHERE id = " + id;
       }
       else {
         query += "SELECT id, fname, lname FROM speakers WHERE 1";

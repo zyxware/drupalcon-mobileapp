@@ -33,6 +33,7 @@ angular.module('starter.config', [])
                   {name: 'desc', type: 'text'},
                   {name: 'fname', type: 'text'},
                   {name: 'lname', type: 'text'},
+                  {name: 'org', type: 'text'},
               ]
             },
             {
