@@ -174,6 +174,7 @@ angular.module('starter.services', [])
       }
       else {
         query += "SELECT id, fname, lname FROM speakers WHERE 1";
+        query += " ORDER BY fname, lname ASC";
       }  
       $cordovaSQLite.execute(db, query).then(function (res) {
         if (res.rows.length > 0) {
