@@ -27,8 +27,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       }
       var currentJsonVersion = window.localStorage.getItem('json-version');
       if (window.localStorage.getItem('db-initialized') != 1) {
+        $ionicLoading.show({
+          template: 'Intializing'
+        });
         // Intializing the db for first-time.
-        console.log('inside db-initlization');
         if(ionic.Platform.isAndroid()){
           url = "/android_asset/www/json/sessions.json";
         }
@@ -49,6 +51,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
               });
               confirmPopup.then(function(res) {
                 if(res) {
+                  $ionicLoading.show({
+                    template: 'Intializing'
+                  });
                   dataService.getJsonFile().then(function (response) {
                     var url = response.nativeURL;
                     if(window.localStorage.getItem('json-version') < currentJsonVersion) {
@@ -77,9 +82,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
      * @param url - path to the json file from which db is to be intilized.
      */
     var updateDB = function(url){
-      $ionicLoading.show({
-        template: '<div align="center" ><ion-spinner style="stroke:#3577E8!important"  icon="android"></ion-spinner></div>'
-      });
       angular.forEach(DB_CONFIG.tables, function (table) {
         var columns = [];
         angular.forEach(table.columns, function (column) {
@@ -103,6 +105,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
 
             var query = 'INSERT INTO ' + table.name + ' (' + columns.join(',') + ') VALUES (' + params.join(',') + ')';
             $cordovaSQLite.execute(db, query, fieldValues).then(function (res) {
+              console.log('Value inserted into ' + table.name);
             }, function (err) {
               console.error(err);
             });
@@ -110,7 +113,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         });
       });
       window.localStorage.setItem('db-initialized', 1);
-      $timeout( function(){ $ionicLoading.hide()}, 5000);
+      $timeout( function(){ $ionicLoading.hide()}, 15000);
     }
   })
   .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
