@@ -2,7 +2,8 @@
     <ion-content ng-repeat="detail in details track by $index">
         <div class="row">
             <div class="col text-center item-avatar-center">
-                <img width="25%" height="25%" src="img/avatar.png">
+                <img width="25%" height="25%" ng-if="detail.prof_img==null" src="img/avatar.png">
+                <img width="25%" height="25%" ng-if="detail.prof_img!=null" src="{{detail.prof_img}}">
             </div>
         </div>
 
@@ -19,8 +20,8 @@
         </div>
         <div ng-if="detail.desgn" class="row">
             <div class="col desc-listing padding">
-                <span>{{detail.desgn}}</span>, 
-                <span>{{detail.org}}</span>
+                <span>{{detail.desgn}}</span>
+                <span ng-if="detail.org"> at {{detail.org}}</span>
             </div>
 
         </div>

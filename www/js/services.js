@@ -94,7 +94,7 @@ angular.module('starter.services', [])
         }
         grouby = " GROUP BY programs.id";
         orderby = " ORDER BY programs.date";
-      } 
+      }
       else if(type == 'speaker') {
         select += ", speakers.id, speakers.name, speakers.desgn, speakers.fname, speakers.lname ";
         join += "JOIN speakers ON speakers.id = bookmarks.itemId ";
@@ -120,11 +120,11 @@ angular.module('starter.services', [])
       var result = [];
       var query = "SELECT tracks.id, tracks.title AS name FROM tracks";
       if(id != null){
-        query += " WHERE id = " + id; 
+        query += " WHERE id = " + id;
       }
       else {
         query += " WHERE 1";
-      }  
+      }
       $cordovaSQLite.execute(db, query).then(function (res) {
         if (res.rows.length > 0) {
           for (var i = 0; i < res.rows.length; i++) {
@@ -145,11 +145,11 @@ angular.module('starter.services', [])
       var result = [];
       var query = "SELECT id, name FROM rooms";
       if(id != null){
-        query += " WHERE id = " + id; 
+        query += " WHERE id = " + id;
       }
       else {
         query += " WHERE 1";
-      }  
+      }
       $cordovaSQLite.execute(db, query).then(function (res) {
         if (res.rows.length > 0) {
           for (var i = 0; i < res.rows.length; i++) {
@@ -170,11 +170,11 @@ angular.module('starter.services', [])
       var result = [];
       var query = "";
       if(id != null){
-        query += "SELECT id, name, desgn, desc, fname, lname, org FROM speakers  WHERE id = " + id;
+        query += "SELECT id, name, desgn, desc, fname, lname, org, prof_img FROM speakers  WHERE id = " + id;
       }
       else {
-        query += "SELECT id, fname, lname FROM speakers WHERE 1";
-      }  
+        query += "SELECT id, fname, lname, prof_img FROM speakers WHERE 1";
+      }
       $cordovaSQLite.execute(db, query).then(function (res) {
         if (res.rows.length > 0) {
           for (var i = 0; i < res.rows.length; i++) {

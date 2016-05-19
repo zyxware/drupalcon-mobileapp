@@ -34,6 +34,7 @@ angular.module('starter.config', [])
                   {name: 'fname', type: 'text'},
                   {name: 'lname', type: 'text'},
                   {name: 'org', type: 'text'},
+                  {name: 'prof_img', type: 'text'},
               ]
             },
             {
@@ -66,6 +67,14 @@ angular.module('starter.config', [])
                   {name: 'id', type: 'integer primary key'},
                   {name: 'type', type: 'text'},
                   {name: 'itemId', type: 'integer'},
+              ]
+            },
+            {
+              name: 'files',
+              columns: [
+                  {name: 'id', type: 'integer primary key'},
+                  {name: 'sessionId', type: 'integer'},
+                  {name: 'fileUrl', type: 'text'},
               ]
             },
         ]

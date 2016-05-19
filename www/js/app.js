@@ -8,7 +8,18 @@ var db = null;
 
 angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordova', 'starter.config', 'starter.services', 'ngSanitize'])
 
-  .run(function ($ionicPlatform, $cordovaSQLite, DB_CONFIG, $http, $cordovaNetwork, dataService, ajaxService, $rootScope, $ionicPopup, $ionicLoading, $timeout) {
+  .run(function ($ionicPlatform, $cordovaSQLite, $ionicModal, DB_CONFIG, $http, $cordovaNetwork, dataService, ajaxService, $rootScope, $ionicPopup, $ionicLoading, $timeout) {
+
+    /*
+    * CHECK USER ALREADY LOGINED OR NOT
+    */
+    if(localStorage.getItem("userid")==''||localStorage.getItem("userid")==""||localStorage.getItem("userid")==null||localStorage.getItem("userid")=='null'||localStorage.getItem("userid")=='undefined')
+    {
+      $rootScope.User_id =  '';
+    }else {
+        $rootScope.User_id      =   localStorage.getItem("user_id");
+    }
+
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -25,12 +36,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       } else {
         db = window.openDatabase(DB_CONFIG.name, '1', 'd_conference', 1024 * 1024 * 100); // browser
       }
+
+
+
       var currentJsonVersion = window.localStorage.getItem('json-version');
       if (window.localStorage.getItem('db-initialized') != 1) {
         // Intializing the db for first-time.
         console.log('inside db-initlization');
         if(ionic.Platform.isAndroid()){
           url = "/android_asset/www/json/sessions.json";
+          // url = "./json/sessions.json";
         }
         updateDB(url);
       }
@@ -39,16 +54,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         var params = headers = [];
         // listen for Online event - on device
         var isOnline = $cordovaNetwork.isOnline();
+        console.log(isOnline);
         if(isOnline == true) {
           ajaxService.ajax('json-version', params, headers).then(function (response) {
             currentJsonVersion = response.data.version;
+            console.log(currentJsonVersion);
+            console.log(window.localStorage.getItem('json-version'));
             if(window.localStorage.getItem('json-version') < currentJsonVersion) {
+              console.log('inner the checking');
               var confirmPopup = $ionicPopup.confirm({
                 title: 'Update Available',
                 template: 'An update for Confernece schedule is available. Do you want to update the data?'
               });
               confirmPopup.then(function(res) {
                 if(res) {
+                  console.log(res);
                   dataService.getJsonFile().then(function (response) {
                     var url = response.nativeURL;
                     if(window.localStorage.getItem('json-version') < currentJsonVersion) {
@@ -66,14 +86,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
                   console.log('No need to update');
                 }
               })
-            }  
+            }
           });
         }
       }
     });
     /**
-     * Function to create the db enteries. 
-     * 
+     * Function to create the db enteries.
+     *
      * @param url - path to the json file from which db is to be intilized.
      */
     var updateDB = function(url){
@@ -111,6 +131,58 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       });
       window.localStorage.setItem('db-initialized', 1);
       $timeout( function(){ $ionicLoading.hide()}, 5000);
+    }
+    // An alert dialog
+    $rootScope.showAlert = function(title,data) {
+      var alertPopup = $ionicPopup.alert({
+        title: title,
+        template: data
+      });
+    };
+    /*
+    *MODEL POPUP FOR LOGIN
+    */
+    $rootScope.user = {
+      'username':'',
+      'password':''
+    }
+    $ionicModal.fromTemplateUrl('templates/Login_model.html', {
+    scope: $rootScope,
+    animation: 'slide-in-up'
+    }).then(function(modal) {
+      $rootScope.Login = modal;
+    });
+    $rootScope.openModal = function() {
+      $rootScope.Login.show();
+    };
+    $rootScope.closeModal = function() {
+      $rootScope.Login.hide();
+    };
+    /*
+    *USER LOGIN FUNCTION FOR SUBMIT DATA
+    */
+    $rootScope.User_Login = function(user)
+    {
+    var isOnline = $cordovaNetwork.isOnline();
+      console.log(isOnline);
+      if(isOnline == true) {
+        if(user.username  == '')
+        {$rootScope.showAlert("Warning","Please enter your username")}
+        else if(user.password == '' )
+        {$rootScope.showAlert("Warning","Please enter your  password","error");}
+        else {
+          $rootScope.userData={
+            'uname':user.username,
+            'passs':user.password
+          }
+            ajaxService.ajax('cod-mobile/user-authorization', $rootScope.userData, []).then(function (response) {
+              localStorage.setItem("userid",1);
+              $rootScope.User_id  = 1;
+            });
+        }
+      }else {
+
+      }
     }
   })
   .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {

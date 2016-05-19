@@ -23,7 +23,8 @@
           class="item-listing item-remove-animate item-avatar item-icon-right"
           ng-repeat="speaker in speakers | filter:searchSpeaker"
           href="#/app/speakerdetail/{{speaker.id}}">
-            <img src="img/avatar.png">
+            <img ng-if="speaker.prof_img==''" src="img/avatar.png">
+            <img ng-if="speaker.prof_img!=''" src="{{speaker.prof_img}}">
             <h2>{{speaker.fname}} {{speaker.lname}}</h2>
             <h3>{{speaker.desgn}}</h3>
         </ion-item>

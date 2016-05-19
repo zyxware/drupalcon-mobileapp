@@ -43,7 +43,6 @@ angular.module('starter.controllers', [])
         console.log("No results found");
       }
     }, function (err) {
-      console.error(err);
     });
   })
 
@@ -59,17 +58,16 @@ angular.module('starter.controllers', [])
   // SpeakerDetailCtrl - Speaker Detail page
   .controller('SpeakerDetailCtrl', function ($scope, $stateParams, $cordovaSQLite, sessionService) {
     var id = $stateParams.speakerId;
-    
+
     $scope.programs = [];
 
     sessionService.getSessions('speaker', id).then(function(response){
       $scope.programs = response;
     });
     sessionService.getSpeakers(id).then(function(response){
-      console.log(response);
       $scope.details = response;
     });
-    
+
     $scope.bookmarked = false;
     var bookQuery = "SELECT bookmarks.id FROM bookmarks WHERE type = ? AND itemId = ?";
     $cordovaSQLite.execute(db, bookQuery, ['speaker', id]).then(function (resBook) {
@@ -92,8 +90,8 @@ angular.module('starter.controllers', [])
   // SessionDetailCtrl - Session Detail Page
   .controller('SessionDetailCtrl', function ($scope, $stateParams, $cordovaSQLite) {
     var id = $stateParams.sessionId;
-    var query = "SELECT programs.*, tracks.title AS tracktitle, ";
-        query += "speakers.fname AS speakerfname, speakers.lname AS speakerlname, speakers.id AS speakerid, ";
+    var query = "SELECT programs.*,tracks.title AS tracktitle, ";
+        query += "speakers.fname AS speakerfname, speakers.lname AS speakerlname,speakers.prof_img AS speakerprof_img, speakers.id AS speakerid, ";
         query += "rooms.name AS roomname, rooms.id AS roomid ";
         query += "FROM programs ";
         query += "JOIN tracks ON tracks.id = programs.track ";
@@ -104,15 +102,18 @@ angular.module('starter.controllers', [])
 
     $scope.program = [];
     $scope.speakers = [];
+    $scope.SessionFiles = [];
 
     $cordovaSQLite.execute(db, query, [id]).then(function (res) {
       if (res.rows.length > 0) {
         $scope.program = res.rows.item(0);
+        console.log($scope.program);
         $scope.programDate = new Date(res.rows.item(0).date);
         for (var i = 0; i < res.rows.length; i++) {
           var speakerId = res.rows.item(i).speakerid;
           var speakername = res.rows.item(i).speakerfname + " " + res.rows.item(i).speakerlname;
-          $scope.speakers.push({speakername:speakername,speakerid:speakerId});
+          var prof_img = res.rows.item(i).speakerprof_img;
+          $scope.speakers.push({speakername:speakername,prof_img:prof_img,speakerid:speakerId});
         }
         $scope.bookmarks = false;
         var bookQuery = "SELECT bookmarks.id FROM bookmarks WHERE type = ? AND itemId = ?";
@@ -121,6 +122,18 @@ angular.module('starter.controllers', [])
             $scope.bookmarked = true;
           }
         });
+        var FileQuery = "SELECT files.fileUrl FROM files WHERE sessionId = ?";
+        $cordovaSQLite.execute(db, FileQuery, [id]).then(function (resFile) {
+          if (resFile.rows.length > 0) {
+            for (var i = 0; i < resFile.rows.length; i++) {
+              var FileUri = res.rows.item(i).fileUrl;
+                $scope.SessionFiles.push({Session_id:id,file:FileUri});
+                console.log($scope.SessionFiles);
+            }
+
+          }
+        });
+
       } else {
         console.log("No results found");
       }
@@ -137,7 +150,7 @@ angular.module('starter.controllers', [])
       $scope.tracks = response;
     });
   })
-  
+
   // TrackDetailCtrl - Track Detail page.
   .controller('TrackDetailCtrl', function ($scope, $stateParams, sessionService) {
     var id = $stateParams.trackId;
@@ -161,7 +174,7 @@ angular.module('starter.controllers', [])
     sessionService.getSessions('room', id).then(function(response){
       $scope.programs = response;
     });
-    
+
     $scope.rooms = [];
     var roomId = null;
     sessionService.getRooms(id).then(function(response){
@@ -179,14 +192,21 @@ angular.module('starter.controllers', [])
   })
 
   // BookmarkCtrl - Bookmarking items
-  .controller('BookmarkCtrl', function ($scope, $cordovaSQLite) {
+  .controller('BookmarkCtrl', function ($scope, $cordovaSQLite, $rootScope) {
     $scope.addBookmark = function(type, id) {
-      var query = 'INSERT INTO bookmarks (type, itemId) VALUES ( ?, ?)';
-      $cordovaSQLite.execute(db, query, [type, id]).then(function (res) {
-        $scope.bookmarked = true;
-      }, function (err) {
-          console.error(err);
-      });
+      /*
+      *CHECK THE USER ALREADY LOGINED .THE USER NOT LOGIN THEN DISPLAY THE LOGIN FORM POPUP
+      */
+      if($rootScope.User_id =='')
+      {$rootScope.openModal();}
+      else {
+        var query = 'INSERT INTO bookmarks (type, itemId) VALUES ( ?, ?)';
+        $cordovaSQLite.execute(db, query, [type, id]).then(function (res) {
+          $scope.bookmarked = true;
+        }, function (err) {
+            console.error(err);
+        });
+      }
     };
 
     $scope.removeBookmark = function(type, id) {
@@ -224,17 +244,17 @@ angular.module('starter.controllers', [])
       });
     });
   })
-  
+
   // FilterSessions - Filters sessions
   .controller('FilterSessions', function ($scope, $cordovaSQLite, sessionService, $state, $rootScope, $ionicHistory) {
-    
+
     $ionicHistory.nextViewOptions({
       disableBack: true
     });
     $rootScope.dateFilter = [];
     $rootScope.trackFilter = [];
     $rootScope.roomFilter = [];
-    
+
     // Intializing the date filter. Getting the eventdates.
     var query = "SELECT date FROM eventdates ";
     // if view-pastevents = 0, view future events only, else view past events.
@@ -259,7 +279,7 @@ angular.module('starter.controllers', [])
     }, function (err) {
       console.error(err);
     });
-    
+
     // Intializing the date filter
     $scope.dateToggle = true;
     // Intializing the track filter. Getting the tracks.
@@ -280,7 +300,7 @@ angular.module('starter.controllers', [])
       $scope.dateToggle = false;
       $scope.trackToggle = false;
       $scope.roomToggle = false;
-      
+
       if(type == 'date') {
         $scope.dateToggle = true;
       }
@@ -294,10 +314,10 @@ angular.module('starter.controllers', [])
 
     // Setting the values for datefilter, with values listed in filter page.
     $rootScope.dateFilter = [];
-    
+
     $scope.setDateFilter = function(date) {
       var idx = $rootScope.dateFilter.indexOf(date);
-      
+
       if(idx > -1) {
         $rootScope.dateFilter.splice(idx, 1);
       }
@@ -308,10 +328,10 @@ angular.module('starter.controllers', [])
 
     // Setting the values for track, with values listed in filter page.
     $rootScope.trackFilter = [];
-    
+
     $scope.setTrackFilter = function(date) {
       var idx = $rootScope.trackFilter.indexOf(date);
-      
+
       if(idx > -1) {
         $rootScope.trackFilter.splice(idx, 1);
       }
@@ -322,10 +342,10 @@ angular.module('starter.controllers', [])
 
     // Setting the values for rooms, with values listed in filter page.
     $rootScope.roomFilter = [];
-    
+
     $scope.setRoomFilter = function(date) {
       var idx = $rootScope.roomFilter.indexOf(date);
-      
+
       if(idx > -1) {
         $rootScope.roomFilter.splice(idx, 1);
       }
@@ -417,4 +437,3 @@ angular.module('starter.controllers', [])
       $scope.showSearchBar = false;
     }
   });
-

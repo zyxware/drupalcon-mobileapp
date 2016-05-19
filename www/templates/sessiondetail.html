@@ -22,7 +22,8 @@
         <div class="col">
           <ion-list>
                 <ion-item type="item-text-wrap"  class="item-listing item-remove-animate item-avatar item-icon-right" ng-repeat="speaker in speakers track by $index" href="#/app/speakerdetail/{{speaker.speakerid}}">
-                    <img src="img/avatar.png">
+                    <img ng-if="speaker.prof_img==null ||speaker.prof_img==''" src="img/avatar.png">
+                    <img ng-if="speaker.prof_img!=null ||speaker.prof_img!=''" src="{{speaker.prof_img}}">
                     <h2>{{speaker.speakername}}</h2>
                 </ion-item>
             </ion-list>
@@ -32,6 +33,11 @@
           <div class="col desc-listing padding" ng-bind-html="program.desc">
           </div>
         </div>
+
+        <div class="row">
+          <div class="col desc-listing padding" ng-repeat="files in SessionFiles">
+            <p>{{files.file}}</p>
+          </div>
+        </div>
     </ion-content>
 </ion-view>
-
