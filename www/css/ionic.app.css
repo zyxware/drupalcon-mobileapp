@@ -9856,5 +9856,17 @@ a.row.schedule-title {
 .program-schedule .item {
   margin-top: 5px; }
 
+
 .bar-light .button.button-clear {
   font-size: 14px; }
+/*RATING STYLES*/
+  ul.rating li {
+  display: inline;
+  border: 0px;
+  background: none;
+  padding: 2px 4px;
+}
+ul.rating li i {
+  font-size: 20px;
+  color: gold;
+}

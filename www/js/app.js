@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 var db = null;
 
-angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordova', 'starter.config', 'starter.services', 'ngSanitize'])
+angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngStorage', 'ngCordova', 'starter.config', 'starter.services', 'ngSanitize'])
 
   .run(function ($ionicPlatform, $cordovaSQLite, $ionicModal, DB_CONFIG, $http, $cordovaNetwork, dataService, ajaxService, $rootScope, $ionicPopup, $ionicLoading, $timeout) {
 
@@ -169,19 +169,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
         if(user.username  == '')
         {$rootScope.showAlert("Warning","Please enter your username")}
         else if(user.password == '' )
-        {$rootScope.showAlert("Warning","Please enter your  password","error");}
+        {$rootScope.showAlert("Warning","Please enter your  password");}
         else {
-          $rootScope.userData={
-            'uname':user.username,
-            'passs':user.password
-          }
-            ajaxService.ajax('cod-mobile/user-authorization', $rootScope.userData, []).then(function (response) {
-              localStorage.setItem("userid",1);
-              $rootScope.User_id  = 1;
+            ajaxService.ajax('cod-mobile/user-authorization?uname='+user.username+'&pass='+user.password, '', []).then(function (response) {
+              if(response.data.uid!=false)
+              {
+                localStorage.setItem("userid",1);
+                $rootScope.User_id  = 1;
+                $rootScope.closeModal();
+              }else {
+                $rootScope.showAlert("Error","Username or password is not correct");
+              }
             });
         }
       }else {
-
+        $rootScope.showAlert("Error","Please Connect Internet");
       }
     }
   })

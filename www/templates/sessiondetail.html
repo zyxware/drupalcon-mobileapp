@@ -11,13 +11,21 @@
 
               <i ng-if="!bookmarked" class="ion-ios-bookmarks-outline bookmark-icon" ng-click="addBookmark('session', program.id)"></i>
               <i ng-if="bookmarked" class="ion-ios-bookmarks bookmark-icon" ng-click="removeBookmark('session', program.id)"></i>
-
+              <!--*** STAR RATING STARS**** -->
+              <div>
+                 <rating ng-model="data.rating" max="data.max" ng-click="Rating(program.id)"></rating>
+              </div>
             <div class="row">
               <div class="col col-50">{{program.experiencelevel}}</div>
               <div class="col col-50" href="#/app/trackdetail/{{program.track}}">{{program.tracktitle}}</div>
             </div>
           </div>
+          <!-- <i class="ion-ios-star-outline"/>
+          <i class="ion-ios-star-outline"/> -->
       </div>
+
+
+
       <div class="row">
         <div class="col">
           <ion-list>
