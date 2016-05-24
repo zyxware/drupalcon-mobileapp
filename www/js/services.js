@@ -212,3 +212,18 @@ angular.module('starter.services', [])
     }
   }
 });
+// .service('syncDataBase',function($http, $ionicLoading, $cordovaSQLite) {
+//   this.syncLocaltoServer = function(table){
+//     var FetchQuery = "SELECT * FROM "+table+" WHRE ";
+//     $cordovaSQLite.execute(db, FetchQuery, []).then(function (resfetch) {
+//       console.log(resfetch)
+//       if (resfetch.rows.length > 0) {
+//         for (var i = 0; i < resfetch.rows.length; i++) {
+//           var data2 = resfetch.rows.item(i).ratevalue;
+//           console.log(data2);
+//         }
+//       }
+//     });
+//
+//   }
+// })

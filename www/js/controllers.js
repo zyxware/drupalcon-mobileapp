@@ -52,6 +52,7 @@ angular.module('starter.controllers', [])
     var id = null;
     sessionService.getSpeakers(id).then(function(response){
       $scope.speakers = response;
+      console.log($scope.speakers);
     });
   })
 
@@ -145,27 +146,30 @@ angular.module('starter.controllers', [])
     }
 
     $scope.Rating = function(SessionId){
+
       if($rootScope.User_id ==  '')
       {}
       else {
-        $scope.$watch('data.rating', function() {
-        var checkQuery = "SELECT * FROM rating WHERE sessionId = ? AND UserId = ?";
-        $cordovaSQLite.execute(db, checkQuery, [ SessionId, $rootScope.User_id]).then(function (rescheck) {
+        var checkQuery = "SELECT ratevalue FROM rating WHERE sessionId = "+SessionId+" AND UserId ="+$rootScope.User_id;
+        console.log(checkQuery);
+        $cordovaSQLite.execute(db, checkQuery, []).then(function (rescheck) {
+          console.log(rescheck);
           if (rescheck.rows.length > 0) {
             // UPDATE THE DATA ALREADY EXIST
-            var updateQuery = "UPDATE rating SET ratevalue = ? WHERE sessionId = ? AND UserId = ?";
-            $cordovaSQLite.execute(db, updateQuery, [$scope.data.rating, SessionId, $rootScope.User_id]).then(function (resUpdat) {
+            var updateQuery = "UPDATE rating SET ratevalue ="+$scope.data.rating+" WHERE sessionId ="+SessionId+" AND UserId ="+$rootScope.User_id;
+            $cordovaSQLite.execute(db, updateQuery, []).then(function (resUpdat) {
 
             });
           }else {
             // INSERT NEW DATA
-            var insertQuery = "INSERT INTO rating (sessionId, UserId, ratevalue) VALUES ( ?, ?, ?)'";
+            console.log("inner else part");
+            var insertQuery = "INSERT INTO rating (sessionId, UserId, ratevalue) VALUES ( ?, ?, ?)";
             $cordovaSQLite.execute(db, insertQuery, [ SessionId, $rootScope.User_id, $scope.data.rating]).then(function (resinsert) {
 
             });
           }
         });
-        });
+
       }
 
     }

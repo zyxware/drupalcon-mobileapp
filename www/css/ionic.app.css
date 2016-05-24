@@ -3982,7 +3982,7 @@ a.subdued {
       background-image: linear-gradient(180deg, #6b46e5, #6b46e5 50%, transparent 50%); }
   .bar.bar-dark {
     border-color: #111;
-    background-color: #4d4d4d;
+    background-color: #632D90;
     background-image: linear-gradient(0deg, #111, #111 50%, transparent 50%);
     color: #fff; }
     .bar.bar-dark .title {
@@ -6127,7 +6127,7 @@ a.item-content {
 .item-complex.item-icon-right {
   padding-right: 0; }
   .item-complex.item-icon-right .item-content {
-    padding-right: 54px; }
+    padding-right: 10px; }
 
 .item-icon-left.item-icon-right .icon:first-child {
   right: auto; }
@@ -6237,8 +6237,8 @@ button.item.item-button-right {
 .item-avatar .item-content,
 .item-avatar-left,
 .item-avatar-left .item-content {
-  padding-left: 72px;
-  min-height: 72px; }
+  padding-left: 104px;
+  min-height: 104px; }
   .item-avatar > img:first-child,
   .item-avatar .item-image,
   .item-avatar .item-content > img:first-child,
@@ -6250,8 +6250,8 @@ button.item.item-button-right {
     position: absolute;
     top: 16px;
     left: 16px;
-    max-width: 40px;
-    max-height: 40px;
+    max-width: 74px;
+    max-height: 74px;
     width: 100%;
     height: 100%;
     border-radius: 50%; }
@@ -9397,7 +9397,9 @@ a.button {
  * instead have colors which represent an emotion or generic theme.
  */
 .light, a.light {
-  color: #fff; }
+  color: #464646;
+  width: 80%;
+  margin-left: 10%;}
 
 .light-bg {
   background-color: #fff; }
@@ -9725,16 +9727,16 @@ body, .ionic-body {
   color: #606060; }
 
 ion-content {
-  background-color: #E5E5E5; }
+  background-color: #E4EAEC; }
 
 .menu-bg .item-content {
-  background-color: #4D4D4D; }
+  background-color: #FFFFFF; }
 
 .menu-bg .item {
-  border-color: #7D7777; }
+  border-color: #E3E3E3;; }
 
 .menu-bg .menu-separator {
-  background-color: #676767;
+  background-color: #E4EAEC;
   border: none; }
 
 .item-listing {
@@ -9755,7 +9757,7 @@ ion-content {
   font-weight: bold; }
 
 .profile-header {
-  background-color: #676767;
+  background-color: #BCC2C5;
   color: #fff;
   font-weight: bold; }
   .profile-header i {
@@ -9768,7 +9770,7 @@ ion-content {
   text-align: justify; }
 
 .item-divider {
-  background-color: #676767;
+  background-color: #BCC2C5;
   color: #fff;
   padding: 3%; }
 
@@ -9869,4 +9871,40 @@ a.row.schedule-title {
 ul.rating li i {
   font-size: 20px;
   color: gold;
+}
+.Login_Content
+{
+  background: #632D90;
+}
+.login_List
+{
+  padding-top: 50%;
+}
+.My_Floating_Label
+{
+  border: none;
+  width: 80%;
+  margin-left: 10%;
+  border-bottom: 1px solid #AD97C2;
+  padding: 3px 0 0px 0px!important;
+}
+.My_textbox
+{
+  color: white!important;
+
+}
+.My-login-button{
+    border-color: transparent;
+    background-color: #FFFFFF!important;
+    color: #632D90!important;
+    width: 80%!important;
+    border-radius: 2px!important;
+}
+.Icon-class{
+      font-size: 25px!important;
+}
+.wraper
+{
+  overflow: initial;
+  white-space: initial;
 }

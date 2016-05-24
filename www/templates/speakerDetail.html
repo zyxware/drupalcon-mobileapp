@@ -10,6 +10,7 @@
         <div class="row">
             <div class="col profile-header text-center">
                 <div class="col">
+                  <h3>Affiliations</h3>
                     {{detail.fname}} {{detail.lname}}
                 </div>
                 <div class="col">
@@ -20,6 +21,7 @@
         </div>
         <div ng-if="detail.desgn" class="row">
             <div class="col desc-listing padding">
+              <h3>Biodata</h3>
                 <span>{{detail.desgn}}</span>
                 <span ng-if="detail.org"> at {{detail.org}}</span>
             </div>
@@ -31,7 +33,7 @@
         <div class="row" ng-if="programs.length" class="program-schedule">
             <div class="col">
                 <div class="item item-divider text-center">
-                    SESSIONS
+                    Presentations
                 </div>
                 <div class="item item-text-wrap" ng-repeat="program in programs track by $index"
                      >
