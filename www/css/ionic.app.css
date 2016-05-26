@@ -7973,7 +7973,7 @@ input:checked + .checkbox-icon:after {
   opacity: 1; }
 
 .item-checkbox {
-  padding-left: 60px; }
+  padding-left: 60px;     background-color: #E4EAEC;}
   .item-checkbox.active {
     box-shadow: none; }
 
@@ -9791,6 +9791,20 @@ ion-content {
     border-right: 1px dotted #676767; }
     .program-schedule-details .col:last-child {
       border-right: none; }
+.program-schedule-details2 {
+  border-top: 1px dotted #676767;
+  border-bottom: 1px dotted #676767;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  padding: 2px;
+  margin-bottom: 10px; }
+  .program-schedule-details2 .col {
+    margin: 3px;
+    font-size: 0.8em;
+    border-right: 1px dotted #676767; }
+    .program-schedule-details2 .col:last-child {
+      border-right: none; }
 
 a.row.schedule-title {
   text-decoration: none;
@@ -9810,16 +9824,17 @@ a.row.schedule-title {
     color: #632D90; }
 
 .filter-page {
-  padding-bottom: 0px; }
+  padding-bottom: 0px;
+  padding: 0px!important; }
   .filter-page .input-label {
-    background-color: #4D4D4D;
+    background-color: #BCC2C5;
     margin: 5px 0px;
     padding: 0px; }
   .filter-page ion-item {
-    background-color: #4D4D4D;
+    background-color: #BCC2C5;
     border-bottom: 1px solid #cdcdcd; }
   .filter-page .item.active {
-    background-color: #fff;
+    background-color: #61368A;
     color: #4D4D4D; }
   .filter-page .col-75 {
     padding-left: 0px; }
@@ -9841,14 +9856,15 @@ a.row.schedule-title {
 
 /*Home Page*/
 .ion-conference-home {
-  background: url(../img/Start_BG_screen_without_logo.png) no-repeat center center fixed;
+  background: url(../img/Start_BG_screen_without_logo.jpg) no-repeat center center fixed;
   background-size: cover; }
   .ion-conference-home .main-listing {
     margin-top: 20px; }
     .ion-conference-home .main-listing a {
       text-decoration: none; }
     .ion-conference-home .main-listing .item-title {
-      font-size: 1.3em; }
+      font-size: 1.2em;
+    color: white!important;}
 
 .session-details {
   font-size: 12px; }
@@ -9907,4 +9923,21 @@ ul.rating li i {
 {
   overflow: initial;
   white-space: initial;
+}
+.default-margin
+{
+  text-align: center;
+padding-top: 31px;
+}
+.Rating_Class
+{
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.filter-menu
+{
+  color: #fff!important;
+  width: 100%!important;
+  margin-left: 0%!important;
+  overflow: inherit!important;
 }

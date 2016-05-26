@@ -9,7 +9,7 @@
     <div ng-hide="!showSearchBar" class="bar bar-header item-input-inset">
       <label class="item-input-wrapper">
         <i class="icon ion-ios-search placeholder-icon"></i>
-        <input type="search" placeholder="Search" ng-model="searchSpeaker" ng-change="scrollTop()" id="searchbx" autofocus>
+        <input type="search" focus="{{focusThis}}" placeholder="Search" ng-model="searchSpeaker" ng-change="scrollTop()" id="searchbx" autofocus>
       </label>
       <button class="button button-clear" ng-click="hideSearchbar()">
         Cancel
@@ -26,7 +26,7 @@
             <img ng-if="speaker.prof_img==''" src="img/avatar.png">
             <img ng-if="speaker.prof_img!=''" src="{{speaker.prof_img}}">
             <h2>{{speaker.fname}} {{speaker.lname}}</h2>
-            <h3 class="wraper">{{speaker.desgn}}</h3>
+            <p class="wraper" ng-bind-html="speaker.desc" ></p>
         </ion-item>
     </ion-list>
   </ion-content>

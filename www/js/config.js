@@ -86,6 +86,7 @@ angular.module('starter.config', [])
                   {name: 'sessionId', type: 'integer'},
                   {name: 'UserId', type: 'integer'},
                   {name: 'ratevalue', type: 'integer'},
+                  {name: 'review', type: 'text'},
               ]
             },
         ]

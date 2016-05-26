@@ -61,7 +61,6 @@ angular.module('starter.controllers', [])
     var id = $stateParams.speakerId;
 
     $scope.programs = [];
-
     sessionService.getSessions('speaker', id).then(function(response){
       $scope.programs = response;
     });
@@ -82,7 +81,6 @@ angular.module('starter.controllers', [])
   .controller('SessionsCtrl', function ($scope, sessionService, $stateParams) {
     var date = $stateParams.date;
     $scope.programs = [];
-
     sessionService.getSessions('date', date).then(function(response){
       $scope.programs = response;
     });
@@ -91,6 +89,12 @@ angular.module('starter.controllers', [])
   // SessionDetailCtrl - Session Detail Page
   .controller('SessionDetailCtrl', function ($scope, $stateParams, $cordovaSQLite, $rootScope) {
     var id = $stateParams.sessionId;
+    $scope.rating = '';
+    $scope.data = {
+      rating : '',
+      max: 5
+    }
+
     var query = "SELECT programs.*,tracks.title AS tracktitle, ";
         query += "speakers.fname AS speakerfname, speakers.lname AS speakerlname,speakers.prof_img AS speakerprof_img, speakers.id AS speakerid, ";
         query += "rooms.name AS roomname, rooms.id AS roomid ";
@@ -108,7 +112,6 @@ angular.module('starter.controllers', [])
     $cordovaSQLite.execute(db, query, [id]).then(function (res) {
       if (res.rows.length > 0) {
         $scope.program = res.rows.item(0);
-        console.log($scope.program);
         $scope.programDate = new Date(res.rows.item(0).date);
         for (var i = 0; i < res.rows.length; i++) {
           var speakerId = res.rows.item(i).speakerid;
@@ -116,6 +119,7 @@ angular.module('starter.controllers', [])
           var prof_img = res.rows.item(i).speakerprof_img;
           $scope.speakers.push({speakername:speakername,prof_img:prof_img,speakerid:speakerId});
         }
+        //USER BOOKMARKS
         $scope.bookmarks = false;
         var bookQuery = "SELECT bookmarks.id FROM bookmarks WHERE type = ? AND itemId = ?";
         $cordovaSQLite.execute(db, bookQuery, ['session', id]).then(function (resBook) {
@@ -123,6 +127,29 @@ angular.module('starter.controllers', [])
             $scope.bookmarked = true;
           }
         });
+        //FETCHING USER RATING
+        if($rootScope.User_id !=  '')
+        {
+          var FetchQuery = "SELECT ratevalue FROM rating WHERE UserId ="+$rootScope.User_id+" AND sessionId="+id;
+             $cordovaSQLite.execute(db, FetchQuery, []).then(function (resfetch) {
+               if (resfetch.rows.length > 0) {
+                 for (var i = 0; i < resfetch.rows.length; i++) {
+                   $scope.data.rating = resfetch.rows.item(i).ratevalue;
+                 }
+               }
+             });
+        }
+        //FETCH REVIEWS
+        $scope.reviews=[];
+        var reviewQuery = "SELECT review FROM rating WHERE sessionId="+id;
+           $cordovaSQLite.execute(db, reviewQuery, []).then(function (reviews) {
+             if (reviews.rows.length > 0) {
+               for (var i = 0; i < reviews.rows.length; i++) {
+                 $scope.reviews.push({review:reviews.rows.item(i).review})
+               }
+             }
+           });
+        //FETCH USER FILES
         var FileQuery = "SELECT files.fileUrl FROM files WHERE sessionId = ?";
         $cordovaSQLite.execute(db, FileQuery, [id]).then(function (resFile) {
           if (resFile.rows.length > 0) {
@@ -139,45 +166,63 @@ angular.module('starter.controllers', [])
       console.error(err);
     });
     // ***********RATING FUNCTIONS AND DIRECTIVES************
-    $scope.rating = '';
-    $scope.data = {
-      rating : '',
-      max: 5
-    }
+
 
     $scope.Rating = function(SessionId){
 
       if($rootScope.User_id ==  '')
-      {}
+      {$rootScope.openModal()}
       else {
         var checkQuery = "SELECT ratevalue FROM rating WHERE sessionId = "+SessionId+" AND UserId ="+$rootScope.User_id;
-        console.log(checkQuery);
         $cordovaSQLite.execute(db, checkQuery, []).then(function (rescheck) {
-          console.log(rescheck);
           if (rescheck.rows.length > 0) {
             // UPDATE THE DATA ALREADY EXIST
-            var updateQuery = "UPDATE rating SET ratevalue ="+$scope.data.rating+" WHERE sessionId ="+SessionId+" AND UserId ="+$rootScope.User_id;
+            var updateQuery = "UPDATE rating SET ratevalue ="+$scope.data.rating+" WHERE sessionId="+SessionId+" AND UserId="+$rootScope.User_id;
             $cordovaSQLite.execute(db, updateQuery, []).then(function (resUpdat) {
-
+                $scope.SubmitReview(SessionId);
             });
           }else {
             // INSERT NEW DATA
-            console.log("inner else part");
-            var insertQuery = "INSERT INTO rating (sessionId, UserId, ratevalue) VALUES ( ?, ?, ?)";
-            $cordovaSQLite.execute(db, insertQuery, [ SessionId, $rootScope.User_id, $scope.data.rating]).then(function (resinsert) {
-
+            var insertQuery = "INSERT INTO rating (sessionId, UserId, ratevalue,review) VALUES ( ?, ?, ?, ?)";
+            $cordovaSQLite.execute(db, insertQuery, [ SessionId, $rootScope.User_id, $scope.data.rating,'']).then(function (resinsert) {
+                $scope.SubmitReview(SessionId);
             });
           }
         });
-
       }
-
     }
+    $scope.SubmitReview = function(SessionId) {
+      swal({
+        title: 'Submit your Review',
+        input: 'textarea',
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        preConfirm: function() {
+          return new Promise(function(resolve) {
+              resolve();
+          });
+        },
+        allowOutsideClick: false
+      }).then(function(textarea) {
+        if (textarea) {
+          var checkQuery = "SELECT ratevalue FROM rating WHERE sessionId = "+SessionId+" AND UserId ="+$rootScope.User_id;
+          $cordovaSQLite.execute(db, checkQuery, []).then(function (rescheck) {
+            if (rescheck.rows.length > 0) {
+                var updatereview = "UPDATE rating SET review ="+textarea+" WHERE sessionId ="+SessionId+" AND UserId ="+$rootScope.User_id;
+                $cordovaSQLite.execute(db, query, []).then(function (resUp) {
+                  swal({
+                      type: 'success',
+                      title: 'THANK YOU',
+                      html: 'Thanks for your review'
+                    });
+                });
+              }
+            });
+        }
+      })
+    }
+
   })
-
-
-
-
   // TracksCtrl - Tracks listing page.
   .controller('TracksCtrl', function ($scope, sessionService) {
     $scope.tracks = [];
@@ -234,7 +279,8 @@ angular.module('starter.controllers', [])
       *CHECK THE USER ALREADY LOGINED .THE USER NOT LOGIN THEN DISPLAY THE LOGIN FORM POPUP
       */
       if($rootScope.User_id =='')
-      {$rootScope.openModal();}
+      {$rootScope.openModal();
+      }
       else {
         var query = 'INSERT INTO bookmarks (type, userid, itemId) VALUES ( ?, ?, ?)';
         $cordovaSQLite.execute(db, query, [type, $rootScope.User_id, id]).then(function (res) {
@@ -268,7 +314,6 @@ angular.module('starter.controllers', [])
         $scope.programs = response;
       });
     });
-
   })
 
   // FavouriteSpeakersCtrl - Displays favourite speakers
@@ -465,12 +510,14 @@ angular.module('starter.controllers', [])
 
   // SearchCtrl - Shows/Hides the title search bar.
   .controller('SearchCtrl', function ($scope, $timeout) {
+
     $scope.showSearchbar = function() {
       $scope.showSearchBar = true;
       document.getElementById('searchbx').select();
     }
     $scope.hideSearchbar = function() {
       $scope.showSearchBar = false;
+      $rootScope.focusThis="true";
     }
   });
 
@@ -516,15 +563,13 @@ angular.module('starter.controllers', [])
       $scope.rate = function(value) {
         //CHECK THE USER LOGINED OR NOT
         if($rootScope.User_id ==  '')
-        {$rootScope.openModal()}
+        {}
         else {
           if (!$scope.readonly && value >= 0 && value <= $scope.range.length) {
             ngModelCtrl.$setViewValue(value);
             return ngModelCtrl.$render();
-
           }
         }
-
       };
       $scope.reset = function() {
         $scope.value = ngModelCtrl.$viewValue;

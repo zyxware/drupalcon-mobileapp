@@ -3,49 +3,57 @@
       <div class="row session-details">
           <div class="col profile-header text-center">
             <div class="col session-title">{{program.title}}</div>
-            <div class="row text-center">
-              <div class="col"> On {{program.date.replace("00:00:00","").trim() | date:'d MMMM yyyy'}}</div>
-              <div class="col col-50 ">{{program.startTime}} - {{program.endTime}}</div>
-              <div class="col" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
+            <div align="center" class="Rating_Class">
+               <rating ng-model="data.rating" max="data.max" ng-click="Rating(program.id)"></rating>
             </div>
+
+            <div class="row text-center program-schedule-details2">
+              <div class="col col-33">On {{program.date.replace("00:00:00","").trim() | date:'d MMMM yyyy'}}</div>
+              <div class="col col-33">{{program.startTime}} - {{program.endTime}}</div>
+              <div class="col col-33" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
+            </div>
+
+
 
               <i ng-if="!bookmarked" class="ion-ios-bookmarks-outline bookmark-icon" ng-click="addBookmark('session', program.id)"></i>
               <i ng-if="bookmarked" class="ion-ios-bookmarks bookmark-icon" ng-click="removeBookmark('session', program.id)"></i>
-              <!--*** STAR RATING STARS**** -->
-              <div>
-                 <rating ng-model="data.rating" max="data.max" ng-click="Rating(program.id)"></rating>
-              </div>
+
             <div class="row">
               <div class="col col-50">{{program.experiencelevel}}</div>
               <div class="col col-50" href="#/app/trackdetail/{{program.track}}">{{program.tracktitle}}</div>
             </div>
           </div>
-          <!-- <i class="ion-ios-star-outline"/>
-          <i class="ion-ios-star-outline"/> -->
       </div>
-
-
-
       <div class="row">
         <div class="col">
           <ion-list>
-                <ion-item type="item-text-wrap"  class="item-listing item-remove-animate item-avatar item-icon-right" ng-repeat="speaker in speakers track by $index" href="#/app/speakerdetail/{{speaker.speakerid}}">
-                    <img ng-if="speaker.prof_img==null ||speaker.prof_img==''" src="img/avatar.png">
-                    <img ng-if="speaker.prof_img!=null ||speaker.prof_img!=''" src="{{speaker.prof_img}}">
-                    <h2>{{speaker.speakername}}</h2>
-                </ion-item>
+              <ion-item type="item-text-wrap"  class="item-listing item-remove-animate item-avatar item-icon-right" ng-repeat="speaker in speakers track by $index" href="#/app/speakerdetail/{{speaker.speakerid}}">
+                  <img ng-if="speaker.prof_img==null ||speaker.prof_img==''" src="img/avatar.png">
+                  <img ng-if="speaker.prof_img!=null ||speaker.prof_img!=''" src="{{speaker.prof_img}}">
+                  <h2>{{speaker.speakername}}</h2>
+              </ion-item>
             </ion-list>
           </div>
         </div>
-        <div ng-if="program.desc" class="row">
-          <div class="col desc-listing padding" ng-bind-html="program.desc">
+        <div  class="row">
+          <div ng-if="program.desc" class="row">
+            <div class="col desc-listing padding" ng-bind-html="program.desc">
+            </div>
           </div>
         </div>
+        <h4 ng-if="SessionFiles.length>0">Files</h4>
+        <div class="row" ng-repeat="files in SessionFiles">
+          <div class="col desc-listing padding" >
 
-        <div class="row">
-          <div class="col desc-listing padding" ng-repeat="files in SessionFiles">
             <p>{{files.file}}</p>
           </div>
         </div>
+<!-- REVIEWS  -->
+      <h4 ng-if="reviews.length>0">Reviews</h4>
+      <div class="row" ng-repeat="review in reviews">
+        <div class="col desc-listing padding" >
+          <p>{{review.review}}</p>
+        </div>
+      </div>
     </ion-content>
 </ion-view>

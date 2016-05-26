@@ -2,15 +2,15 @@
     <ion-content ng-repeat="detail in details track by $index">
         <div class="row">
             <div class="col text-center item-avatar-center">
-                <img width="25%" height="25%" ng-if="detail.prof_img==null" src="img/avatar.png">
-                <img width="25%" height="25%" ng-if="detail.prof_img!=null" src="{{detail.prof_img}}">
+                <img width="25%" height="25%" ng-if="detail.prof_img==''" src="img/avatar.png">
+                <img width="25%" height="25%" ng-if="detail.prof_img!=''" src="{{detail.prof_img}}">
             </div>
         </div>
 
         <div class="row">
             <div class="col profile-header text-center">
                 <div class="col">
-                  <h3>Affiliations</h3>
+
                     {{detail.fname}} {{detail.lname}}
                 </div>
                 <div class="col">
@@ -21,14 +21,19 @@
         </div>
         <div ng-if="detail.desgn" class="row">
             <div class="col desc-listing padding">
-              <h3>Biodata</h3>
+              <h4>Affiliations</h4>
+
                 <span>{{detail.desgn}}</span>
                 <span ng-if="detail.org"> at {{detail.org}}</span>
             </div>
 
         </div>
         <div ng-if="detail.desc" class="row">
-          <div class="desc-listing padding" ng-bind-html="detail.desc"></div>
+
+          <div class="desc-listing padding" >
+            <h4>Biodata</h4>
+            <div ng-bind-html="detail.desc"></div>
+          </div>
         </div>
         <div class="row" ng-if="programs.length" class="program-schedule">
             <div class="col">

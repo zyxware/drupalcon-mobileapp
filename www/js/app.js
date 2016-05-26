@@ -13,11 +13,12 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
     /*
     * CHECK USER ALREADY LOGINED OR NOT
     */
+
     if(localStorage.getItem("userid")==''||localStorage.getItem("userid")==""||localStorage.getItem("userid")==null||localStorage.getItem("userid")=='null'||localStorage.getItem("userid")=='undefined')
     {
       $rootScope.User_id =  '';
     }else {
-        $rootScope.User_id      =   localStorage.getItem("user_id");
+        $rootScope.User_id      =   localStorage.getItem("userid");
     }
 
     $ionicPlatform.ready(function () {
@@ -165,7 +166,7 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
     {
     var isOnline = $cordovaNetwork.isOnline();
       console.log(isOnline);
-      if(isOnline == true) {
+     if(isOnline == true) {
         if(user.username  == '')
         {$rootScope.showAlert("Warning","Please enter your username")}
         else if(user.password == '' )
@@ -174,8 +175,8 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
             ajaxService.ajax('cod-mobile/user-authorization?uname='+user.username+'&pass='+user.password, '', []).then(function (response) {
               if(response.data.uid!=false)
               {
-                localStorage.setItem("userid",1);
-                $rootScope.User_id  = 1;
+                localStorage.setItem("userid",response.data.uid);
+                  console.log(response.data.uid);
                 $rootScope.closeModal();
               }else {
                 $rootScope.showAlert("Error","Username or password is not correct");

@@ -96,7 +96,7 @@ angular.module('starter.services', [])
         orderby = " ORDER BY programs.date";
       }
       else if(type == 'speaker') {
-        select += ", speakers.id, speakers.name, speakers.desgn, speakers.fname, speakers.lname ";
+        select += ", speakers.id, speakers.name, speakers.prof_img speakers.desc, speakers.fname, speakers.lname ";
         join += "JOIN speakers ON speakers.id = bookmarks.itemId ";
       }
       var query = select + from + join + where + groupby + orderby;
@@ -173,7 +173,7 @@ angular.module('starter.services', [])
         query += "SELECT id, name, desgn, desc, fname, lname, org, prof_img FROM speakers  WHERE id = " + id;
       }
       else {
-        query += "SELECT id, fname, lname, prof_img FROM speakers WHERE 1";
+        query += "SELECT id, fname, desc, lname, prof_img FROM speakers WHERE 1";
       }
       $cordovaSQLite.execute(db, query).then(function (res) {
         if (res.rows.length > 0) {
@@ -214,7 +214,7 @@ angular.module('starter.services', [])
 });
 // .service('syncDataBase',function($http, $ionicLoading, $cordovaSQLite) {
 //   this.syncLocaltoServer = function(table){
-//     var FetchQuery = "SELECT * FROM "+table+" WHRE ";
+//     var FetchQuery = "SELECT * FROM "+table+" WHERE ";
 //     $cordovaSQLite.execute(db, FetchQuery, []).then(function (resfetch) {
 //       console.log(resfetch)
 //       if (resfetch.rows.length > 0) {
