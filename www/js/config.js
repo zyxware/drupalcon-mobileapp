@@ -78,7 +78,6 @@ angular.module('starter.config', [])
                   {name: 'fileUrl', type: 'text'},
               ]
             },
-            ,
             {
               name: 'rating',
               columns: [
@@ -86,7 +85,19 @@ angular.module('starter.config', [])
                   {name: 'sessionId', type: 'integer'},
                   {name: 'UserId', type: 'integer'},
                   {name: 'ratevalue', type: 'integer'},
+                  {name: 'entity_type',type:'text'},
+                  {name: 'save_status', type: 'integer'},
+              ]
+            },
+            {
+              name: 'reviews',
+              columns: [
+                  {name: 'id', type: 'integer primary key'},
+                  {name: 'sessionId', type: 'integer'},
+                  {name: 'UserId', type: 'integer'},
+                  {name: 'username', type: 'text'},
                   {name: 'review', type: 'text'},
+                  {name: 'save_status', type: 'integer'},
               ]
             },
         ]

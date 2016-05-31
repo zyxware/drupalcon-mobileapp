@@ -134,28 +134,32 @@ angular.module('starter.controllers', [])
              $cordovaSQLite.execute(db, FetchQuery, []).then(function (resfetch) {
                if (resfetch.rows.length > 0) {
                  for (var i = 0; i < resfetch.rows.length; i++) {
-                   $scope.data.rating = resfetch.rows.item(i).ratevalue;
+                   var rat = resfetch.rows.item(i).ratevalue;
+                   $scope.data.rating = (rat/20);
+                   console.log($scope.data.rating);
                  }
                }
              });
         }
         //FETCH REVIEWS
         $scope.reviews=[];
-        var reviewQuery = "SELECT review FROM rating WHERE sessionId="+id;
+        var reviewQuery = "SELECT review,username FROM reviews WHERE sessionId="+id;
            $cordovaSQLite.execute(db, reviewQuery, []).then(function (reviews) {
              if (reviews.rows.length > 0) {
                for (var i = 0; i < reviews.rows.length; i++) {
-                 $scope.reviews.push({review:reviews.rows.item(i).review})
+                 $scope.reviews.push({review:reviews.rows.item(i).review,username:reviews.rows.item(i).username})
+                 console.log($scope.reviews);
                }
              }
            });
         //FETCH USER FILES
-        var FileQuery = "SELECT files.fileUrl FROM files WHERE sessionId = ?";
-        $cordovaSQLite.execute(db, FileQuery, [id]).then(function (resFile) {
+        var FileQuery = "SELECT fileUrl FROM files WHERE sessionId ="+id;
+        $cordovaSQLite.execute(db, FileQuery, []).then(function (resFile) {
           if (resFile.rows.length > 0) {
             for (var i = 0; i < resFile.rows.length; i++) {
-              var FileUri = res.rows.item(i).fileUrl;
+              var FileUri = resFile.rows.item(i).fileUrl;
                 $scope.SessionFiles.push({Session_id:id,file:FileUri});
+                console.log($scope.SessionFiles);
             }
           }
         });
@@ -166,25 +170,25 @@ angular.module('starter.controllers', [])
       console.error(err);
     });
     // ***********RATING FUNCTIONS AND DIRECTIVES************
-
-
     $scope.Rating = function(SessionId){
 
       if($rootScope.User_id ==  '')
       {$rootScope.openModal()}
       else {
+        $scope.savestatus = 0;
         var checkQuery = "SELECT ratevalue FROM rating WHERE sessionId = "+SessionId+" AND UserId ="+$rootScope.User_id;
         $cordovaSQLite.execute(db, checkQuery, []).then(function (rescheck) {
+          $scope.multirating = ($scope.data.rating*20);
           if (rescheck.rows.length > 0) {
             // UPDATE THE DATA ALREADY EXIST
-            var updateQuery = "UPDATE rating SET ratevalue ="+$scope.data.rating+" WHERE sessionId="+SessionId+" AND UserId="+$rootScope.User_id;
+            var updateQuery = "UPDATE rating SET ratevalue ="+$scope.multirating+" WHERE sessionId="+SessionId+" AND UserId="+$rootScope.User_id;
             $cordovaSQLite.execute(db, updateQuery, []).then(function (resUpdat) {
                 $scope.SubmitReview(SessionId);
             });
           }else {
             // INSERT NEW DATA
-            var insertQuery = "INSERT INTO rating (sessionId, UserId, ratevalue,review) VALUES ( ?, ?, ?, ?)";
-            $cordovaSQLite.execute(db, insertQuery, [ SessionId, $rootScope.User_id, $scope.data.rating,'']).then(function (resinsert) {
+            var insertQuery = "INSERT INTO rating (sessionId, UserId, ratevalue, entity_type, save_status) VALUES ( ?, ?, ?, ?, ?)";
+            $cordovaSQLite.execute(db, insertQuery, [ SessionId, $rootScope.User_id, $scope.multirating, 'node',$scope.savestatus]).then(function (resinsert) {
                 $scope.SubmitReview(SessionId);
             });
           }
@@ -204,24 +208,33 @@ angular.module('starter.controllers', [])
         },
         allowOutsideClick: false
       }).then(function(textarea) {
-        if (textarea) {
-          var checkQuery = "SELECT ratevalue FROM rating WHERE sessionId = "+SessionId+" AND UserId ="+$rootScope.User_id;
-          $cordovaSQLite.execute(db, checkQuery, []).then(function (rescheck) {
-            if (rescheck.rows.length > 0) {
-                var updatereview = "UPDATE rating SET review ="+textarea+" WHERE sessionId ="+SessionId+" AND UserId ="+$rootScope.User_id;
-                $cordovaSQLite.execute(db, query, []).then(function (resUp) {
-                  swal({
-                      type: 'success',
-                      title: 'THANK YOU',
-                      html: 'Thanks for your review'
-                    });
+        if(textarea)
+        {
+            var insertreview = "INSERT INTO reviews (sessionId, UserId, username, review, save_status) VALUES ( ?, ?, ?, ?, ?)";
+            $cordovaSQLite.execute(db, insertreview, [ SessionId, $rootScope.User_id, $rootScope.username, textarea,$scope.savestatus]).then(function (resUp) {
+                var reviewQuery = "SELECT review,username FROM reviews WHERE sessionId="+SessionId;
+                 $cordovaSQLite.execute(db, reviewQuery, []).then(function (reviews) {
+                   $scope.reviews=[];
+                   if (reviews.rows.length > 0) {
+                     for (var i = 0; i < reviews.rows.length; i++) {
+                       $scope.reviews.push({review:reviews.rows.item(i).review,username:reviews.rows.item(i).username})
+                     }
+                   }
+                 });
+              swal({
+                  type: 'success',
+                  title: 'THANK YOU',
+                  html: 'Thanks for your review'
                 });
-              }
             });
-        }
+          }else {
+          }
       })
     }
-
+    $scope.open_Browser = function(url) {
+      console.log(url);
+      var ref =  window.open(url, '_blank', 'location=yes');
+    }
   })
   // TracksCtrl - Tracks listing page.
   .controller('TracksCtrl', function ($scope, sessionService) {

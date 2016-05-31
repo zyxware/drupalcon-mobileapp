@@ -22,6 +22,17 @@ angular.module('starter.services', [])
         $ionicLoading.hide();
         return data;
       });
+    },
+    Interval_Ajax: function (page, datas, headers) {
+      var deferred = $q.defer();
+      return $http({
+        method: 'POST',
+        url: "http://dev.drupalcon.z9.dev.zyxware.net/" + page,
+        headers: headers,
+        data: datas
+      }).success(function (data) {
+        return data;
+      });
     }
   }
 })
@@ -203,7 +214,6 @@ angular.module('starter.services', [])
               var ft = new FileTransfer();
               ft.download(movieURL, dirUser.toURL() + "/sessions.json", function(entry) {
                 deferred.resolve(entry);
-                console.log("inside services:" + entry.nativeURL);
               }, function(err) { alert("Download failure: " + JSON.stringify(err)); });
           }, function(err) { alert("2nd getDirectory failure: " + JSON.stringify(err)); });
         }, function(err) { alert("1st getDirectory failure: " + JSON.stringify(err)); });
@@ -211,19 +221,53 @@ angular.module('starter.services', [])
       return deferred.promise;
     }
   }
+})
+.service('syncDataBase',function($http, $ionicLoading, $cordovaSQLite, $cordovaNetwork, ajaxService) {
+  this.syncLocaltoServer_rating = function(){
+    var isOnline = $cordovaNetwork.isOnline();
+     if(isOnline == true) {
+       var FetchQuery = "SELECT UserId,ratevalue,sessionId FROM rating WHERE save_status=0";
+        $cordovaSQLite.execute(db, FetchQuery, []).then(function (resfetch) {
+          var my_data = [];
+          if (resfetch.rows.length > 0) {
+            for (var i = 0; i < resfetch.rows.length; i++) {
+              var userId = resfetch.rows.item(i).UserId;
+              var sessionId = resfetch.rows.item(i).sessionId;
+              var linkdata = 'user_id='+resfetch.rows.item(i).UserId+'&fivestar_value='+resfetch.rows.item(i).ratevalue+'&session_id='+resfetch.rows.item(i).sessionId;
+              ajaxService.Interval_Ajax('cod-mobile/session-rating?'+linkdata, '', []).then(function (response) {
+                if(response.data.success)
+                {
+                  var updatesavestatus= "UPDATE rating SET save_status =1 WHERE UserId="+userId+" AND sessionId="+sessionId;
+                  $cordovaSQLite.execute(db, updatesavestatus, []).then(function (ressave) {
+                  });
+                }
+              });
+            }
+          }
+        });
+      }//CLOSE NETWORK CHECKING
+  },
+  this.syncLocaltoServer_reviews = function(){
+    var isOnline = $cordovaNetwork.isOnline();
+     if(isOnline == true) {
+       var FetchQuery = "SELECT id,UserId,username,review,sessionId FROM reviews WHERE save_status=0";
+        $cordovaSQLite.execute(db, FetchQuery, []).then(function (resfetch) {
+          var my_data = [];
+          if (resfetch.rows.length > 0) {
+            for (var i = 0; i < resfetch.rows.length; i++) {
+              var Tb_Id = resfetch.rows.item(i).id;
+              var linkdata = 'user_id='+resfetch.rows.item(i).UserId+'&comment_body='+resfetch.rows.item(i).review+'&user_name='+resfetch.rows.item(i).username+'&session_id='+resfetch.rows.item(i).sessionId;
+              ajaxService.Interval_Ajax('cod-mobile/session-reviews?'+linkdata, '', []).then(function (response) {
+                if(response.data.success)
+                {
+                  var updatesavestatus= "UPDATE reviews SET save_status =1 WHERE id="+Tb_Id;
+                  $cordovaSQLite.execute(db, updatesavestatus, []).then(function (ressave) {
+                  });
+                }
+              });
+            }
+          }
+        });
+      }//CLOSE NETWORK CHECKING
+  }
 });
-// .service('syncDataBase',function($http, $ionicLoading, $cordovaSQLite) {
-//   this.syncLocaltoServer = function(table){
-//     var FetchQuery = "SELECT * FROM "+table+" WHERE ";
-//     $cordovaSQLite.execute(db, FetchQuery, []).then(function (resfetch) {
-//       console.log(resfetch)
-//       if (resfetch.rows.length > 0) {
-//         for (var i = 0; i < resfetch.rows.length; i++) {
-//           var data2 = resfetch.rows.item(i).ratevalue;
-//           console.log(data2);
-//         }
-//       }
-//     });
-//
-//   }
-// })

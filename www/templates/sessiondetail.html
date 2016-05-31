@@ -41,17 +41,17 @@
             </div>
           </div>
         </div>
-        <h4 ng-if="SessionFiles.length>0">Files</h4>
+        <h4 class="review-header" ng-if="SessionFiles.length>0">Files</h4>
         <div class="row" ng-repeat="files in SessionFiles">
-          <div class="col desc-listing padding" >
-
+          <div class="col desc-listing padding" ng-click="open_Browser(files.file)">
             <p>{{files.file}}</p>
           </div>
         </div>
 <!-- REVIEWS  -->
-      <h4 ng-if="reviews.length>0">Reviews</h4>
+      <h4 class="review-header" ng-if="reviews.length>0">Reviews</h4>
       <div class="row" ng-repeat="review in reviews">
         <div class="col desc-listing padding" >
+          <h6 class="username-div">{{review.username}}</h6>
           <p>{{review.review}}</p>
         </div>
       </div>

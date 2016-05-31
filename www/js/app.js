@@ -8,7 +8,7 @@ var db = null;
 
 angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngStorage', 'ngCordova', 'starter.config', 'starter.services', 'ngSanitize'])
 
-  .run(function ($ionicPlatform, $cordovaSQLite, $ionicModal, DB_CONFIG, $http, $cordovaNetwork, dataService, ajaxService, $rootScope, $ionicPopup, $ionicLoading, $timeout) {
+  .run(function ($ionicPlatform, $cordovaSQLite, $ionicModal, syncDataBase, DB_CONFIG, $http, $cordovaNetwork, dataService, ajaxService, $rootScope, $ionicPopup, $ionicLoading, $interval, $timeout) {
 
     /*
     * CHECK USER ALREADY LOGINED OR NOT
@@ -17,8 +17,10 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
     if(localStorage.getItem("userid")==''||localStorage.getItem("userid")==""||localStorage.getItem("userid")==null||localStorage.getItem("userid")=='null'||localStorage.getItem("userid")=='undefined')
     {
       $rootScope.User_id =  '';
+      // $rootScope.User_id =  1;
     }else {
         $rootScope.User_id      =   localStorage.getItem("userid");
+        $rootScope.username     =   localStorage.getItem("username");
     }
 
     $ionicPlatform.ready(function () {
@@ -141,6 +143,13 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
       });
     };
     /*
+    *INTERVAL FUNCTION FOR SYNCHRONOUS RATING AND REVIEWS DATA
+    */
+    var stop = $interval(function() {
+        syncDataBase.syncLocaltoServer_rating();
+        syncDataBase.syncLocaltoServer_reviews();
+    }, 7000);
+    /*
     *MODEL POPUP FOR LOGIN
     */
     $rootScope.user = {
@@ -176,7 +185,10 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
               if(response.data.uid!=false)
               {
                 localStorage.setItem("userid",response.data.uid);
-                  console.log(response.data.uid);
+                localStorage.setItem("username",user.username);
+                $rootScope.username = user.username;
+                $rootScope.User_id  = response.data.uid;
+                  console.log($rootScope.username);
                 $rootScope.closeModal();
               }else {
                 $rootScope.showAlert("Error","Username or password is not correct");

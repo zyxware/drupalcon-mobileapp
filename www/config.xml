@@ -8,7 +8,7 @@
       Zyxware Team
     </author>
   <content src="index.html"/>
-  <preference name="phonegap-version" value="3.5.0" /> 
+  <preference name="phonegap-version" value="3.5.0" />
   <gap:plugin name="com.ionic.keyboard" spec="1.0.3" source="pgb"/>
   <gap:plugin name="br.com.paveisitemas.splashscreen" spec="2.1.1" source="pgb"/>
   <gap:plugin name="com.surfernetwork.fileplugin" spec="1.0.2" source="pgb" />
@@ -17,6 +17,8 @@
   <gap:plugin name="com.butterflyeffect.plugins" spec="0.1.1" source="pgb"/>
   <gap:plugin name="org.apache.cordova.network-information" spec="0.2.12" source="pgb" />
   <gap:plugin name="it.adacto.cordova.device" spec="0.1" source="pgb" />
+  <gap:plugin name="org.apache.cordova.inappbrowser" />
+
   <access origin="*"/>
     <preference name="webviewbounce" value="false"/>
     <preference name="UIWebViewBounce" value="false"/>
