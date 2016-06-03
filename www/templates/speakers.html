@@ -17,6 +17,7 @@
     </div>
   </ion-header-bar>
   <ion-content>
+      <p ng-bind-html="so"></p>
     <ion-list>
       <div class="row empty-result" ng-if="!speakers.length">No speakers added.</div>
         <ion-item type="item-text-wrap"
@@ -26,7 +27,7 @@
             <img ng-if="speaker.prof_img==''" src="img/avatar.png">
             <img ng-if="speaker.prof_img!=''" src="{{speaker.prof_img}}">
             <h2>{{speaker.fname}} {{speaker.lname}}</h2>
-            <p class="wraper" ng-bind-html="speaker.desc" ></p>
+            <p class="wraper" ng-bind-html="speaker.desc | cut:true:200" ></p>
         </ion-item>
     </ion-list>
   </ion-content>

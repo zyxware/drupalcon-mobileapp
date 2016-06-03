@@ -5524,7 +5524,9 @@ ion-tabs.tabs-color-active-dark .tab-item {
     flex-direction: column; }
   .popup-container input,
   .popup-container textarea {
-    width: 100%; }
+    width: 100%;
+    height: 70px;
+   }
 
 .popup-head {
   padding: 15px 10px;

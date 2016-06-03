@@ -52,7 +52,7 @@
       <div class="row" ng-repeat="review in reviews">
         <div class="col desc-listing padding" >
           <h6 class="username-div">{{review.username}}</h6>
-          <p>{{review.review}}</p>
+          <p ng-bind-html="review.review"></p>
         </div>
       </div>
     </ion-content>

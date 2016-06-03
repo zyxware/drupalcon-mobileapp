@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="con.zyxware.codconferenceapp" version="0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://cordova.apache.org/ns/1.0">
-  <name> DrupalCon Neworeleans 2016</name>
+  <name> DrupalCon Neworeleans 2018</name>
   <description>
          A simple app that guides you through the DrupalCon Neworeleans 2016 schedules.
     </description>

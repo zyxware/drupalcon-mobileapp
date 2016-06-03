@@ -47,8 +47,9 @@ angular.module('starter.controllers', [])
   })
 
   // SpeakersCtrl - Speaker listing page
-  .controller('SpeakersCtrl', function ($scope, sessionService) {
+  .controller('SpeakersCtrl', function ($scope, sessionService ,$rootScope) {
     $scope.speakers = [];
+    $rootScope.some_text = 'sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss';
     var id = null;
     sessionService.getSpeakers(id).then(function(response){
       $scope.speakers = response;
@@ -59,11 +60,11 @@ angular.module('starter.controllers', [])
   // SpeakerDetailCtrl - Speaker Detail page
   .controller('SpeakerDetailCtrl', function ($scope, $stateParams, $cordovaSQLite, sessionService) {
     var id = $stateParams.speakerId;
-
     $scope.programs = [];
     sessionService.getSessions('speaker', id).then(function(response){
       $scope.programs = response;
     });
+
     sessionService.getSpeakers(id).then(function(response){
       $scope.details = response;
     });
@@ -80,6 +81,7 @@ angular.module('starter.controllers', [])
   // SessionsCtrl - Session listing Page
   .controller('SessionsCtrl', function ($scope, sessionService, $stateParams) {
     var date = $stateParams.date;
+
     $scope.programs = [];
     sessionService.getSessions('date', date).then(function(response){
       $scope.programs = response;
@@ -87,14 +89,13 @@ angular.module('starter.controllers', [])
   })
 
   // SessionDetailCtrl - Session Detail Page
-  .controller('SessionDetailCtrl', function ($scope, $stateParams, $cordovaSQLite, $rootScope) {
+  .controller('SessionDetailCtrl', function ($scope, $stateParams, $cordovaSQLite, $rootScope ,$ionicPopup) {
     var id = $stateParams.sessionId;
     $scope.rating = '';
     $scope.data = {
       rating : '',
       max: 5
     }
-
     var query = "SELECT programs.*,tracks.title AS tracktitle, ";
         query += "speakers.fname AS speakerfname, speakers.lname AS speakerlname,speakers.prof_img AS speakerprof_img, speakers.id AS speakerid, ";
         query += "rooms.name AS roomname, rooms.id AS roomid ";
@@ -130,16 +131,16 @@ angular.module('starter.controllers', [])
         //FETCHING USER RATING
         if($rootScope.User_id !=  '')
         {
-          var FetchQuery = "SELECT ratevalue FROM rating WHERE UserId ="+$rootScope.User_id+" AND sessionId="+id;
-             $cordovaSQLite.execute(db, FetchQuery, []).then(function (resfetch) {
-               if (resfetch.rows.length > 0) {
-                 for (var i = 0; i < resfetch.rows.length; i++) {
-                   var rat = resfetch.rows.item(i).ratevalue;
-                   $scope.data.rating = (rat/20);
-                   console.log($scope.data.rating);
-                 }
+           var FetchQuery = "SELECT ratevalue FROM rating WHERE UserId ="+$rootScope.User_id+" AND sessionId="+id;
+           $cordovaSQLite.execute(db, FetchQuery, []).then(function (resfetch) {
+             if (resfetch.rows.length > 0) {
+               for (var i = 0; i < resfetch.rows.length; i++) {
+                 var rat = resfetch.rows.item(i).ratevalue;
+                 $scope.data.rating = (rat/20);
+                 console.log($scope.data.rating);
                }
-             });
+             }
+           });
         }
         //FETCH REVIEWS
         $scope.reviews=[];
@@ -159,7 +160,6 @@ angular.module('starter.controllers', [])
             for (var i = 0; i < resFile.rows.length; i++) {
               var FileUri = resFile.rows.item(i).fileUrl;
                 $scope.SessionFiles.push({Session_id:id,file:FileUri});
-                console.log($scope.SessionFiles);
             }
           }
         });
@@ -173,7 +173,10 @@ angular.module('starter.controllers', [])
     $scope.Rating = function(SessionId){
 
       if($rootScope.User_id ==  '')
-      {$rootScope.openModal()}
+      {
+        //OPEN LOGIN MODEL POPUP
+        $rootScope.openModal()
+      }
       else {
         $scope.savestatus = 0;
         var checkQuery = "SELECT ratevalue FROM rating WHERE sessionId = "+SessionId+" AND UserId ="+$rootScope.User_id;
@@ -181,7 +184,7 @@ angular.module('starter.controllers', [])
           $scope.multirating = ($scope.data.rating*20);
           if (rescheck.rows.length > 0) {
             // UPDATE THE DATA ALREADY EXIST
-            var updateQuery = "UPDATE rating SET ratevalue ="+$scope.multirating+" WHERE sessionId="+SessionId+" AND UserId="+$rootScope.User_id;
+            var updateQuery = "UPDATE rating SET ratevalue ="+$scope.multirating+", save_status ="+$scope.savestatus+" WHERE sessionId="+SessionId+" AND UserId="+$rootScope.User_id;
             $cordovaSQLite.execute(db, updateQuery, []).then(function (resUpdat) {
                 $scope.SubmitReview(SessionId);
             });
@@ -196,44 +199,58 @@ angular.module('starter.controllers', [])
       }
     }
     $scope.SubmitReview = function(SessionId) {
-      swal({
-        title: 'Submit your Review',
-        input: 'textarea',
-        showCancelButton: true,
-        confirmButtonText: 'Submit',
-        preConfirm: function() {
-          return new Promise(function(resolve) {
-              resolve();
-          });
-        },
-        allowOutsideClick: false
-      }).then(function(textarea) {
-        if(textarea)
+
+
+      $rootScope.data = {};
+
+      // An elaborate, custom popup
+      var myPopup = $ionicPopup.show({
+      template: '<textarea ng-model="data.wifi">',
+      title: 'Enter your review',
+      subTitle: '',
+      scope: $rootScope,
+      buttons: [
+        { text: 'Cancel' },
         {
-            var insertreview = "INSERT INTO reviews (sessionId, UserId, username, review, save_status) VALUES ( ?, ?, ?, ?, ?)";
-            $cordovaSQLite.execute(db, insertreview, [ SessionId, $rootScope.User_id, $rootScope.username, textarea,$scope.savestatus]).then(function (resUp) {
-                var reviewQuery = "SELECT review,username FROM reviews WHERE sessionId="+SessionId;
-                 $cordovaSQLite.execute(db, reviewQuery, []).then(function (reviews) {
-                   $scope.reviews=[];
-                   if (reviews.rows.length > 0) {
-                     for (var i = 0; i < reviews.rows.length; i++) {
-                       $scope.reviews.push({review:reviews.rows.item(i).review,username:reviews.rows.item(i).username})
+          text: '<b>Submit</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            console.log($rootScope.data.wifi);
+            if (!$rootScope.data.wifi) {
+              e.preventDefault($rootScope.data.wifi);
+              var alertPopup = $ionicPopup.alert({
+                 title: 'Warning',
+                 template: 'Please enter your review'
+               });
+            } else {
+              $scope.savestatus= 0;
+              var textarea = $rootScope.data.wifi
+              var insertreview = "INSERT INTO reviews (sessionId, UserId, username, review, save_status) VALUES ( ?, ?, ?, ?, ?)";
+              $cordovaSQLite.execute(db, insertreview, [ SessionId, $rootScope.User_id, $rootScope.username, textarea,$scope.savestatus]).then(function (resUp) {
+                  var reviewQuery = "SELECT review,username FROM reviews WHERE sessionId="+SessionId;
+                   $cordovaSQLite.execute(db, reviewQuery, []).then(function (reviews) {
+                     $scope.reviews=[];
+                     if (reviews.rows.length > 0) {
+                       for (var i = 0; i < reviews.rows.length; i++) {
+                         $scope.reviews.push({review:reviews.rows.item(i).review,username:reviews.rows.item(i).username})
+                       }
                      }
-                   }
-                 });
-              swal({
-                  type: 'success',
-                  title: 'THANK YOU',
-                  html: 'Thanks for your review'
-                });
-            });
-          }else {
+                   });
+                 var alertPopup = $ionicPopup.alert({
+                    title: 'THANK YOU',
+                    template: 'Thanks for your review'
+                  });
+              });
+            }
           }
-      })
+        }
+      ]
+      });
+
     }
     $scope.open_Browser = function(url) {
       console.log(url);
-      var ref =  window.open(url, '_blank', 'location=yes');
+      window.open(encodeURI(url), '_system', 'location=yes');
     }
   })
   // TracksCtrl - Tracks listing page.
@@ -288,20 +305,18 @@ angular.module('starter.controllers', [])
   // BookmarkCtrl - Bookmarking items
   .controller('BookmarkCtrl', function ($scope, $cordovaSQLite, $rootScope) {
     $scope.addBookmark = function(type, id) {
-      /*
-      *CHECK THE USER ALREADY LOGINED .THE USER NOT LOGIN THEN DISPLAY THE LOGIN FORM POPUP
-      */
-      if($rootScope.User_id =='')
-      {$rootScope.openModal();
-      }
-      else {
+
+        console.log(type);
+        console.log(id);
+        $scope.Usr = 0
         var query = 'INSERT INTO bookmarks (type, userid, itemId) VALUES ( ?, ?, ?)';
-        $cordovaSQLite.execute(db, query, [type, $rootScope.User_id, id]).then(function (res) {
+        $cordovaSQLite.execute(db, query, [type, $scope.Usr, id]).then(function (res) {
+          console.log(res);
           $scope.bookmarked = true;
         }, function (err) {
             console.error(err);
         });
-      }
+
     };
 
     $scope.removeBookmark = function(type, id) {
@@ -331,10 +346,13 @@ angular.module('starter.controllers', [])
 
   // FavouriteSpeakersCtrl - Displays favourite speakers
   .controller('FavouriteSpeakersCtrl', function ($scope, $cordovaSQLite, sessionService) {
+    console.log("control");
     $scope.$on('$ionicView.afterEnter', function() {
+      console.log("Inner function");
       $scope.speakers = [];
       sessionService.getFavourites('speaker').then(function(response){
         $scope.speakers = response;
+        console.log($scope.speakers);
       });
     });
   })
@@ -449,14 +467,10 @@ angular.module('starter.controllers', [])
     }
 
     $scope.applyFilter = function() {
-      console.log($rootScope.trackFilter);
-      console.log($rootScope.roomFilter);
       $state.go('app.sessionsFilter');
     };
 
     $scope.clearFilter = function() {
-      console.log($rootScope.trackFilter);
-      console.log($rootScope.roomFilter);
       $rootScope.dateFilter = [];
       $rootScope.trackFilter = [];
       $rootScope.roomFilter = [];
@@ -533,9 +547,6 @@ angular.module('starter.controllers', [])
       $rootScope.focusThis="true";
     }
   });
-
-
-
   // Generated by CoffeeScript 1.9.1
   // ********RATING FACTORY
   (function() {

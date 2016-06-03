@@ -8,7 +8,7 @@ var db = null;
 
 angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngStorage', 'ngCordova', 'starter.config', 'starter.services', 'ngSanitize'])
 
-  .run(function ($ionicPlatform, $cordovaSQLite, $ionicModal, syncDataBase, DB_CONFIG, $http, $cordovaNetwork, dataService, ajaxService, $rootScope, $ionicPopup, $ionicLoading, $interval, $timeout) {
+  .run(function ($ionicPlatform, $ionicPopup, $window, $cordovaSQLite, $ionicModal, syncDataBase, DB_CONFIG, $http, $cordovaNetwork, dataService, ajaxService, $rootScope, $ionicPopup, $ionicLoading, $interval, $timeout) {
 
     /*
     * CHECK USER ALREADY LOGINED OR NOT
@@ -23,6 +23,8 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
         $rootScope.username     =   localStorage.getItem("username");
     }
 
+    $rootScope.InnerHeight = {"height":$window.innerHeight+"px"};
+    console.log($rootScope.InnerHeight)
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -148,7 +150,7 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
     var stop = $interval(function() {
         syncDataBase.syncLocaltoServer_rating();
         syncDataBase.syncLocaltoServer_reviews();
-    }, 7000);
+    }, 4000);
     /*
     *MODEL POPUP FOR LOGIN
     */
@@ -200,6 +202,31 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
       }
     }
   })
+
+  //CUT THE WORDS IN A PARTICULAR WORDS
+  .filter('cut', function () {
+        return function (value, wordwise, max, tail) {
+            if (!value) return '';
+
+            max = parseInt(max, 10);
+            if (!max) return value;
+            if (value.length <= max) return value;
+
+            value = value.substr(0, max);
+            if (wordwise) {
+                var lastspace = value.lastIndexOf(' ');
+                if (lastspace != -1) {
+                  //Also remove . and , so its gives a cleaner result.
+                  if (value.charAt(lastspace-1) == '.' || value.charAt(lastspace-1) == ',') {
+                    lastspace = lastspace - 1;
+                  }
+                  value = value.substr(0, lastspace);
+                }
+            }
+
+            return value + (tail || ' …');
+        };
+    })
   .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
     //$ionicConfigProvider.views.maxCache(5);
     $ionicConfigProvider.backButton.text('Back').icon('ion-chevron-left');
