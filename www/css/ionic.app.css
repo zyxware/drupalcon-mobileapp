@@ -9830,7 +9830,7 @@ a.row.schedule-title {
   padding: 0px!important; }
   .filter-page .input-label {
     background-color: #BCC2C5;
-    margin: 5px 0px;
+    margin: 3px 0px;
     padding: 0px; }
   .filter-page ion-item {
     background-color: #BCC2C5;
@@ -9890,6 +9890,19 @@ ul.rating li i {
   font-size: 20px;
   color: gold;
 }
+
+/*RATING Average STYLES*/
+  ul.ratingavg li {
+  display: inline;
+  border: 0px;
+  background: none;
+  padding: 2px 4px;
+}
+ul.ratingavg li i {
+  font-size: 20px;
+  color: gray;
+}
+
 .Login_Content
 {
   background: #632D90;
@@ -9933,8 +9946,8 @@ padding-top: 31px;
 }
 .Rating_Class
 {
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: 4px;
+  padding-bottom: 10px;
 }
 .filter-menu
 {
@@ -9950,4 +9963,9 @@ padding-top: 31px;
 .review-header
 {
       padding-left: 16px;
+}
+.icon-colour
+{
+  color: gray!important;
+  font-size: 19px;
 }

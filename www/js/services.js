@@ -23,6 +23,7 @@ angular.module('starter.services', [])
         return data;
       });
     },
+    //This to remove loading when submit the rating and reviews automatically
     Interval_Ajax: function (page, datas, headers) {
       var deferred = $q.defer();
       return $http({
@@ -107,7 +108,7 @@ angular.module('starter.services', [])
         orderby = " ORDER BY programs.date";
       }
       else if(type == 'speaker') {
-        select += ", speakers.id, speakers.name, speakers.prof_img speakers.desc, speakers.fname, speakers.lname ";
+        select += ", speakers.id, speakers.name, speakers.prof_img ,speakers.desc, speakers.fname, speakers.lname ";
         join += "JOIN speakers ON speakers.id = bookmarks.itemId ";
       }
       var query = select + from + join + where + groupby + orderby;
@@ -195,6 +196,19 @@ angular.module('starter.services', [])
         } else {
           console.log("No results found");
         }
+      }, function (err) {
+        q.reject(null);
+      });
+      return q.promise;
+    },
+    getRatevalue: function(val, id) {
+      var q = $q.defer();
+      var result = '';
+        query = "SELECT ratevalue FROM rating WHERE sessionId="+id+" AND ratevalue="+val;
+      $cordovaSQLite.execute(db, query).then(function (res) {
+          result = res.rows.length;
+          q.resolve(result);
+
       }, function (err) {
         q.reject(null);
       });

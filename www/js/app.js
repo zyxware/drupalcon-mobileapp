@@ -17,14 +17,13 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
     if(localStorage.getItem("userid")==''||localStorage.getItem("userid")==""||localStorage.getItem("userid")==null||localStorage.getItem("userid")=='null'||localStorage.getItem("userid")=='undefined')
     {
       $rootScope.User_id =  '';
-      // $rootScope.User_id =  1;
     }else {
         $rootScope.User_id      =   localStorage.getItem("userid");
         $rootScope.username     =   localStorage.getItem("username");
     }
-
-    $rootScope.InnerHeight = {"height":$window.innerHeight+"px"};
-    console.log($rootScope.InnerHeight)
+    //AUTOMATICALLY GET DEVICE HEIGHT AND IMPLIMENT IN FILTER PAGE SCROLLING
+    var Height = ($window.innerHeight-90);
+    $rootScope.InnerHeight = {"height":Height+"px"};
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -41,16 +40,11 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
       } else {
         db = window.openDatabase(DB_CONFIG.name, '1', 'd_conference', 1024 * 1024 * 100); // browser
       }
-
-
-
       var currentJsonVersion = window.localStorage.getItem('json-version');
       if (window.localStorage.getItem('db-initialized') != 1) {
         // Intializing the db for first-time.
-        console.log('inside db-initlization');
         if(ionic.Platform.isAndroid()){
           url = "/android_asset/www/json/sessions.json";
-          // url = "./json/sessions.json";
         }
         updateDB(url);
       }
@@ -59,25 +53,19 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
         var params = headers = [];
         // listen for Online event - on device
         var isOnline = $cordovaNetwork.isOnline();
-        console.log(isOnline);
         if(isOnline == true) {
           ajaxService.ajax('json-version', params, headers).then(function (response) {
             currentJsonVersion = response.data.version;
-            console.log(currentJsonVersion);
-            console.log(window.localStorage.getItem('json-version'));
             if(window.localStorage.getItem('json-version') < currentJsonVersion) {
-              console.log('inner the checking');
               var confirmPopup = $ionicPopup.confirm({
                 title: 'Update Available',
                 template: 'An update for Confernece schedule is available. Do you want to update the data?'
               });
               confirmPopup.then(function(res) {
                 if(res) {
-                  console.log(res);
                   dataService.getJsonFile().then(function (response) {
                     var url = response.nativeURL;
                     if(window.localStorage.getItem('json-version') < currentJsonVersion) {
-                      console.log("inside getJson Success callback.");
                       angular.forEach(DB_CONFIG.tables, function (table) {
                         if (table.name != 'bookmarks') {
                           var query = 'DROP TABLE ' + table.name;
@@ -129,7 +117,6 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
             var query = 'INSERT INTO ' + table.name + ' (' + columns.join(',') + ') VALUES (' + params.join(',') + ')';
             $cordovaSQLite.execute(db, query, fieldValues).then(function (res) {
             }, function (err) {
-              console.error(err);
             });
           });
         });
@@ -154,10 +141,7 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
     /*
     *MODEL POPUP FOR LOGIN
     */
-    $rootScope.user = {
-      'username':'',
-      'password':''
-    }
+    $rootScope.user = {'username':'','password':''}
     $ionicModal.fromTemplateUrl('templates/Login_model.html', {
     scope: $rootScope,
     animation: 'slide-in-up'
@@ -190,7 +174,6 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
                 localStorage.setItem("username",user.username);
                 $rootScope.username = user.username;
                 $rootScope.User_id  = response.data.uid;
-                  console.log($rootScope.username);
                 $rootScope.closeModal();
               }else {
                 $rootScope.showAlert("Error","Username or password is not correct");
@@ -203,7 +186,7 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
     }
   })
 
-  //CUT THE WORDS IN A PARTICULAR WORDS
+  //CUT THE WORDS IN A PARTICULAR letters
   .filter('cut', function () {
         return function (value, wordwise, max, tail) {
             if (!value) return '';
@@ -223,7 +206,6 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
                   value = value.substr(0, lastspace);
                 }
             }
-
             return value + (tail || ' …');
         };
     })

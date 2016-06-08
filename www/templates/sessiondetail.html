@@ -7,13 +7,19 @@
                <rating ng-model="data.rating" max="data.max" ng-click="Rating(program.id)"></rating>
             </div>
 
+            <div align="center" class="Rating_Class">
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=1,'ion-ios-star-outline icon-colour' : average < 1 }"></i>
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=2,'ion-ios-star-outline icon-colour' : average < 2 }"></i>
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=3,'ion-ios-star-outline icon-colour' : average < 3 }"></i>
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=4,'ion-ios-star-outline icon-colour' : average < 4 }"></i>
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=5,'ion-ios-star-outline icon-colour' : average < 5 }"></i>
+            </div>
+
             <div class="row text-center program-schedule-details2">
               <div class="col col-33">On {{program.date.replace("00:00:00","").trim() | date:'d MMMM yyyy'}}</div>
               <div class="col col-33">{{program.startTime}} - {{program.endTime}}</div>
               <div class="col col-33" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
             </div>
-
-
 
               <i ng-if="!bookmarked" class="ion-ios-bookmarks-outline bookmark-icon" ng-click="addBookmark('session', program.id)"></i>
               <i ng-if="bookmarked" class="ion-ios-bookmarks bookmark-icon" ng-click="removeBookmark('session', program.id)"></i>

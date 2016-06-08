@@ -49,11 +49,9 @@ angular.module('starter.controllers', [])
   // SpeakersCtrl - Speaker listing page
   .controller('SpeakersCtrl', function ($scope, sessionService ,$rootScope) {
     $scope.speakers = [];
-    $rootScope.some_text = 'sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss';
     var id = null;
     sessionService.getSpeakers(id).then(function(response){
       $scope.speakers = response;
-      console.log($scope.speakers);
     });
   })
 
@@ -89,7 +87,7 @@ angular.module('starter.controllers', [])
   })
 
   // SessionDetailCtrl - Session Detail Page
-  .controller('SessionDetailCtrl', function ($scope, $stateParams, $cordovaSQLite, $rootScope ,$ionicPopup) {
+  .controller('SessionDetailCtrl', function ($scope, $stateParams, $cordovaSQLite, $rootScope ,$ionicPopup, sessionService) {
     var id = $stateParams.sessionId;
     $scope.rating = '';
     $scope.data = {
@@ -137,7 +135,6 @@ angular.module('starter.controllers', [])
                for (var i = 0; i < resfetch.rows.length; i++) {
                  var rat = resfetch.rows.item(i).ratevalue;
                  $scope.data.rating = (rat/20);
-                 console.log($scope.data.rating);
                }
              }
            });
@@ -149,7 +146,6 @@ angular.module('starter.controllers', [])
              if (reviews.rows.length > 0) {
                for (var i = 0; i < reviews.rows.length; i++) {
                  $scope.reviews.push({review:reviews.rows.item(i).review,username:reviews.rows.item(i).username})
-                 console.log($scope.reviews);
                }
              }
            });
@@ -162,6 +158,31 @@ angular.module('starter.controllers', [])
                 $scope.SessionFiles.push({Session_id:id,file:FileUri});
             }
           }
+        });
+
+        //FETCH RATE VALUE AND CALCULATE AVERAGE RATING
+        sessionService.getRatevalue('20',id).then(function(response20){
+          $scope.Ratearray20 = response20;
+          sessionService.getRatevalue('40',id).then(function(response40){
+            $scope.Ratearray40 = response40;
+            sessionService.getRatevalue('60',id).then(function(response60){
+              $scope.Ratearray60 = response60;
+              sessionService.getRatevalue('80',id).then(function(response80){
+                $scope.Ratearray80 = response80;
+                sessionService.getRatevalue('100',id).then(function(response100){
+                  $scope.Ratearray100 = response100;
+                    $scope.totalcalc = $scope.Ratearray20 + ($scope.Ratearray40*2) + ($scope.Ratearray60*3) + ($scope.Ratearray80*4) + ($scope.Ratearray100*5);
+                    $scope.TotalCount = $scope.Ratearray20 + $scope.Ratearray40 + $scope.Ratearray60 + $scope.Ratearray80 + $scope.Ratearray100;
+                    if($scope.totalcalc ==0 && $scope.totalcalc ==0)
+                    {
+                      $rootScope.average = 0;
+                    }else {
+                      $rootScope.average =  Math.round($scope.totalcalc/$scope.TotalCount);
+                    }
+                });
+              });
+            });
+          });
         });
       } else {
         console.log("No results found");
@@ -249,7 +270,6 @@ angular.module('starter.controllers', [])
 
     }
     $scope.open_Browser = function(url) {
-      console.log(url);
       window.open(encodeURI(url), '_system', 'location=yes');
     }
   })
@@ -306,15 +326,12 @@ angular.module('starter.controllers', [])
   .controller('BookmarkCtrl', function ($scope, $cordovaSQLite, $rootScope) {
     $scope.addBookmark = function(type, id) {
 
-        console.log(type);
-        console.log(id);
-        $scope.Usr = 0
+        $scope.Usr = 0;
         var query = 'INSERT INTO bookmarks (type, userid, itemId) VALUES ( ?, ?, ?)';
         $cordovaSQLite.execute(db, query, [type, $scope.Usr, id]).then(function (res) {
           console.log(res);
           $scope.bookmarked = true;
         }, function (err) {
-            console.error(err);
         });
 
     };
@@ -346,13 +363,10 @@ angular.module('starter.controllers', [])
 
   // FavouriteSpeakersCtrl - Displays favourite speakers
   .controller('FavouriteSpeakersCtrl', function ($scope, $cordovaSQLite, sessionService) {
-    console.log("control");
     $scope.$on('$ionicView.afterEnter', function() {
-      console.log("Inner function");
       $scope.speakers = [];
       sessionService.getFavourites('speaker').then(function(response){
         $scope.speakers = response;
-        console.log($scope.speakers);
       });
     });
   })
@@ -370,7 +384,6 @@ angular.module('starter.controllers', [])
     // Intializing the date filter. Getting the eventdates.
     var query = "SELECT date FROM eventdates ";
     // if view-pastevents = 0, view future events only, else view past events.
-    console.log(window.localStorage.getItem('view-pastevents'));
     if (window.localStorage.getItem('view-pastevents') == 0) {
       query += "WHERE date > date('now') ";
     }
@@ -386,7 +399,6 @@ angular.module('starter.controllers', [])
           $scope.schedules.push({dateStr:dateStr, dateVal:dateVal});
         }
       } else {
-        console.log("No results found");
       }
     }, function (err) {
       console.error(err);
@@ -527,7 +539,6 @@ angular.module('starter.controllers', [])
         console.log("No results found");
       }
     }, function (err) {
-      console.error(err);
     });
     $scope.appliedFilter = true;
     $rootScope.dateFilter = [];
@@ -536,7 +547,7 @@ angular.module('starter.controllers', [])
   })
 
   // SearchCtrl - Shows/Hides the title search bar.
-  .controller('SearchCtrl', function ($scope, $timeout) {
+  .controller('SearchCtrl', function ($scope, $timeout, $rootScope) {
 
     $scope.showSearchbar = function() {
       $scope.showSearchBar = true;
@@ -585,6 +596,7 @@ angular.module('starter.controllers', [])
         return states;
       };
       $scope.rate = function(value) {
+        console.log(value);
         //CHECK THE USER LOGINED OR NOT
         if($rootScope.User_id ==  '')
         {}
@@ -642,5 +654,6 @@ angular.module('starter.controllers', [])
         }
       };
     });
+
 
   }).call(this);

@@ -2,19 +2,18 @@
     <ion-content ng-repeat="detail in details track by $index">
         <div class="row">
             <div class="col text-center item-avatar-center">
-                <img width="25%" height="25%" ng-if="detail.prof_img==''" src="img/avatar.png">
-                <img width="25%" height="25%" ng-if="detail.prof_img!=''" src="{{detail.prof_img}}">
+                <img width="100px" height="100px" ng-if="detail.prof_img==''" src="img/avatar.png">
+                <img width="100px" height="100px" ng-if="detail.prof_img!=''" src="{{detail.prof_img}}">
             </div>
         </div>
 
         <div class="row">
             <div class="col profile-header text-center">
                 <div class="col">
-
                     {{detail.fname}} {{detail.lname}}
                 </div>
                 <div class="col">
-                    <i ng-if="!bookmarked"  class="ion-ios-bookmarks-outline positive bookmark-icon" ng-click="addBookmark('speaker', detail.id)"></i>
+                    <i ng-if="!bookmarked" class="ion-ios-bookmarks-outline positive bookmark-icon" ng-click="addBookmark('speaker', detail.id)"></i>
                     <i ng-if="bookmarked"  class="ion-ios-bookmarks positive bookmark-icon" ng-click="removeBookmark('speaker', detail.id)"></i>
                 </div>
             </div>
