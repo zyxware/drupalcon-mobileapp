@@ -2,9 +2,9 @@
   <ion-content>
     <form name="filteForm">
       <div class="row filter-page">
-          <div class="col col-25 input-label">
+          <div class="col col-25 input-label" ng-style="InnerHeight">
             <ion-list>
-              <ion-item class="light filter-menu" ng-class="{'active': dateToggle}" ng-click="toggleFilter('date')">
+              <ion-item class="light filter-menu " ng-class="{'active': dateToggle}" ng-click="toggleFilter('date')">
                 Dates
               </ion-item>
               <ion-item class="light filter-menu" ng-class="{'active': trackToggle}" ng-click="toggleFilter('track')">
@@ -16,16 +16,18 @@
             </ion-list>
           </div>
           <div class="col col-75">
-            <ion-list ng-show="dateToggle" ng-repeat="schedule in schedules track by $index">
-              <ion-checkbox ng-model="data.date" ng-checked="dateVal" ng-click="setDateFilter(schedule.dateVal)">{{schedule.dateStr.replace("00:00:00","").trim() | date:' d MMMM yyyy'}}</ion-checkbox>
-            </ion-list>
+            <ion-scroll ng-style="InnerHeight">
+              <ion-list ng-show="dateToggle" ng-repeat="schedule in schedules track by $index">
+                <ion-checkbox ng-model="data.date" ng-checked="dateVal" ng-click="setDateFilter(schedule.dateVal)">{{schedule.dateStr.replace("00:00:00","").trim() | date:' d MMMM yyyy'}}</ion-checkbox>
+              </ion-list>
 
-            <ion-list ng-show="trackToggle" ng-repeat="trackitem in tracks track by $index">
-              <ion-checkbox ng-model="data.track" ng-checked="trackVal" ng-click="setTrackFilter(trackitem.id)">{{trackitem.name}}</ion-checkbox>
-            </ion-list>
-            <ion-list ng-show="roomToggle" ng-repeat="room in rooms track by $index">
-              <ion-checkbox ng-model="data.room" ng-checked="roomVal" ng-click="setRoomFilter(room.id)">{{room.name}}</ion-checkbox>
-            </ion-list>
+              <ion-list ng-show="trackToggle" ng-repeat="trackitem in tracks track by $index">
+                <ion-checkbox ng-model="data.track" ng-checked="trackVal" ng-click="setTrackFilter(trackitem.id)">{{trackitem.name}}</ion-checkbox>
+              </ion-list>
+              <ion-list ng-show="roomToggle" ng-repeat="room in rooms track by $index">
+                <ion-checkbox ng-model="data.room" ng-checked="roomVal" ng-click="setRoomFilter(room.id)">{{room.name}}</ion-checkbox>
+              </ion-list>
+            </ion-scroll>
           </div>
       </div>
       <!--here was the button row -->

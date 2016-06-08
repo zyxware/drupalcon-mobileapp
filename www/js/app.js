@@ -6,9 +6,24 @@
 // 'starter.controllers' is found in controllers.js
 var db = null;
 
-angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordova', 'starter.config', 'starter.services', 'ngSanitize'])
+angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngStorage', 'ngCordova', 'starter.config', 'starter.services', 'ngSanitize'])
 
-  .run(function ($ionicPlatform, $cordovaSQLite, DB_CONFIG, $http, $cordovaNetwork, dataService, ajaxService, $rootScope, $ionicPopup, $ionicLoading, $timeout) {
+  .run(function ($ionicPlatform, $ionicPopup, $window, $cordovaSQLite, $ionicModal, syncDataBase, DB_CONFIG, $http, $cordovaNetwork, dataService, ajaxService, $rootScope, $ionicPopup, $ionicLoading, $interval, $timeout) {
+
+    /*
+    * CHECK USER ALREADY LOGINED OR NOT
+    */
+
+    if(localStorage.getItem("userid")==''||localStorage.getItem("userid")==""||localStorage.getItem("userid")==null||localStorage.getItem("userid")=='null'||localStorage.getItem("userid")=='undefined')
+    {
+      $rootScope.User_id =  '';
+    }else {
+        $rootScope.User_id      =   localStorage.getItem("userid");
+        $rootScope.username     =   localStorage.getItem("username");
+    }
+    //AUTOMATICALLY GET DEVICE HEIGHT AND IMPLIMENT IN FILTER PAGE SCROLLING
+    var Height = ($window.innerHeight-90);
+    $rootScope.InnerHeight = {"height":Height+"px"};
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -57,7 +72,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
                   dataService.getJsonFile().then(function (response) {
                     var url = response.nativeURL;
                     if(window.localStorage.getItem('json-version') < currentJsonVersion) {
-                      console.log("inside getJson Success callback.");
                       angular.forEach(DB_CONFIG.tables, function (table) {
                         if (table.name != 'bookmarks') {
                           var query = 'DROP TABLE ' + table.name;
@@ -71,14 +85,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
                   console.log('No need to update');
                 }
               })
-            }  
+            }
           });
         }
       }
     });
     /**
-     * Function to create the db enteries. 
-     * 
+     * Function to create the db enteries.
+     *
      * @param url - path to the json file from which db is to be intilized.
      */
     var updateDB = function(url){
@@ -107,7 +121,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
             $cordovaSQLite.execute(db, query, fieldValues).then(function (res) {
               console.log('Value inserted into ' + table.name);
             }, function (err) {
-              console.error(err);
             });
           });
         });
@@ -115,7 +128,91 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngStorage', 'ngCordo
       window.localStorage.setItem('db-initialized', 1);
       $timeout( function(){ $ionicLoading.hide()}, 15000);
     }
+    // An alert dialog
+    $rootScope.showAlert = function(title,data) {
+      var alertPopup = $ionicPopup.alert({
+        title: title,
+        template: data
+      });
+    };
+    /*
+    *INTERVAL FUNCTION FOR SYNCHRONOUS RATING AND REVIEWS DATA
+    */
+    var stop = $interval(function() {
+        syncDataBase.syncLocaltoServer_rating();
+        syncDataBase.syncLocaltoServer_reviews();
+    }, 4000);
+    /*
+    *MODEL POPUP FOR LOGIN
+    */
+    $rootScope.user = {'username':'','password':''}
+    $ionicModal.fromTemplateUrl('templates/Login_model.html', {
+    scope: $rootScope,
+    animation: 'slide-in-up'
+    }).then(function(modal) {
+      $rootScope.Login = modal;
+    });
+    $rootScope.openModal = function() {
+      $rootScope.Login.show();
+    };
+    $rootScope.closeModal = function() {
+      $rootScope.Login.hide();
+    };
+    /*
+    *USER LOGIN FUNCTION FOR SUBMIT DATA
+    */
+    $rootScope.User_Login = function(user)
+    {
+    var isOnline = $cordovaNetwork.isOnline();
+      console.log(isOnline);
+     if(isOnline == true) {
+        if(user.username  == '')
+        {$rootScope.showAlert("Warning","Please enter your username")}
+        else if(user.password == '' )
+        {$rootScope.showAlert("Warning","Please enter your  password");}
+        else {
+            ajaxService.ajax('cod-mobile/user-authorization?uname='+user.username+'&pass='+user.password, '', []).then(function (response) {
+              if(response.data.uid!=false)
+              {
+                localStorage.setItem("userid",response.data.uid);
+                localStorage.setItem("username",user.username);
+                $rootScope.username = user.username;
+                $rootScope.User_id  = response.data.uid;
+                $rootScope.closeModal();
+              }else {
+                $rootScope.showAlert("Error","Username or password is not correct");
+              }
+            });
+        }
+      }else {
+        $rootScope.showAlert("Error","Please Connect Internet");
+      }
+    }
   })
+
+  //CUT THE WORDS IN A PARTICULAR letters
+  .filter('cut', function () {
+        return function (value, wordwise, max, tail) {
+            if (!value) return '';
+
+            max = parseInt(max, 10);
+            if (!max) return value;
+            if (value.length <= max) return value;
+
+            value = value.substr(0, max);
+            if (wordwise) {
+                var lastspace = value.lastIndexOf(' ');
+                if (lastspace != -1) {
+                  //Also remove . and , so its gives a cleaner result.
+                  if (value.charAt(lastspace-1) == '.' || value.charAt(lastspace-1) == ',') {
+                    lastspace = lastspace - 1;
+                  }
+                  value = value.substr(0, lastspace);
+                }
+            }
+            return value + (tail || ' …');
+        };
+    })
   .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
     //$ionicConfigProvider.views.maxCache(5);
     $ionicConfigProvider.backButton.text('Back').icon('ion-chevron-left');

@@ -18,46 +18,48 @@
     </ion-header-bar>
     <ion-content>
       <ion-list class="menu-bg">
-        <ion-item class="light" menu-close href="#/app/">
-            <i class="icon ion-home"></i> Home
+        <ion-item class="light" style="margin-top: 13px;" menu-close href="#/app/">
+            <i class="icon ion-home Icon-class"></i> Home
         </ion-item>
         <ion-item class="light" menu-close href="#/app/schedules">
-            <i class="icon ion-mic-c"></i> Sessions
+            <i class="icon ion-mic-a Icon-class"></i> Sessions
         </ion-item>
         <ion-item class="light" menu-close href="#/app/speakers">
-            <i class="icon ion-man"></i> Speakers
+            <i class="ion-ios-people Icon-class"></i> Speakers
         </ion-item>
         <ion-item class="light" menu-close href="#/app/tracks">
-            <i class="ion-chevron-up"></i>
+            <i class="ion-ios-browsers Icon-class"></i>
           Tracks
         </ion-item>
         <ion-item class="light" menu-close href="#/app/rooms">
-            <i class="icon ion-cube"></i>
+            <i class="icon ion-home Icon-class"></i>
           Rooms
         </ion-item>
-        <ion-item class="light" menu-close href="#/app/favourites">
-          <i class="icon ion-star"></i>
-          Favorites
-        </ion-item>
-        <ion-item class="menu-separator">
+
+        <ion-item class="menu-separator ">
         </ion-item>
         <ion-item class="light" menu-close href="#/app/about">
-          <i class="icon ion-compose"></i>
+          <i class="icon ion-compose Icon-class"></i>
           DrupalCon
         </ion-item>
         <ion-item class="light" menu-close href="#/app/about-app">
-          <i class="icon ion-information-circled"></i>
+          <i class="icon ion-information-circled Icon-class"></i>
           About App
         </ion-item>
         <ion-item class="menu-separator">
         </ion-item>
+
         <ion-item  ng-if="!pastevents"  class="light" menu-close href="#" ng-click="viewPastEvents()">
-          <i class="icon ion-android-checkbox-outline-blank" ></i>
+          <i class="icon ion-android-checkbox-outline-blank Icon-class" ></i>
           View past events
         </ion-item>
         <ion-item  ng-if="pastevents" class="light" menu-close href="#" ng-click="removePastEvents()">
-          <i class="icon ion-android-checkbox-outline" ></i>
+          <i class="icon ion-android-checkbox-outline Icon-class" ></i>
           View past events
+        </ion-item>
+        <ion-item class="light" menu-close href="#/app/favourites">
+          <i class="icon ion-ios-bookmarks Icon-class"></i>
+          Favorites
         </ion-item>
       </ion-list>
     </ion-content>

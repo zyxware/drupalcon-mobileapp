@@ -8,6 +8,7 @@
       Zyxware Team
     </author>
   <content src="index.html"/>
+   <preference name="phonegap-version" value="3.5.0" />
   <gap:plugin name="com.ionic.keyboard" spec="1.0.3" source="pgb"/>
   <gap:plugin name="br.com.paveisitemas.splashscreen" spec="2.1.1" source="pgb"/>
   <gap:plugin name="com.cordova.plugins.fileopener" spec="1.0.1" source="pgb" />

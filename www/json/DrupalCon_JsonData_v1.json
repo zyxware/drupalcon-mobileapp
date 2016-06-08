@@ -2,7 +2,7 @@
   "eventdates": [
     {
       "id": 1,
-      "date": "2016-05-09 00:00:00"
+      "date": "2016-04-09 00:00:00"
     },
     {
       "id": 2,
@@ -25,7 +25,7 @@
     {
       "id": 1,
       "title": "Ask Not What Open Source Can Do For You…But What You Can Do For Open Source",
-      "date": "2016-05-09 00:00:00",
+      "date": "2016-04-09 00:00:00",
       "room": 1,
       "startTime": "09:00am",
       "endTime": "10:30am",
@@ -37,7 +37,7 @@
     {
       "id": 2,
       "title": "Drupal 8 and Omni-Channel: Peanut Butter Meets Chocolate",
-      "date": "2016-05-09 00:00:00",
+      "date": "2016-04-09 00:00:00",
       "room": 2,
       "startTime": "11:30am",
       "endTime": "12:30pm",
@@ -109,7 +109,7 @@
     {
       "id": 8,
       "title": "Managing the Risks of Going Headless",
-      "date": "2016-05-14 00:00:00",
+      "date": "2016-05-13 00:00:00",
       "room": 2,
       "startTime": "10:30am",
       "endTime": "11:30am",
@@ -121,7 +121,7 @@
     {
       "id": 9,
       "title": "Altering, Extending, and Enhancing Drupal 8",
-      "date": "2016-05-14 00:00:00",
+      "date": "2016-05-12 00:00:00",
       "room": 3,
       "startTime": "01:30pm",
       "endTime": "03:30pm",
@@ -133,7 +133,7 @@
     {
       "id": 10,
       "title": "Configuration Management for Developers in Drupal 8",
-      "date": "2016-05-15 00:00:00",
+      "date": "2016-05-12 00:00:00",
       "room": 1,
       "startTime": "09:30am",
       "endTime": "11:30am",
@@ -145,7 +145,7 @@
     {
       "id": 11,
       "title": "Creating online stores with Commerce 2.x on Drupal 8",
-      "date": "2016-05-15 00:00:00",
+      "date": "2016-05-13 00:00:00",
       "room": 2,
       "startTime": "11:30am",
       "endTime": "12:30pm",
@@ -157,7 +157,7 @@
     {
       "id": 12,
       "title": "Debugging During Development: Creating, Breaking and Fixing a Module",
-      "date": "2016-05-16 00:00:00",
+      "date": "2016-05-11 00:00:00",
       "room": 3,
       "startTime": "09:30am",
       "endTime": "11:30am",
@@ -169,7 +169,7 @@
     {
       "id": 13,
       "title": "Your brain health is more important than your standing desk",
-      "date": "2016-05-16 00:00:00",
+      "date": "2016-05-12 00:00:00",
       "room": 1,
       "startTime": "12:30pm",
       "endTime": "02:30pm",
@@ -181,7 +181,7 @@
     {
       "id": 14,
       "title": "Approaches for UX changes big and small",
-      "date": "2016-05-17 00:00:00",
+      "date": "2016-05-11 00:00:00",
       "room": 2,
       "startTime": "09:30am",
       "endTime": "11:30am",
@@ -193,7 +193,7 @@
     {
       "id": 15,
       "title": "Automated javascript testing: where we are and what we actually want",
-      "date": "2016-05-17 00:00:00",
+      "date": "2016-05-10 00:00:00",
       "room": 3,
       "startTime": "02:30pm",
       "endTime": "03:30pm",
@@ -205,7 +205,7 @@
     {
       "id": 16,
       "title": "Drupal (admin) as an application: More JavaScript in core?",
-      "date": "2016-05-18 00:00:00",
+      "date": "2016-05-11 00:00:00",
       "room": 1,
       "startTime": "09:30am",
       "endTime": "11:30am",
@@ -217,7 +217,7 @@
     {
       "id": 17,
       "title": "Drupal is a CMS, so how can we better manage content?",
-      "date": "2016-05-18 00:00:00",
+      "date": "2016-05-12 00:00:00",
       "room": 2,
       "startTime": "02:30pm",
       "endTime": "03:30pm",
@@ -229,7 +229,7 @@
     {
       "id": 18,
       "title": "Building your DevOps gameplan",
-      "date": "2016-05-19 00:00:00",
+      "date": "2016-05-13 00:00:00",
       "room": 3,
       "startTime": "09:30am",
       "endTime": "11:30am",
@@ -241,7 +241,7 @@
     {
       "id": 19,
       "title": "ChatOps for Distributed Teams, Fun, and Profit",
-      "date": "2016-05-19 00:00:00",
+      "date": "2016-05-11 00:00:00",
       "room": 1,
       "startTime": "02:30pm",
       "endTime": "03:30pm",
@@ -253,7 +253,7 @@
     {
       "id": 20,
       "title": "Containing Chaos with Kubernetes",
-      "date": "2016-05-20 00:00:00",
+      "date": "2016-05-09 00:00:00",
       "room": 2,
       "startTime": "09:30am",
       "endTime": "11:30am",
@@ -265,7 +265,7 @@
     {
       "id": 21,
       "title": "Continuous Delivery with Drupal",
-      "date": "2016-05-20 00:00:00",
+      "date": "2016-05-10 00:00:00",
       "room": 3,
       "startTime": "02:30pm",
       "endTime": "03:30pm",
@@ -277,7 +277,7 @@
     {
       "id": 22,
       "title": "Documentation Is Getting An Overhaul",
-      "date": "2016-05-21 00:00:00",
+      "date": "2016-05-13 00:00:00",
       "room": 1,
       "startTime": "02:30pm",
       "endTime": "03:30pm",
@@ -289,7 +289,7 @@
     {
       "id": 23,
       "title": "Drupal.org Infrastructure, take home lessons",
-      "date": "2016-05-22 00:00:00",
+      "date": "2016-05-12 00:00:00",
       "room": 2,
       "startTime": "02:30pm",
       "endTime": "03:30pm",
@@ -301,7 +301,7 @@
     {
       "id": 24,
       "title": "Drupal.org is changing: content restructure, issue credits, Composer and more..",
-      "date": "2016-05-23 00:00:00",
+      "date": "2016-05-11 00:00:00",
       "room": 3,
       "startTime": "02:30pm",
       "endTime": "03:30pm",
@@ -313,7 +313,7 @@
     {
       "id": 25,
       "title": "Spotlight on the Featured Showcase: Writing Great Case Studies for Drupal.org",
-      "date": "2016-05-24 00:00:00",
+      "date": "2016-05-10 00:00:00",
       "room": 1,
       "startTime": "02:30pm",
       "endTime": "03:30pm",

@@ -2,7 +2,8 @@
     <ion-content ng-repeat="detail in details track by $index">
         <div class="row">
             <div class="col text-center item-avatar-center">
-                <img width="25%" height="25%" src="img/avatar.png">
+                <img width="100px" height="100px" ng-if="detail.prof_img==''" src="img/avatar.png">
+                <img width="100px" height="100px" ng-if="detail.prof_img!=''" src="{{detail.prof_img}}">
             </div>
         </div>
 
@@ -12,25 +13,32 @@
                     {{detail.fname}} {{detail.lname}}
                 </div>
                 <div class="col">
-                    <i ng-if="!bookmarked"  class="ion-ios-bookmarks-outline positive bookmark-icon" ng-click="addBookmark('speaker', detail.id)"></i>
+                    <i ng-if="!bookmarked" class="ion-ios-bookmarks-outline positive bookmark-icon" ng-click="addBookmark('speaker', detail.id)"></i>
                     <i ng-if="bookmarked"  class="ion-ios-bookmarks positive bookmark-icon" ng-click="removeBookmark('speaker', detail.id)"></i>
                 </div>
             </div>
         </div>
         <div ng-if="detail.desgn" class="row">
             <div class="col desc-listing padding">
+
+              <h4>Affiliations</h4>
+
                 <span>{{detail.desgn}}</span>
                 <span ng-if="detail.org"> at {{detail.org}}</span>
             </div>
 
         </div>
         <div ng-if="detail.desc" class="row">
-          <div class="desc-listing padding" ng-bind-html="detail.desc"></div>
+
+          <div class="desc-listing padding" >
+            <h4>Biodata</h4>
+            <div ng-bind-html="detail.desc"></div>
+          </div>
         </div>
         <div class="row" ng-if="programs.length" class="program-schedule">
             <div class="col">
                 <div class="item item-divider text-center">
-                    SESSIONS
+                    Presentations
                 </div>
                 <div class="item item-text-wrap" ng-repeat="program in programs track by $index"
                      >

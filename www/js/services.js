@@ -22,6 +22,18 @@ angular.module('starter.services', [])
         $ionicLoading.hide();
         return data;
       });
+    },
+    //This to remove loading when submit the rating and reviews automatically
+    Interval_Ajax: function (page, datas, headers) {
+      var deferred = $q.defer();
+      return $http({
+        method: 'POST',
+        url: "http://dev.drupalcon.z9.dev.zyxware.net/" + page,
+        headers: headers,
+        data: datas
+      }).success(function (data) {
+        return data;
+      });
     }
   }
 })
@@ -94,9 +106,9 @@ angular.module('starter.services', [])
         }
         grouby = " GROUP BY programs.id";
         orderby = " ORDER BY programs.date";
-      } 
+      }
       else if(type == 'speaker') {
-        select += ", speakers.id, speakers.name, speakers.desgn, speakers.fname, speakers.lname ";
+        select += ", speakers.id, speakers.name, speakers.prof_img ,speakers.desc, speakers.fname, speakers.lname ";
         join += "JOIN speakers ON speakers.id = bookmarks.itemId ";
       }
       var query = select + from + join + where + groupby + orderby;
@@ -120,11 +132,11 @@ angular.module('starter.services', [])
       var result = [];
       var query = "SELECT tracks.id, tracks.title AS name FROM tracks";
       if(id != null){
-        query += " WHERE id = " + id; 
+        query += " WHERE id = " + id;
       }
       else {
         query += " WHERE 1";
-      }  
+      }
       $cordovaSQLite.execute(db, query).then(function (res) {
         if (res.rows.length > 0) {
           for (var i = 0; i < res.rows.length; i++) {
@@ -145,11 +157,11 @@ angular.module('starter.services', [])
       var result = [];
       var query = "SELECT id, name FROM rooms";
       if(id != null){
-        query += " WHERE id = " + id; 
+        query += " WHERE id = " + id;
       }
       else {
         query += " WHERE 1";
-      }  
+      }
       $cordovaSQLite.execute(db, query).then(function (res) {
         if (res.rows.length > 0) {
           for (var i = 0; i < res.rows.length; i++) {
@@ -170,12 +182,17 @@ angular.module('starter.services', [])
       var result = [];
       var query = "";
       if(id != null){
-        query += "SELECT id, name, desgn, desc, fname, lname, org FROM speakers  WHERE id = " + id;
+        query += "SELECT id, name, desgn, desc, fname, lname, org, prof_img FROM speakers  WHERE id = " + id;
       }
       else {
+<<<<<<< HEAD
         query += "SELECT id, fname, lname FROM speakers WHERE 1";
         query += " ORDER BY fname, lname ASC";
       }  
+=======
+        query += "SELECT id, fname, desc, lname, prof_img FROM speakers WHERE 1";
+      }
+>>>>>>> 115c44b9fae99be4cf9e24a450e799e01fbdbf8a
       $cordovaSQLite.execute(db, query).then(function (res) {
         if (res.rows.length > 0) {
           for (var i = 0; i < res.rows.length; i++) {
@@ -185,6 +202,19 @@ angular.module('starter.services', [])
         } else {
           console.log("No results found");
         }
+      }, function (err) {
+        q.reject(null);
+      });
+      return q.promise;
+    },
+    getRatevalue: function(val, id) {
+      var q = $q.defer();
+      var result = '';
+        query = "SELECT ratevalue FROM rating WHERE sessionId="+id+" AND ratevalue="+val;
+      $cordovaSQLite.execute(db, query).then(function (res) {
+          result = res.rows.length;
+          q.resolve(result);
+
       }, function (err) {
         q.reject(null);
       });
@@ -204,12 +234,60 @@ angular.module('starter.services', [])
               var ft = new FileTransfer();
               ft.download(movieURL, dirUser.toURL() + "/sessions.json", function(entry) {
                 deferred.resolve(entry);
-                console.log("inside services:" + entry.nativeURL);
               }, function(err) { alert("Download failure: " + JSON.stringify(err)); });
           }, function(err) { alert("2nd getDirectory failure: " + JSON.stringify(err)); });
         }, function(err) { alert("1st getDirectory failure: " + JSON.stringify(err)); });
       }, function(err) { alert("requestFileSystem failure: " + JSON.stringify(err)); });
       return deferred.promise;
     }
+  }
+})
+.service('syncDataBase',function($http, $ionicLoading, $cordovaSQLite, $cordovaNetwork, ajaxService) {
+  this.syncLocaltoServer_rating = function(){
+    var isOnline = $cordovaNetwork.isOnline();
+     if(isOnline == true) {
+       var FetchQuery = "SELECT UserId,ratevalue,sessionId FROM rating WHERE save_status=0";
+        $cordovaSQLite.execute(db, FetchQuery, []).then(function (resfetch) {
+          var my_data = [];
+          if (resfetch.rows.length > 0) {
+            for (var i = 0; i < resfetch.rows.length; i++) {
+              var userId = resfetch.rows.item(i).UserId;
+              var sessionId = resfetch.rows.item(i).sessionId;
+              var linkdata = 'user_id='+resfetch.rows.item(i).UserId+'&fivestar_value='+resfetch.rows.item(i).ratevalue+'&session_id='+resfetch.rows.item(i).sessionId;
+              ajaxService.Interval_Ajax('cod-mobile/session-rating?'+linkdata, '', []).then(function (response) {
+                if(response.data.success)
+                {
+                  var updatesavestatus= "UPDATE rating SET save_status =1 WHERE UserId="+userId+" AND sessionId="+sessionId;
+                  $cordovaSQLite.execute(db, updatesavestatus, []).then(function (ressave) {
+                  });
+                }
+              });
+            }
+          }
+        });
+      }//CLOSE NETWORK CHECKING
+  },
+  this.syncLocaltoServer_reviews = function(){
+    var isOnline = $cordovaNetwork.isOnline();
+     if(isOnline == true) {
+       var FetchQuery = "SELECT id,UserId,username,review,sessionId FROM reviews WHERE save_status=0";
+        $cordovaSQLite.execute(db, FetchQuery, []).then(function (resfetch) {
+          var my_data = [];
+          if (resfetch.rows.length > 0) {
+            for (var i = 0; i < resfetch.rows.length; i++) {
+              var Tb_Id = resfetch.rows.item(i).id;
+              var linkdata = 'user_id='+resfetch.rows.item(i).UserId+'&comment_body='+resfetch.rows.item(i).review+'&user_name='+resfetch.rows.item(i).username+'&session_id='+resfetch.rows.item(i).sessionId;
+              ajaxService.Interval_Ajax('cod-mobile/session-reviews?'+linkdata, '', []).then(function (response) {
+                if(response.data.success)
+                {
+                  var updatesavestatus= "UPDATE reviews SET save_status =1 WHERE id="+Tb_Id;
+                  $cordovaSQLite.execute(db, updatesavestatus, []).then(function (ressave) {
+                  });
+                }
+              });
+            }
+          }
+        });
+      }//CLOSE NETWORK CHECKING
   }
 });

@@ -34,6 +34,7 @@ angular.module('starter.config', [])
                   {name: 'fname', type: 'text'},
                   {name: 'lname', type: 'text'},
                   {name: 'org', type: 'text'},
+                  {name: 'prof_img', type: 'text'},
               ]
             },
             {
@@ -64,9 +65,42 @@ angular.module('starter.config', [])
               name: 'bookmarks',
               columns: [
                   {name: 'id', type: 'integer primary key'},
+                  {name: 'userid', type: 'integer'},
                   {name: 'type', type: 'text'},
                   {name: 'itemId', type: 'integer'},
               ]
             },
+            {
+              name: 'files',
+              columns: [
+                  {name: 'id', type: 'integer primary key'},
+                  {name: 'sessionId', type: 'integer'},
+                  {name: 'fileUrl', type: 'text'},
+              ]
+            },
+            {
+              name: 'rating',
+              columns: [
+                  {name: 'id', type: 'integer primary key'},
+                  {name: 'sessionId', type: 'integer'},
+                  {name: 'UserId', type: 'integer'},
+                  {name: 'ratevalue', type: 'integer'},
+                  {name: 'entity_type',type:'text'},
+                  {name: 'save_status', type: 'integer'},
+              ]
+            },
+            {
+              name: 'reviews',
+              columns: [
+                  {name: 'id', type: 'integer primary key'},
+                  {name: 'sessionId', type: 'integer'},
+                  {name: 'UserId', type: 'integer'},
+                  {name: 'username', type: 'text'},
+                  {name: 'review', type: 'text'},
+                  {name: 'save_status', type: 'integer'},
+              ]
+            },
         ]
     });
+
+    
