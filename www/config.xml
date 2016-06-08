@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="con.zyxware.codconferenceapp" version="0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://cordova.apache.org/ns/1.0">
-<<<<<<< HEAD
-  <name> DrupalCon Neworeleans 2016</name>
-=======
+
   <name> DrupalCon Neworeleans 2018</name>
->>>>>>> 115c44b9fae99be4cf9e24a450e799e01fbdbf8a
   <description>
          A simple app that guides you through the DrupalCon Neworeleans 2016 schedules.
     </description>
@@ -12,11 +9,9 @@
       Zyxware Team
     </author>
   <content src="index.html"/>
-<<<<<<< HEAD
-  <preference name="phonegap-version" value="3.5.0" /> 
-=======
+
   <preference name="phonegap-version" value="3.5.0" />
->>>>>>> 115c44b9fae99be4cf9e24a450e799e01fbdbf8a
+
   <gap:plugin name="com.ionic.keyboard" spec="1.0.3" source="pgb"/>
   <gap:plugin name="br.com.paveisitemas.splashscreen" spec="2.1.1" source="pgb"/>
   <gap:plugin name="com.surfernetwork.fileplugin" spec="1.0.2" source="pgb" />
@@ -25,11 +20,8 @@
   <gap:plugin name="com.butterflyeffect.plugins" spec="0.1.1" source="pgb"/>
   <gap:plugin name="org.apache.cordova.network-information" spec="0.2.12" source="pgb" />
   <gap:plugin name="it.adacto.cordova.device" spec="0.1" source="pgb" />
-<<<<<<< HEAD
-=======
   <gap:plugin name="org.apache.cordova.inappbrowser" />
     <gap:plugin name="org.apache.cordova.device-orientation" />
->>>>>>> 115c44b9fae99be4cf9e24a450e799e01fbdbf8a
   <access origin="*"/>
     <preference name="webviewbounce" value="false"/>
     <preference name="UIWebViewBounce" value="false"/>
