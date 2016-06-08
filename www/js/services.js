@@ -185,14 +185,8 @@ angular.module('starter.services', [])
         query += "SELECT id, name, desgn, desc, fname, lname, org, prof_img FROM speakers  WHERE id = " + id;
       }
       else {
-<<<<<<< HEAD
-        query += "SELECT id, fname, lname FROM speakers WHERE 1";
-        query += " ORDER BY fname, lname ASC";
-      }  
-=======
         query += "SELECT id, fname, desc, lname, prof_img FROM speakers WHERE 1";
       }
->>>>>>> 115c44b9fae99be4cf9e24a450e799e01fbdbf8a
       $cordovaSQLite.execute(db, query).then(function (res) {
         if (res.rows.length > 0) {
           for (var i = 0; i < res.rows.length; i++) {
