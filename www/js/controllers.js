@@ -325,11 +325,9 @@ angular.module('starter.controllers', [])
   // BookmarkCtrl - Bookmarking items
   .controller('BookmarkCtrl', function ($scope, $cordovaSQLite, $rootScope) {
     $scope.addBookmark = function(type, id) {
-
         $scope.Usr = 0;
         var query = 'INSERT INTO bookmarks (type, userid, itemId) VALUES ( ?, ?, ?)';
         $cordovaSQLite.execute(db, query, [type, $scope.Usr, id]).then(function (res) {
-          console.log(res);
           $scope.bookmarked = true;
         }, function (err) {
         });
@@ -337,8 +335,8 @@ angular.module('starter.controllers', [])
     };
 
     $scope.removeBookmark = function(type, id) {
-      var query = 'DELETE FROM bookmarks WHERE type = ? AND itemId = ? AND userid = ?';
-      $cordovaSQLite.execute(db, query, [type, id, $rootScope.User_id]).then(function (res) {
+      var query = 'DELETE FROM bookmarks WHERE type = ? AND itemId = ?';
+      $cordovaSQLite.execute(db, query, [type, id]).then(function (res) {
         $scope.bookmarked = false;
       }, function (err) {
           console.error(err);

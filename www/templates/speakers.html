@@ -21,7 +21,7 @@
     <ion-list>
       <div class="row empty-result" ng-if="!speakers.length">No speakers added.</div>
         <ion-item type="item-text-wrap"
-          class="item-listing item-remove-animate item-avatar item-icon-right"
+          class="item-listing item-remove-animate item-avatar item-icon-right spkr-dtls"
           ng-repeat="speaker in speakers | filter:searchSpeaker"
           href="#/app/speakerdetail/{{speaker.id}}">
             <img ng-if="speaker.prof_img==''" src="img/avatar.png">
@@ -32,11 +32,3 @@
     </ion-list>
   </ion-content>
 </ion-view>
-<style>
-
-.item p
-{
-  overflow: Initial!important;
-  white-space: initial!important;
-}
-</style>
