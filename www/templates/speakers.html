@@ -6,23 +6,22 @@
         Search
       </a>
     </div>
-    <div ng-hide="!showSearchBar" class="bar bar-header item-input-inset">
+    <div ng-hide="!showSearchBar" class="bar bar-header item-input-inset SerchBar_speakers">
       <label class="item-input-wrapper">
         <i class="icon ion-ios-search placeholder-icon"></i>
-        <input type="search" focus="{{focusThis}}" placeholder="Search" ng-model="searchSpeaker" ng-change="scrollTop()" id="searchbx" autofocus>
+        <input type="search" focus="{{focusThis}}" placeholder="Search" ng-model="search.searchSpeaker" ng-change="scrollTop()" id="searchbx" autofocus>
       </label>
-      <button class="button button-clear" ng-click="hideSearchbar()">
+      <button class="button button-clear" ng-click="hideSearchbar(search)">
         Cancel
       </button>
     </div>
   </ion-header-bar>
-  <ion-content>
-      <p ng-bind-html="so"></p>
+  <ion-content >
     <ion-list>
-      <div class="row empty-result" ng-if="!speakers.length">No speakers added.</div>
+      <div class="row empty-result " ng-if="!speakers.length">No speakers added.</div>
         <ion-item type="item-text-wrap"
-          class="item-listing item-remove-animate item-avatar item-icon-right spkr-dtls"
-          ng-repeat="speaker in speakers | filter:searchSpeaker"
+          class="item-listing  item-avatar item-remove-animate item-icon-right spkr-dtls"
+          ng-repeat="speaker in speakers | filter:search.searchSpeaker"
           href="#/app/speakerdetail/{{speaker.id}}">
             <img ng-if="speaker.prof_img==''" src="img/avatar.png">
             <img ng-if="speaker.prof_img!=''" src="{{speaker.prof_img}}">

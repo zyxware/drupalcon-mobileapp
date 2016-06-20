@@ -102,5 +102,3 @@ angular.module('starter.config', [])
             },
         ]
     });
-
-    

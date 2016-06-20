@@ -4286,7 +4286,9 @@ a.subdued {
 .bar-subheader {
   top: 44px;
   display: block;
-  height: 44px; }
+  height: 43px;
+  padding: 6px!important;
+}
 
 .bar-subfooter {
   bottom: 44px;
@@ -9769,7 +9771,8 @@ ion-content {
   margin: 10px;
   background-color: #fff;
   font-size: 14px;
-  text-align: justify; }
+  text-align: justify;
+  }
 
 .item-divider {
   background-color: #BCC2C5;
@@ -9855,7 +9858,11 @@ a.row.schedule-title {
   padding: 10px;
   font-size: 14px;
   margin-top: 4px; }
-
+.empty-result2 {
+  background-color: #fff;
+  padding: 10px;
+  font-size: 14px;
+  margin-top: 13px!important; }
 /*Home Page*/
 .ion-conference-home {
   background: url(../img/Start_BG_screen_without_logo.jpg) no-repeat center center fixed;
@@ -9955,17 +9962,46 @@ padding-top: 31px;
   width: 100%!important;
   margin-left: 0%!important;
   overflow: inherit!important;
+  padding-bottom: 19px!important;
+  border-right: 0px!important;
+  border-left: 0px!important;
 }
-.username-div
-{
+.username-div{
       color: #36528C;
 }
-.review-header
-{
+.review-header{
       padding-left: 16px;
 }
-.icon-colour
-{
+.icon-colour{
   color: gray!important;
   font-size: 19px;
+}
+.spkr-dtls p{
+  overflow: Initial!important;
+  white-space: initial!important;
+}
+.SerchBar{
+    height: 37px!important;
+    border-bottom: 0px !important;
+    border: 0px!important;
+}
+.Fav-Menu{
+    margin-bottom: 12px;
+}
+.File-Listing{
+    width: 92%!important;
+}
+.SerchBar_speakers {
+    height: 37px!important;
+    border-bottom: 0px !important;
+    border: 0px!important;
+  }
+.speaker-desc{
+  margin-top: -5px;
+}
+.Speaker_aff{
+  margin-top: -1px!important;
+}
+.speaker_bio{
+      margin-top: -10px!important;
 }

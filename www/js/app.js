@@ -21,8 +21,10 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
         $rootScope.User_id      =   localStorage.getItem("userid");
         $rootScope.username     =   localStorage.getItem("username");
     }
+    $rootScope.search={searchSpeaker:''};
+    $rootScope.search2={searchSession :''};
     //AUTOMATICALLY GET DEVICE HEIGHT AND IMPLIMENT IN FILTER PAGE SCROLLING
-    var Height = ($window.innerHeight-90);
+    var Height = ($window.innerHeight-87);
     $rootScope.InnerHeight = {"height":Height+"px"};
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
