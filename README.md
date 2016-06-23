@@ -2,7 +2,9 @@
 
 ## Synopsis
 
-Mobile application for DrupalCon New Orleans 2016. This application uses Conference Organizing Distribution (COD) to pull the conference details.
+Mobile application built for DrupalCon New Orleans 2016. This application uses Conference Organizing Distribution (COD) to pull the conference details.
+
+This app can be used to work along with any website built on Drupal COD. 
 
 The companion module at COD end to generate the data required for the app in JSON is available at
 
