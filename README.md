@@ -12,7 +12,6 @@ https://www.drupal.org/project/cod_mobile
 
 ## App Functionlities
 
-
 Main Features of this app are
 
 1. Complete session listing based on various filter critirea - Tracks, Rooms, Speakers and Date.
@@ -78,7 +77,7 @@ The app will be intialized and will be updated with data stored in the JSON file
 
 Using phonegap;-
 
-1. https://build.phonegap.com
-2.compress the App files
-3.upload into the phonegap server
-4.Produce the Android apk file then download
+1. Login to https://build.phonegap.com
+2. Compress the App files
+3. Upload into the phonegap server
+4. Produce the Android apk file then download
