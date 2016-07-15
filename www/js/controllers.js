@@ -52,6 +52,7 @@ angular.module('starter.controllers', [])
     var id = null;
     sessionService.getSpeakers(id).then(function(response){
       $scope.speakers = response;
+      console.log($scope.speakers);
     });
   })
 
@@ -61,10 +62,12 @@ angular.module('starter.controllers', [])
     $scope.programs = [];
     sessionService.getSessions('speaker', id).then(function(response){
       $scope.programs = response;
+      console.log($scope.programs);
     });
 
     sessionService.getSpeakers(id).then(function(response){
       $scope.details = response;
+      console.log($scope.details);
     });
 
     $scope.bookmarked = false;

@@ -1,29 +1,45 @@
-<ion-view view-title="DrupalCon">
-    <ion-content class="ion-conference-home">
+<ion-view view-title="DUBLIN" style="background: transparent">
+    <ion-content class="ion-conference-home has-header">
         <div class="row">
             <div class="col default-margin">
-                <img width="76%" src="img/Logo_purple.png">
+                <img width="76%" src="Custom/img/Logo_purple.png">
             </div>
         </div>
-        <div class="row main-listing">
-            <a class="col-center col-offset-20" href="#/app/schedules">
-                <img width="50%" src="img/sessions.png">
-                <div class="item-title">Sessions</div>
-            </a>
-            <a class="col-center" href="#/app/speakers">
-                <img width="50%" src="img/speakers.png">
-                <div class="item-title">Speakers</div>
-            </a>
+        <div class="row main-listing">      
+            <div class="col" align="center">
+                <a align="center" class="col-center" href="#/app/tracks">
+                    <i class="ion ion-ios-settings-strong HomeIcon"></i>
+                    <div class="item-title">TRACKS</div>
+                </a>
+            </div>
+            <div class="col" align="center">
+                <a align="center" class="col-center" href="#/app/schedules">
+                    <i class="ion ion-ios-mic HomeIcon"></i>
+                    <div class="item-title">SESSIONS</div>
+                </a> 
+            </div> 
         </div>
         <div class="row main-listing">
-            <a class="col-center col-offset-20" href="#/app/tracks">
-                <img width="50%" src="img/Tracks.png">
-                <div class="col item-title">Tracks</div>
-            </a>
-            <a class="col-center " href="#/app/rooms">
-                <img width="50%" src="img/room.png">
-                <div class="col item-title">Rooms</div>
-            </a>
+            <div class="col" align="center">
+                 <a align="center" class="col-center" href="#/app/rooms">
+                    <i class="ion ion-ios-photos HomeIcon"></i>
+                    <div class="col item-title">ROOMS</div>
+                </a>
+            </div> 
+            <div class="col" align="center">
+                <a align="center" class="col-center " href="#/app/speakers">
+                    <i class="ion ion-ios-person HomeIcon"></i>
+                    <div class="item-title">SPEAKERS</div>
+                </a>      
+            </div>     
         </div>
+       
     </ion-content>
 </ion-view>
+<style type="text/css">
+.bar-stable,.bar,.bar-header,.disable-user-behavior
+  {
+    border: none!important;
+    background: transparent!important;
+  }
+</style>

@@ -5,36 +5,37 @@
             <div class="col session-title">{{program.title}}</div>
             <div align="center" class="Rating_Class">
                <rating ng-model="data.rating" max="data.max" ng-click="Rating(program.id)"></rating>
-            </div>
-
-            <div align="center" class="Rating_Class">
-               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=1,'ion-ios-star-outline icon-colour' : average < 1 }"></i>
-               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=2,'ion-ios-star-outline icon-colour' : average < 2 }"></i>
-               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=3,'ion-ios-star-outline icon-colour' : average < 3 }"></i>
-               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=4,'ion-ios-star-outline icon-colour' : average < 4 }"></i>
-               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=5,'ion-ios-star-outline icon-colour' : average < 5 }"></i>
-            </div>
+            </div>           
 
             <div class="row text-center program-schedule-details2">
               <div class="col col-33">On {{program.date.replace("00:00:00","").trim() | date:'d MMMM yyyy'}}</div>
               <div class="col col-33">{{program.startTime}} - {{program.endTime}}</div>
               <div class="col col-33" ng-href="#/app/roomdetail/{{program.roomid}}">{{program.roomname}}</div>
             </div>
+            <div align="center" class="Rating_Class">
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=1,'ion-ios-star-outline icon-colour' : average < 1 }"></i>
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=2,'ion-ios-star-outline icon-colour' : average < 2 }"></i>
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=3,'ion-ios-star-outline icon-colour' : average < 3 }"></i>
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=4,'ion-ios-star-outline icon-colour' : average < 4 }"></i>
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=5,'ion-ios-star-outline icon-colour' : average < 5 }"></i>
+            </div>       
 
-              <i ng-if="!bookmarked" class="ion-ios-bookmarks-outline bookmark-icon" ng-click="addBookmark('session', program.id)"></i>
-              <i ng-if="bookmarked" class="ion-ios-bookmarks bookmark-icon" ng-click="removeBookmark('session', program.id)"></i>
-
-            <div class="row">
-              <div class="col col-50">{{program.experiencelevel}}</div>
-              <div class="col col-50" href="#/app/trackdetail/{{program.track}}">{{program.tracktitle}}</div>
+            <div class="row ExpLevel">
+              <div class="col col-40">{{program.experiencelevel}}</div>
+              <div class="col col-20">
+                  <i ng-if="!bookmarked" class="ion-ios-bookmarks-outline bookmark-icon" ng-click="addBookmark('session', program.id)"></i>
+                  <i ng-if="bookmarked" class="ion-ios-bookmarks bookmark-icon" ng-click="removeBookmark('session', program.id)"></i>
+              </div>
+              <div class="col col-40" href="#/app/trackdetail/{{program.track}}">{{program.tracktitle}}</div>
             </div>
+
           </div>
       </div>
       <div class="row">
         <div class="col">
           <ion-list>
-              <ion-item type="item-text-wrap"  class="item-listing item-remove-animate item-avatar item-icon-right spkr-dtls" ng-repeat="speaker in speakers track by $index" href="#/app/speakerdetail/{{speaker.speakerid}}">
-                  <img ng-if="speaker.prof_img==null ||speaker.prof_img==''" src="img/avatar.png">
+              <ion-item type="item-text-wrap"  class="item-listing item-remove-animate item-avatar item-icon-right spkr-dtls Session-speaker" ng-repeat="speaker in speakers track by $index" href="#/app/speakerdetail/{{speaker.speakerid}}">
+                  <img ng-if="speaker.prof_img==null ||speaker.prof_img==''" src="Custom/img/avatar.png">
                   <img ng-if="speaker.prof_img!=null ||speaker.prof_img!=''" src="{{speaker.prof_img}}">
                   <h2>{{speaker.speakername}}</h2>
                   <p class="wraper" ng-bind-html="speaker.desc | cut:true:80" ></p>
@@ -48,19 +49,105 @@
             </div>
           </div>
         </div>
-        <h4 class="review-header" ng-if="SessionFiles.length>0">Files</h4>
-        <div class="row" ng-repeat="files in SessionFiles">
+         <div class="row header_Sessiondetail" ng-if="SessionFiles.length>0">
+          <div class="col header_Sessiondetailcol">
+            <h4 class="review-header" >Files</h4>
+          </div>
+        </div>
+        
+        <div class="row Desc-Cont" ng-repeat="files in SessionFiles">
           <div class="col desc-listing padding File-Listing" ng-click="open_Browser(files.file)">
             <p>{{files.file}}</p>
           </div>
         </div>
-<!-- REVIEWS  -->
-      <h4 class="review-header" ng-if="reviews.length>0">Reviews</h4>
-      <div class="row" ng-repeat="review in reviews">
-        <div class="col desc-listing padding" >
+        <div class="row header_Sessiondetail" ng-if="reviews.length>0">
+          <div class="col header_Sessiondetailcol">
+           <h4 class="review-header" >Reviews</h4>
+          </div>
+        </div>
+      
+      <div class="row Desc-Cont" ng-repeat="review in reviews">
+        <div class="col desc-listing padding Review-Listing" >
           <h6 class="username-div">{{review.username}}</h6>
           <p ng-bind-html="review.review"></p>
         </div>
       </div>
     </ion-content>
+
+
+ <!-- <ion-content>
+      <div class="row session-details">
+          <div class="col profile-header text-center">
+            <div class="col session-title">Drupal Con in Dublin</div>
+            <div align="center" class="Rating_Class">
+               <rating ng-model="data.rating" max="data.max" ng-click="Rating(program.id)"></rating>
+            </div>
+
+            <div align="center" class="Rating_Class">
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=1,'ion-ios-star-outline icon-colour' : average < 1 }"></i>
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=2,'ion-ios-star-outline icon-colour' : average < 2 }"></i>
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=3,'ion-ios-star-outline icon-colour' : average < 3 }"></i>
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=4,'ion-ios-star-outline icon-colour' : average < 4 }"></i>
+               <i class="ion" ng-class="{ 'ion-ios-star icon-colour' : average >=5,'ion-ios-star-outline icon-colour' : average < 5 }"></i>
+            </div>
+
+            <div class="row text-center program-schedule-details2">
+              <div class="col col-33">On 26-03-2016</div>
+              <div class="col col-33">10:26 - 11:35</div>
+              <div class="col col-33" ng-href="#/app/roomdetail/{{program.roomid}}">Zyxware office</div>
+            </div>
+
+              <i  class="ion-ios-bookmarks-outline bookmark-icon" ng-click="addBookmark('session', program.id)"></i>
+              <i ng-if="bookmarked" class="ion-ios-bookmarks bookmark-icon" ng-click="removeBookmark('session', program.id)"></i>
+
+            <div class="row">
+              <div class="col col-50">rwrewrewrwer</div>
+              <div class="col col-50" href="#/app/trackdetail/{{program.track}}">dgfgdfsgsf</div>
+            </div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <ion-list>
+              <ion-item type="item-text-wrap"  class="item-listing item-remove-animate item-avatar item-icon-right spkr-dtls" href="#/app/speakerdetail/{{speaker.speakerid}}">
+                  <img  src="Custom/img/avatar.png">
+                  <img ng-if="speaker.prof_img==null ||speaker.prof_img==''" src="{{speaker.prof_img}}">
+                  <h2>mujeeb</h2>
+                  <p class="wraper"  >dfhdfhdfhdfsh sdfghjbsdlkjgndsgsdf gjhsbhlfjg oagkfgja d;faldkfgh;mnbpif  jng ahjsdbfgjhfg ijsahdjfsdjidf siijkjnfgofh gosuhg osdkglsajdfj dm kjnfgs  skdfjngs </p>
+              </ion-item>
+            </ion-list>
+          </div>
+        </div>
+        <div  class="row">
+          <div  class="row">
+            <div class="col desc-listing padding speaker-desc" >kjdnfbhgksad jnd gdsa ihgipdsajhagiphad dsuibgisj gsidgbhsig sd shgishgipd uhsb gishbg ishgishgisujdhfguisw fsijghsif 
+            </div>
+          </div>
+        </div>
+        <div class="row header_Sessiondetail">
+          <div class="col header_Sessiondetailcol">
+            <h4 class="review-header">Files</h4>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col desc-listing padding File-Listing" ng-click="open_Browser(files.file)">
+            <p>vgjfgjfgjfgjfgjfjfhjfhjfhjfgjfgjfjfhjfjfgjfgjgfj</p>
+          </div>
+        </div>
+
+      <h4 class="review-header" >Reviews</h4>
+      <div class="row" >
+        <div class="col desc-listing padding" >
+          <h6 class="username-div">Its good</h6>
+          <p ng-bind-html="review.review">Kollaama sooper</p>
+        </div>
+      </div>
+    </ion-content>
+ -->
+
+
+
+
+
 </ion-view>

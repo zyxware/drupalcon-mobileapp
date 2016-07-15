@@ -2,16 +2,16 @@
   <ion-content>
     <form name="filteForm">
       <div class="row filter-page">
-          <div class="col col-25 input-label" ng-style="InnerHeight">
+          <div class="col col-25 input-label input-label2" ng-style="InnerHeight">
             <ion-list>
               <ion-item class="light filter-menu " ng-class="{'active': dateToggle}" ng-click="toggleFilter('date')">
-                Dates
+                <i class="ion ion-calendar FilterIcon"></i>DATES
               </ion-item>
               <ion-item class="light filter-menu" ng-class="{'active': trackToggle}" ng-click="toggleFilter('track')">
-                Tracks
+                <i class="ion-ios-settings-strong FilterIcon"></i>TRACKS
               </ion-item>
               <ion-item class="light filter-menu" ng-class="{'active': roomToggle}" ng-click="toggleFilter('room')">
-                Rooms
+                <i class="ion ion-ios-photos FilterIcon"></i>ROOMS
               </ion-item>
             </ion-list>
           </div>

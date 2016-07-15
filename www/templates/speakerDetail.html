@@ -1,23 +1,18 @@
 <ion-view view-title="Speaker's Profile" ng-controller="BookmarkCtrl">
     <ion-content ng-repeat="detail in details track by $index">
-        <div class="row">
+        <div class="row speakbg">
             <div class="col text-center item-avatar-center">
-                <img width="100px" height="100px" ng-if="detail.prof_img==''" src="img/avatar.png">
-                <img width="100px" height="100px" ng-if="detail.prof_img!=''" src="{{detail.prof_img}}">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col profile-header text-center">
-                <div class="col">
-                    {{detail.fname}} {{detail.lname}}
+                <img width="80px" height="80px" ng-if="detail.prof_img==''" src="Custom/img/avatar.png">
+                <img width="80px" height="80px" ng-if="detail.prof_img!=''" src="{{detail.prof_img}}">
+                <div>
+                   {{detail.fname}} {{detail.lname}}
                 </div>
-                <div class="col">
-                    <i ng-if="!bookmarked" class="ion-ios-bookmarks-outline positive bookmark-icon" ng-click="addBookmark('speaker', detail.id)"></i>
-                    <i ng-if="bookmarked"  class="ion-ios-bookmarks positive bookmark-icon" ng-click="removeBookmark('speaker', detail.id)"></i>
+                <div class="iconDiff">
+                     <i ng-if="!bookmarked" class="ion-ios-bookmarks-outline positive bookmark-icon-speaker" ng-click="addBookmark('speaker', detail.id)"></i>
+                    <i ng-if="bookmarked"  class="ion-ios-bookmarks positive bookmark-icon-speaker" ng-click="removeBookmark('speaker', detail.id)"></i>
                 </div>
             </div>
-        </div>
+        </div>       
         <div ng-if="detail.desgn" class="row Speaker_aff">
             <div class="col desc-listing padding">
 
@@ -30,15 +25,17 @@
         </div>
         <div ng-if="detail.desc" class="row speaker_bio">
 
-          <div class="desc-listing padding" >
+          <div class="desc-listing padding FullWidth" >
             <h4>Biodata</h4>
             <div ng-bind-html="detail.desc"></div>
           </div>
         </div>
-        <div class="row" ng-if="programs.length" class="program-schedule">
+        <div class="row Presentation" ng-if="programs.length" class="program-schedule">
             <div class="col">
-                <div class="item item-divider text-center">
-                    Sessions
+                <div class="item item-divider" ng-class="{ 'SpeakerDetail_Empty' :detail.desgn == 
+null || detail.desc == 
+null}">
+                    Presentations
                 </div>
                 <div class="item item-text-wrap" ng-repeat="program in programs track by $index"
                      >
@@ -54,4 +51,9 @@
             </div>
         </div>
     </ion-content>
+
+
+
+    
+
 </ion-view>

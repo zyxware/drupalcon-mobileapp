@@ -26,30 +26,35 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
     //AUTOMATICALLY GET DEVICE HEIGHT AND IMPLIMENT IN FILTER PAGE SCROLLING
     var Height = ($window.innerHeight-87);
     $rootScope.InnerHeight = {"height":Height+"px"};
-    $ionicPlatform.ready(function () {
-      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-      // for form inputs)
-      if (window.cordova && window.cordova.plugins.Keyboard) {
-        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        cordova.plugins.Keyboard.disableScroll(true);
-      }
+
+    // if (window.cordova && window.cordova.plugins.Keyboard) {
+    //     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    //     cordova.plugins.Keyboard.disableScroll(true);
+    //   }
       if (window.StatusBar) {
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
       if (window.cordova) {
-        db = $cordovaSQLite.openDB({name: DB_CONFIG.name}); //device
+        // db = $cordovaSQLite.openDB({name: DB_CONFIG.name}); //device
+        db = window.openDatabase(DB_CONFIG.name, '1', 'd_conference', 1024 * 1024 * 100); // browser
       } else {
         db = window.openDatabase(DB_CONFIG.name, '1', 'd_conference', 1024 * 1024 * 100); // browser
       }
+
+
+    $ionicPlatform.ready(function () {
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      
       var currentJsonVersion = window.localStorage.getItem('json-version');
       if (window.localStorage.getItem('db-initialized') != 1) {
-        $ionicLoading.show({
-          template: 'Intializing'
-        });
+        // $ionicLoading.show({
+        //   template: 'Intializing'
+        // });
         // Intializing the db for first-time.
         if(ionic.Platform.isAndroid()){
-          url = "/android_asset/www/json/sessions.json";
+          url = "/android_asset/www/Custom/json/sessions.json";
         }
         updateDB(url);
       }
@@ -68,9 +73,9 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
               });
               confirmPopup.then(function(res) {
                 if(res) {
-                  $ionicLoading.show({
-                    template: 'Intializing'
-                  });
+                  // $ionicLoading.show({
+                  //   template: 'Intializing'
+                  // });
                   dataService.getJsonFile().then(function (response) {
                     var url = response.nativeURL;
                     if(window.localStorage.getItem('json-version') < currentJsonVersion) {

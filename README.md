@@ -26,6 +26,22 @@ Main Features of this app are
 
 The app will be intialized and will be updated with data stored in the JSON file. This json file path can be changed in service.js
 
+## App Usage
+
+1.Clone the repository
+2.Add platform "cordova platform add android"
+3.Enter the Command for getting the dependencies "bower install"
+4.Install the follwing pluggins:
+  cordova plugin add ionic-plugin-keyboard
+  cordova plugin add cordova-plugin-splashscreen
+  cordova plugin add cordova-plugin-file
+  cordova plugin add cordova-plugin-file-transfer
+  cordova plugin add https://github.com/litehelpers/Cordova-sqlite-storage.git
+  cordova plugin add cordova-plugin-network-information
+  cordova plugin add cordova-plugin-device
+  cordova plugin add cordova-plugin-inappbrowser
+  cordova plugin add cordova-plugin-device-orientation
+  ionic plugin add https://github.com/apache/cordova-plugin-whitelist.git
 
 ## Code Structure
 
