@@ -28,6 +28,8 @@ The app will be intialized and will be updated with data stored in the JSON file
 
 ## App Usage
 
+using ionic:-
+
 1.Clone the repository
 2.Add platform "cordova platform add android"
 3.Enter the Command for getting the dependencies "bower install"
@@ -43,20 +45,43 @@ The app will be intialized and will be updated with data stored in the JSON file
   cordova plugin add cordova-plugin-device-orientation
   ionic plugin add https://github.com/apache/cordova-plugin-whitelist.git
 
-## Code Structure
+  using phonegap:-
 
+  1.Clone the repository
+  2.Add xmlns:gap="http://cordova.apache.org/ns/1.0" in config.xml <widget>
+  3Add to config.xml file pluggins :-
+    <gap:plugin name="com.ionic.keyboard" spec="1.0.3" source="pgb"/>
+    <gap:plugin name="br.com.paveisitemas.splashscreen" spec="2.1.1" source="pgb"/>
+    <gap:plugin name="com.surfernetwork.fileplugin" spec="1.0.2" source="pgb" />
+    <gap:plugin name="com.chanthu.evri.gcs-file-transfer" spec="1.0.0" source="pgb" />
+    <gap:plugin name="com.millerjames01.sqlite-plugin" spec="1.0.1" source="pgb"/>
+    <gap:plugin name="com.butterflyeffect.plugins" spec="0.1.1" source="pgb"/>
+    <gap:plugin name="org.apache.cordova.network-information" spec="0.2.12" source="pgb" />
+    <gap:plugin name="it.adacto.cordova.device" spec="0.1" source="pgb" />
+    <gap:plugin name="org.apache.cordova.inappbrowser" />
+    <gap:plugin name="org.apache.cordova.device-orientation" />
+
+## Code Structure
+  resources/
+    android/
+      icon/           // Android app icons          
+      splash/         // Android app splash screens        
+    ios/
+      icon/           // ios app icons          
+      splash/         // ios app splash screens
  www/
-    css/
-      ionic.app.css     //This is the User customized classes and styles
-      ionic.app.min.css // Ionic styles and classes
-    img/
-      Logo_purple.png   //Application home page logo
-      avatar.png        //Speaker image is empty then select this image as default
-      room.png          //Home page Rooms icon
-      sessions.png      //Home page Sessions icon
-      speakers.png      //Home page Speakers icon
-      Tracks.png        //Home page Tracks icon
-      Start_BG_screen_without_logo.jpg //Home page background image
+    Custom/
+      css/
+        ionic.app.css     //This is the User customized classes and styles
+        ionic.app.min.css // Ionic styles and classes
+      img/
+        Logo_purple.png   //Application home page logo
+        avatar.png        //Speaker image is empty then select this image as default
+        room.png          //Home page Rooms icon
+        sessions.png      //Home page Sessions icon
+        speakers.png      //Home page Speakers icon
+        Tracks.png        //Home page Tracks icon
+        Start_BG_screen_without_logo.jpg //Home page background image
     js/
       app.js            // Main functions of the App such as .run,.config,.filter
       config.js         // Manage database and its tables
@@ -64,14 +89,7 @@ The app will be intialized and will be updated with data stored in the JSON file
       services.js       // Define all Services and factories ;- ajaxService, sessionService ,dataService, syncDataBase
     json/
       sessions.json     //Server data file in json format it is SYNCHRONOUS in to local database
-    lib/                //Angular, ionic and cordova files
-    resources/
-      android/
-        icon/           // Android app icons          
-        splash/         // Android app splash screens        
-      ios/
-        icon/           // ios app icons          
-        splash/         // ios app splash screens
+    lib/                //Angular,ionic and cordova files.Enter the Command for getting the dependencies "bower install"    
     templates/
       about.html
       about-app.html
@@ -90,6 +108,12 @@ The app will be intialized and will be updated with data stored in the JSON file
       tracks.html
 
 ## Build Generation
+
+using ionic:-
+
+1.install android sdk
+2.add command into terminal "ionic build android"
+3.The build located in "platforms/android/build/outputs/apk/"
 
 Using phonegap;-
 

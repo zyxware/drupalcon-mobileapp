@@ -26,11 +26,6 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
     //AUTOMATICALLY GET DEVICE HEIGHT AND IMPLIMENT IN FILTER PAGE SCROLLING
     var Height = ($window.innerHeight-87);
     $rootScope.InnerHeight = {"height":Height+"px"};
-
-    // if (window.cordova && window.cordova.plugins.Keyboard) {
-    //     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    //     cordova.plugins.Keyboard.disableScroll(true);
-    //   }
       if (window.StatusBar) {
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
@@ -49,9 +44,9 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
       
       var currentJsonVersion = window.localStorage.getItem('json-version');
       if (window.localStorage.getItem('db-initialized') != 1) {
-        // $ionicLoading.show({
-        //   template: 'Intializing'
-        // });
+        $ionicLoading.show({
+          template: 'Intializing'
+        });
         // Intializing the db for first-time.
         if(ionic.Platform.isAndroid()){
           url = "/android_asset/www/Custom/json/sessions.json";
@@ -73,9 +68,9 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
               });
               confirmPopup.then(function(res) {
                 if(res) {
-                  // $ionicLoading.show({
-                  //   template: 'Intializing'
-                  // });
+                  $ionicLoading.show({
+                    template: 'Intializing'
+                  });
                   dataService.getJsonFile().then(function (response) {
                     var url = response.nativeURL;
                     if(window.localStorage.getItem('json-version') < currentJsonVersion) {
@@ -89,7 +84,6 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
                     }
                   })
                 } else {
-                  console.log('No need to update');
                 }
               })
             }
@@ -126,7 +120,6 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
 
             var query = 'INSERT INTO ' + table.name + ' (' + columns.join(',') + ') VALUES (' + params.join(',') + ')';
             $cordovaSQLite.execute(db, query, fieldValues).then(function (res) {
-              console.log('Value inserted into ' + table.name);
             }, function (err) {
             });
           });
@@ -171,7 +164,6 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
     $rootScope.User_Login = function(user)
     {
     var isOnline = $cordovaNetwork.isOnline();
-      console.log(isOnline);
      if(isOnline == true) {
         if(user.username  == '')
         {$rootScope.showAlert("Warning","Please enter your username")}

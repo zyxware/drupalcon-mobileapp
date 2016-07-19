@@ -8,13 +8,6 @@
       Zyxware Team
     </author>
   <content src="index.html"/>
-   <!-- <preference name="phonegap-version" value="3.5.0" /> -->
-  <!-- <gap:plugin name="com.ionic.keyboard" spec="1.0.3" source="pgb"/>
-  <gap:plugin name="br.com.paveisitemas.splashscreen" spec="2.1.1" source="pgb"/>
-  <gap:plugin name="com.cordova.plugins.fileopener" spec="1.0.1" source="pgb" />
-  <gap:plugin name="com.chanthu.evri.gcs-file-transfer" spec="1.0.0" source="pgb" />
-  <gap:plugin name="io.litehelpers.cordova.sqlite" spec="0.7.6" source="pgb"/>
-  <gap:plugin name="com.butterflyeffect.plugins" spec="0.1.1" source="pgb"/> -->
   <access origin="*"/>
     <preference name="webviewbounce" value="false"/>
     <preference name="UIWebViewBounce" value="false"/>
@@ -39,11 +32,6 @@
     <splash src="resources/android/splash/drawable-port-mdpi-screen.png" density="port-mdpi"/>
     <splash src="resources/android/splash/drawable-port-hdpi-screen.png" density="port-hdpi"/>
     <splash src="resources/android/splash/drawable-port-xhdpi-screen.png" density="port-xhdpi"/>
-    <!-- <gap:splash gap:platform="android" gap:qualifier="port-ldpi" src="resources/android/splash/drawable-land-ldpi-screen.png"/>
-    <gap:splash gap:platform="android" gap:qualifier="port-mdpi" src="resources/android/splash/drawable-land-mdpi-screen.png"/>
-    <gap:splash gap:platform="android" gap:qualifier="port-hdpi" src="resources/android/splash/drawable-port-hdpi-screen.png"/>
-    <gap:splash gap:platform="android" gap:qualifier="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png"/>
-    <gap:splash src="resources/android/splash/splash.png"/> -->
   </platform>
   <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
   <splash src="resources/android/splash/splash.png"/>

@@ -80,7 +80,6 @@ angular.module('starter.services', [])
           }
           q.resolve(result);
         } else {
-          //console.log("No results found");
         }
       }, function (err) {
          q.reject(null);
@@ -117,7 +116,6 @@ angular.module('starter.services', [])
           for (var i = 0; i < res.rows.length; i++) {
             result.push(res.rows.item(i));
           }
-          console.log(result);
           q.resolve(result);
         } else {
           //console.log("No results found");
@@ -170,7 +168,6 @@ angular.module('starter.services', [])
           }
           q.resolve(result);
         } else {
-          console.log("No results found");
         }
       }, function (err) {
         q.reject(null);

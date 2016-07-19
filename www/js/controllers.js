@@ -23,8 +23,6 @@ angular.module('starter.controllers', [])
   .controller('ScheduleCtrl', function ($scope, DB_CONFIG, $cordovaSQLite) {
 
     var query = "SELECT date FROM eventdates ";
-    // if view-pastevents = 0, view future events only, else view past events.
-    console.log(window.localStorage.getItem('view-pastevents'));
     if (window.localStorage.getItem('view-pastevents') == 0) {
       query += "WHERE date > date('now') ";
     }
@@ -40,7 +38,6 @@ angular.module('starter.controllers', [])
           $scope.schedules.push({dateStr:dateStr, dateVal:dateVal});
         }
       } else {
-        console.log("No results found");
       }
     }, function (err) {
     });
@@ -52,7 +49,6 @@ angular.module('starter.controllers', [])
     var id = null;
     sessionService.getSpeakers(id).then(function(response){
       $scope.speakers = response;
-      console.log($scope.speakers);
     });
   })
 
@@ -62,12 +58,10 @@ angular.module('starter.controllers', [])
     $scope.programs = [];
     sessionService.getSessions('speaker', id).then(function(response){
       $scope.programs = response;
-      console.log($scope.programs);
     });
 
     sessionService.getSpeakers(id).then(function(response){
       $scope.details = response;
-      console.log($scope.details);
     });
 
     $scope.bookmarked = false;
@@ -189,7 +183,6 @@ angular.module('starter.controllers', [])
           });
         });
       } else {
-        console.log("No results found");
       }
     }, function (err) {
       console.error(err);
@@ -240,7 +233,6 @@ angular.module('starter.controllers', [])
           text: '<b>Submit</b>',
           type: 'button-positive',
           onTap: function(e) {
-            console.log($rootScope.data.wifi);
             if (!$rootScope.data.wifi) {
               e.preventDefault($rootScope.data.wifi);
               var alertPopup = $ionicPopup.alert({
@@ -538,7 +530,6 @@ angular.module('starter.controllers', [])
           $scope.programs.push(res.rows.item(i));
         }
       } else {
-        console.log("No results found");
       }
     }, function (err) {
     });
@@ -602,7 +593,6 @@ angular.module('starter.controllers', [])
         return states;
       };
       $scope.rate = function(value) {
-        console.log(value);
         //CHECK THE USER LOGINED OR NOT
         if($rootScope.User_id ==  '')
         {}
