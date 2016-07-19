@@ -2,7 +2,7 @@
     <ion-content ng-repeat="detail in details track by $index">
         <div class="row speakbg">
             <div class="col text-center item-avatar-center">
-                <img width="80px" height="80px" ng-if="detail.prof_img==''" src="Custom/img/avatar.png">
+                <img width="80px" height="80px" ng-if="detail.prof_img==''" src="custom/img/avatar.png">
                 <img width="80px" height="80px" ng-if="detail.prof_img!=''" src="{{detail.prof_img}}">
                 <div>
                    {{detail.fname}} {{detail.lname}}

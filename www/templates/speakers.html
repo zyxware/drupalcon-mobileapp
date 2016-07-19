@@ -21,7 +21,7 @@
       <div class="row empty-result " ng-if="!speakers.length">No speakers added.</div>
       <div class="ListMargin"></div>
         <a class="item item-avatar spkr-dtls" ng-repeat="speaker in speakers | filter:search.searchSpeaker" href="#/app/speakerdetail/{{speaker.id}}">
-          <img ng-if="speaker.prof_img==''" src="Custom/img/avatar.png">
+          <img ng-if="speaker.prof_img==''" src="custom/img/avatar.png">
           <img ng-if="speaker.prof_img!=''" src="{{speaker.prof_img}}">
           <h2>{{speaker.fname}} {{speaker.lname}}</h2>
          <p class="wraper" ng-bind-html="speaker.desc | cut:true:80" ></p>
