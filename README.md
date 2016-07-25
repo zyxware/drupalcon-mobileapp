@@ -26,6 +26,10 @@ Main Features of this app are
 
 The app will be intialized and will be updated with data stored in the JSON file. This json file path can be changed in service.js
 
+## config.xml Changes
+
+Change the id in  <widget>
+
 ## App Usage
 
 1.Clone the repository
@@ -44,7 +48,14 @@ The app will be intialized and will be updated with data stored in the JSON file
   ionic plugin add https://github.com/apache/cordova-plugin-whitelist.git
 
 ## Code Structure
-
+ archive/               // Old conference themes
+    newOrleans/         //newOrleans conference themes
+      data/
+        sessions.json   //old conference sessions file
+      themes/
+        css/            //css files     
+        img/            // old app used images and icons
+        resources/      //splash screens and icons
  www/
     css/
       ionic.app.css     //This is the User customized classes and styles
@@ -90,6 +101,12 @@ The app will be intialized and will be updated with data stored in the JSON file
       tracks.html
 
 ## Build Generation
+
+Using ionic:-
+
+1.install android sdk on System
+2.cordova platform add android
+3.ionic build android
 
 Using phonegap;-
 

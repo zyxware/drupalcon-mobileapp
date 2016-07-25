@@ -49,9 +49,9 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
       
       var currentJsonVersion = window.localStorage.getItem('json-version');
       if (window.localStorage.getItem('db-initialized') != 1) {
-        // $ionicLoading.show({
-        //   template: 'Intializing'
-        // });
+        $ionicLoading.show({
+          template: 'Intializing'
+        });
         // Intializing the db for first-time.
         if(ionic.Platform.isAndroid()){
           url = "/android_asset/www/json/sessions.json";
@@ -73,9 +73,9 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
               });
               confirmPopup.then(function(res) {
                 if(res) {
-                  // $ionicLoading.show({
-                  //   template: 'Intializing'
-                  // });
+                  $ionicLoading.show({
+                    template: 'Intializing'
+                  });
                   dataService.getJsonFile().then(function (response) {
                     var url = response.nativeURL;
                     if(window.localStorage.getItem('json-version') < currentJsonVersion) {
