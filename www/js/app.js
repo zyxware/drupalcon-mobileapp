@@ -49,7 +49,7 @@ angular.module('starter', ['ionic','ionic.rating', 'starter.controllers', 'ngSto
         });
         // Intializing the db for first-time.
         if(ionic.Platform.isAndroid()){
-          url = "/android_asset/www/Custom/json/sessions.json";
+          url = "/android_asset/www/json/sessions.json";
         }
         updateDB(url);
       }

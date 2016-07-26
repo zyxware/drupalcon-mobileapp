@@ -26,24 +26,37 @@ Main Features of this app are
 
 The app will be intialized and will be updated with data stored in the JSON file. This json file path can be changed in service.js
 
+## config.xml Changes
+
+Change the id in  <widget>
+
+## How to customize App
+
+1. Create a new folder with a proper name under arachive folder and Move the current current custom folder to that, for future reference
+2. Change css styles in custom/css/ionic.app.css
+3. Place the background images and icons in the custom/img folder. Use the same name and extensions.
+4. Change spalsh screens and icons on app into "resources/"
+5. Change the JSON file in  json/ folder.
+
 ## App Usage
 
 using ionic:-
 
-1.Clone the repository
-2.Add platform "cordova platform add android"
-3.Enter the Command for getting the dependencies "bower install"
-4.Install the follwing pluggins:
-  cordova plugin add ionic-plugin-keyboard
-  cordova plugin add cordova-plugin-splashscreen
-  cordova plugin add cordova-plugin-file
-  cordova plugin add cordova-plugin-file-transfer
-  cordova plugin add https://github.com/litehelpers/Cordova-sqlite-storage.git
-  cordova plugin add cordova-plugin-network-information
-  cordova plugin add cordova-plugin-device
-  cordova plugin add cordova-plugin-inappbrowser
-  cordova plugin add cordova-plugin-device-orientation
-  ionic plugin add https://github.com/apache/cordova-plugin-whitelist.git
+1. Clone the repository
+2. Add platform "cordova platform add android"
+3. Enter the Command for getting the dependencies "bower install"
+4. Install the follwing pluggins:
+    cordova plugin add ionic-plugin-keyboard
+    cordova plugin add cordova-plugin-splashscreen
+    cordova plugin add cordova-plugin-file
+    cordova plugin add cordova-plugin-file-transfer
+    cordova plugin add https://github.com/litehelpers/Cordova-sqlite-storage.git
+    cordova plugin add cordova-plugin-network-information
+    cordova plugin add cordova-plugin-device
+    cordova plugin add cordova-plugin-inappbrowser
+    cordova plugin add cordova-plugin-device-orientation
+    ionic plugin add https://github.com/apache/cordova-plugin-whitelist.git
+
 
   using phonegap:-
 
@@ -69,8 +82,16 @@ using ionic:-
     ios/
       icon/           // ios app icons          
       splash/         // ios app splash screens
+ archive/               // Old conference themes
+    newOrleans/         //newOrleans conference themes
+      data/
+        sessions.json   //old conference sessions file
+      themes/
+        css/            //css files     
+        img/            // old app used images and icons
+        resources/      //splash screens and icons
  www/
-    Custom/
+    custom/
       css/
         ionic.app.css     //This is the User customized classes and styles
         ionic.app.min.css // Ionic styles and classes
@@ -111,9 +132,9 @@ using ionic:-
 
 using ionic:-
 
-1.install android sdk
-2.add command into terminal "ionic build android"
-3.The build located in "platforms/android/build/outputs/apk/"
+1. install android sdk on System
+2. cordova platform add android
+3. ionic build android
 
 Using phonegap;-
 

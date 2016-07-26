@@ -1,5 +1,5 @@
 {
-  "name": "Conference App",
+  "name": "conferenceapp",
   "devDependencies": {
     "ionic": "^1.3.1",
     "angular": "^1.5.7"
